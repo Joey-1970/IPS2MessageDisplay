@@ -68,15 +68,29 @@
 # - 'image' (optional): Name des WebFront-Icons (ipsIcon<name>), welches
 #          für Meldung verwendet werden soll, Standard ist "Talk"
 # - 'page' (optional): Nur in Verbindung mit Type 4 - Seitenname
-	public function Add(string $Text, int $Expires, bool $Removable, int $Type, string $Image, int $Page) [
+	public function Add(string $Text, int $Expires, bool $Removable, int $Type, string $Image, int $Page) {
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			
-		]
-	]
+		}
+	}
 	    
+	public function Remove(int $MessageID) {
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			
+		}
+	}
+	    
+	public function RemoveAll(int $MessageID) {
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			
+		}
+	}
 	
-	
-
+	public function RemoveType(int $MessageID) {
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			
+		}
+	}
 	
 }
 ?>
