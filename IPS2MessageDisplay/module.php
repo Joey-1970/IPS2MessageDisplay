@@ -57,8 +57,22 @@
 
 	    
 	// Beginn der Funktionen
-	
-	
+	# Parameter:
+# - 'text': Meldungstext
+# - 'expires' (optional): Zeitpunkt des automatischen Löschens der Meldung
+#          als Unix-Timestamp. Ist der Wert kleiner als die aktuelle Timestamp,
+#          wird nicht automatisch gelöscht.
+# - 'removable' (optional): Anzeige eines Buttons zum Löschen der Meldung im WebFront.
+# - 'type' (optional): Art der Meldung ... 0 => Normal(grün),
+#          1 => Fehler(rot), 2 => Warnung(gelb), 3 => Todo(blau), 4 => Goto(orange)
+# - 'image' (optional): Name des WebFront-Icons (ipsIcon<name>), welches
+#          für Meldung verwendet werden soll, Standard ist "Talk"
+# - 'page' (optional): Nur in Verbindung mit Type 4 - Seitenname
+	public function Add(string $Text, int $Expires, bool $Removable, int $Type, string $Image, int $Page) [
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			
+		]
+	]
 	    
 	
 	
