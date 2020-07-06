@@ -235,7 +235,7 @@
                 			if ((isset($message['Timestamp'])) AND ($ShowTime == true)) {
                     				$title .= 'title=\''.date("d.m.Y H:i", $Message['Timestamp']).'\' ';      
 					}
-                			$Image = '<img src=\'img/icons/'.$message['image'].'.svg\''.$title.'></img>';
+                			$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\''.$title.'></img>';
 					//$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
 				}
 				else {
