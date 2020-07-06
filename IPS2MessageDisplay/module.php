@@ -102,7 +102,9 @@
 	public function RemoveAll(int $MessageID) 
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			
+			$MessageData = array();
+			$this->WriteAttributeString("MessageData", serialize($MessageData));
+			$this->SendDebug("RemoveAll", "Alle Messages wurde entfernt", 0);
 		}
 	}
 	
