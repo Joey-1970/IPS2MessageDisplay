@@ -125,25 +125,6 @@
 			
 		}
 	}
-	
-	/*
-		case 'WebHook':
-		$result = 0;
-		switch ($_GET['action']) {
-		    case 'remove':
-		      $number = isset($_GET['number']) ? $_GET['number'] : -1;
-		      if ($number > 0) {
-			  $result = removeMessage($number);
-		      }
-		      break;
-		    case 'switch':
-		      $page = isset($_GET['page']) ? $_GET['page'] : '';
-		      if (is_string($page) && $page !='') {
-			  $result = switchPage($wfc, $page);
-		      }
-		      break;
-	    }
-    	*/
 	    
 	protected function ProcessHookData() 
 	{		
@@ -159,7 +140,7 @@
 			      		$Page = isset($_GET['page']) ? $_GET['page'] : '';
 			      		if (is_string($page) && $page !='') {
 				  		$WebfrontID = $this->ReadPropertyInteger("WebfrontID")
-						switchPage($WebfrontID, $Page);
+						WFC_SwitchPage($WebfrontID, $Page);
 			      		}
 			      break;
 			}
