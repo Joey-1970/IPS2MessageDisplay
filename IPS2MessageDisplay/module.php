@@ -39,6 +39,7 @@
 		$arrayElements = array(); 
 		
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
+		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Webfronts für die SwitchPage-Funktion"); 
 		$WebfrontID = Array();
 		$WebfrontID = $this->GetWebfrontID();
 		$arrayOptions = array();
