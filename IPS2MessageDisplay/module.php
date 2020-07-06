@@ -73,6 +73,7 @@
 			$MessageData[$MessageID]["Type"] = $Type;
 			$MessageData[$MessageID]["Image"] = $Image;
 			$MessageData[$MessageID]["Page"] = $Page;
+			$MessageData[$MessageID]["Timestamp"] = time();
 			$this->WriteAttributeString("MessageData", serialize($MessageData));
 			$this->SendDebug("Add", "Message ".$MessageID." wurde hinzugefuegt", 0);
 			$this->RenderData($MessageData);
@@ -136,13 +137,22 @@
 	    
 	protected function ProcessHookData() 
 	{		
-		/*
-		if (isset($_GET["StationID"])) {
-			$StationID = $_GET["StationID"];
-			$this->SendDebug("ProcessHookData", "StationID: ".$StationID, 0);
-			$this->GetStationDetails($StationID);
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			switch ($_GET['action']) {
+			    	case 'remove':
+			      		$MessageID = isset($_GET['number']) ? $_GET['number'] : -1;
+			      		if ($number > 0) {
+				  		$this->Remove($MessageID);
+			      		}
+			      		break;
+			    case 'switch':
+			      		$Page = isset($_GET['page']) ? $_GET['page'] : '';
+			      		if (is_string($page) && $page !='') {
+				  		switchPage($WFC, $Page);
+			      		}
+			      break;
+			}
 		}
-		*/
 	}       
 	    
 	private function RenderData($MessageData)		
