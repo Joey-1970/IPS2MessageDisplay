@@ -60,17 +60,17 @@
 
 	    
 	// Beginn der Funktionen
-	public function Add(int $MessagesID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, int $Page) 
+	public function Add(int $MessageID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, string $Page) 
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
 			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
-			$MessageData[$MessagesID]["Text"] = $Text;
-			$MessageData[$MessagesID]["Expires"] = $Expires;
-			$MessageData[$MessagesID]["Removable"] = $Removable;
-			$MessageData[$MessagesID]["Type"] = $Type;
-			$MessageData[$MessagesID]["Image"] = $Image;
-			$MessageData[$MessagesID]["Page"] = $Page;
+			$MessageData[$MessageID]["Text"] = $Text;
+			$MessageData[$MessageID]["Expires"] = $Expires;
+			$MessageData[$MessageID]["Removable"] = $Removable;
+			$MessageData[$MessageID]["Type"] = $Type;
+			$MessageData[$MessageID]["Image"] = $Image;
+			$MessageData[$MessageID]["Page"] = $Page;
 			$this->WriteAttributeString("MessageData", serialize($MessageData));
 			$this->SendDebug("Add", "Message ".$MessageID." wurde hinzugefuegt", 0);
 			$this->RenderData($MessageData);
