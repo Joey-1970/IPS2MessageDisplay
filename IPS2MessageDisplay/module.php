@@ -19,7 +19,9 @@
 		
 		//Status-Variablen anlegen
 		$this->RegisterVariableString("Messages", "Meldungen", "~HTMLBox", 10);
-		
+			
+		// Webhook einrichten
+		$this->RegisterHook("/hook/MessageDisplay_".$this->InstanceID);
 		
 		$MessageData = array();
 		$this->WriteAttributeString("MessageData", serialize($MessageData)); 
@@ -111,6 +113,36 @@
 		}
 	}
 	
+	/*
+		case 'WebHook':
+		$result = 0;
+		switch ($_GET['action']) {
+		    case 'remove':
+		      $number = isset($_GET['number']) ? $_GET['number'] : -1;
+		      if ($number > 0) {
+			  $result = removeMessage($number);
+		      }
+		      break;
+		    case 'switch':
+		      $page = isset($_GET['page']) ? $_GET['page'] : '';
+		      if (is_string($page) && $page !='') {
+			  $result = switchPage($wfc, $page);
+		      }
+		      break;
+	    }
+    	*/
+	    
+	protected function ProcessHookData() 
+	{		
+		/*
+		if (isset($_GET["StationID"])) {
+			$StationID = $_GET["StationID"];
+			$this->SendDebug("ProcessHookData", "StationID: ".$StationID, 0);
+			$this->GetStationDetails($StationID);
+		}
+		*/
+	}       
+	    
 	private function RenderData($MessageData)		
 	{
 		// Etwas CSS und HTML
@@ -158,35 +190,56 @@
 		    					break;
 					}
 	      			}
-	      		else {
-				$Type = 'green';
-	      		}
-	      		if ($Message['Image']) {
-				$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
-	      		}
-	      		else {
-				$Image = '<img src=\'img/icons/Ok.svg\'></img>';
-	      		}
+				else {
+					$Type = 'green';
+				}
+				if ($Message['Image']) {
+					$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
+				}
+				else {
+					$Image = '<img src=\'img/icons/Ok.svg\'></img>';
+				}
 
-	      $content .= '<tr>';
-	      $content .= '<td class="fst">'.$Image.'</td>';
+				$content .= '<tr>';
+				$content .= '<td class="fst">'.$Image.'</td>';
 
-	      $content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
-	      if ($Message['Removable']) {
-			$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/msg?ts=\' + (new Date()).getTime() + \'&action=remove&number='.$Number.'\' });">OK</div></td>';
-	      }
-	      elseif ($Message['Page']) {
-			$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/msg?ts=\' + (new Date()).getTime() + \'&action=switch&page='.$Message['Page'].'\' });">OK</div></td>';
-	      }
-	      else {
-			$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>OK</div></td>';
-	      }
-	      $content .= '</tr>';
-	    }
-	  }
-	  $content .= '</table>';
-	  SetValueString($this->GetIDForIdent("Messages"), $content);
+				$content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
+				if ($Message['Removable']) {
+					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/msg?ts=\' + (new Date()).getTime() + \'&action=remove&number='.$Number.'\' });">OK</div></td>';
+				}
+				elseif ($Message['Page']) {
+					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/msg?ts=\' + (new Date()).getTime() + \'&action=switch&page='.$Message['Page'].'\' });">OK</div></td>';
+				}
+				else {
+					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>OK</div></td>';
+				}
+				$content .= '</tr>';
+			}
+	  	}
+	  	$content .= '</table>';
+	  	SetValueString($this->GetIDForIdent("Messages"), $content);
 	}    
-	    
+	
+	private function RegisterHook($WebHook) 
+	{ 
+		$ids = IPS_GetInstanceListByModuleID("{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}"); 
+		if(sizeof($ids) > 0) { 
+			$hooks = json_decode(IPS_GetProperty($ids[0], "Hooks"), true); 
+			$found = false; 
+			foreach($hooks as $index => $hook) { 
+				if($hook['Hook'] == $WebHook) { 
+					if($hook['TargetID'] == $this->InstanceID) 
+						return; 
+					$hooks[$index]['TargetID'] = $this->InstanceID; 
+					$found = true; 
+				} 
+			} 
+			if(!$found) { 
+				$hooks[] = Array("Hook" => $WebHook, "TargetID" => $this->InstanceID); 
+			} 
+			IPS_SetProperty($ids[0], "Hooks", json_encode($hooks)); 
+			IPS_ApplyChanges($ids[0]); 
+		} 
+	}     
 }
 ?>
