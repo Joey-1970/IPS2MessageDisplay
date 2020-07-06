@@ -47,7 +47,7 @@
             	parent::ApplyChanges();
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			
+			$this->RenderData($MessageData);
 			$this->SetStatus(102);
 			
 		}
