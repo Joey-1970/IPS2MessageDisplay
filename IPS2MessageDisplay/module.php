@@ -15,12 +15,15 @@
             	// Diese Zeile nicht löschen.
             	parent::Create();
 		$this->RegisterPropertyBoolean("Open", false);
-		
+		$this->RegisterAttributeString("MessageData", ""); 
 		
 		//Status-Variablen anlegen
 		$this->RegisterVariableString("Messages", "Meldungen", "~HTMLBox", 10);
 		
 		
+		$MessageData = array();
+		$this->WriteAttributeString("MessageData", serialize($MessageData)); 
+
         }
  	
 	public function GetConfigurationForm() 
@@ -68,17 +71,38 @@
 # - 'image' (optional): Name des WebFront-Icons (ipsIcon<name>), welches
 #          für Meldung verwendet werden soll, Standard ist "Talk"
 # - 'page' (optional): Nur in Verbindung mit Type 4 - Seitenname
-	public function Add(string $Text, int $Expires, bool $Removable, int $Type, string $Image, int $Page) 
+	public function Add(int $MessagesID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, int $Page) 
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			
+			$MessageData = array();
+			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
+			$MessageData[$MessagesID]["Text"] = $Text;
+			$MessageData[$MessagesID]["Expires"] = $Expires;
+			$MessageData[$MessagesID]["Removable"] = $Removable;
+			$MessageData[$MessagesID]["Type"] = $Type;
+			$MessageData[$MessagesID]["Image"] = $Image;
+			$MessageData[$MessagesID]["Page"] = $Page;
+			$this->WriteAttributeString("MessageData", serialize($MessageData));
+			$this->SendDebug("Add", "Message ".$MessageID." wurde hinzugefuegt", 0);
 		}
 	}
 	    
 	public function Remove(int $MessageID) 
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
+			$MessageData = array();
+			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
+			If (is_array($MessageData)) {
+				if (array_key_exists($MessageID, $MessageData)) {
+					unset($MessageData[$MessageID]);
+					$this->SendDebug("Remove", "Message ".$MessageID." wurde entfernt", 0);
+				}
+				else {
+					$this->SendDebug("Remove", "Message ".$MessageID." wurde nicht gefunden", 0);
+				}
+			}
 			
+			$this->WriteAttributeString("MessageData", serialize($MessageData)); 
 		}
 	}
 	    
@@ -89,7 +113,7 @@
 		}
 	}
 	
-	public function RemoveType(int $MessageID) 
+	public function RemoveType(int $Type) 
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			
