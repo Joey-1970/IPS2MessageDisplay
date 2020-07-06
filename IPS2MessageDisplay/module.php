@@ -16,6 +16,7 @@
             	parent::Create();
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("Sorting", 0);
+		$this->RegisterPropertyBoolean("ShowTime", false);
 		$this->RegisterAttributeString("MessageData", ""); 
 		$this->RegisterPropertyInteger("WebfrontID", 0);
 		
@@ -45,6 +46,8 @@
 		$arrayOptions[] = array("label" => "Neuste Nachricht zuerst", "value" => 0);
 		$arrayOptions[] = array("label" => "Älteste Nachricht zuerst", "value" => 1);
 		$arrayElements[] = array("type" => "Select", "name" => "Sorting", "caption" => "Sortierung in der Darstellung", "options" => $arrayOptions );
+		
+		$arrayElements[] = array("name" => "ShowTime", "type" => "CheckBox",  "caption" => "Uhrzeit anzeigen");
 		
 		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Webfronts für die SwitchPage-Funktion"); 
 		$WebfrontID = Array();
@@ -171,6 +174,7 @@
 	    
 	private function RenderData($MessageData)		
 	{
+		$ShowTime = $this->ReadPropertyBoolean("ShowTime");
 		$Sorting = $this->ReadPropertyInteger("Sorting");
 		If ($Sorting == 0) {
 			$MessageData = array_reverse($MessageData);
@@ -228,7 +232,7 @@
 				
 				if ($Message['Image']) {
 					$title = ' ';
-                			if (isset($message['Timestamp'])) {
+                			if ((isset($message['Timestamp'])) AND ($ShowTime == true)) {
                     				$title .= 'title=\''.date("d.m.Y H:i", $Message['Timestamp']).'\' ';      
 					}
                 			$Image = '<img src=\'img/icons/'.$message['image'].'.svg\''.$title.'></img>';
