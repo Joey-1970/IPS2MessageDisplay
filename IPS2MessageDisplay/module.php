@@ -122,7 +122,14 @@
 	public function RemoveType(int $Type) 
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			
+			$MessageData = array();
+			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
+			foreach ($MessageData as $MessageID => $Message) {
+				If ($Message["Type"] == $Type) {
+					unset($MessageData[$MessageID]);
+					$this->SendDebug("RemoveType", "Message ".$MessageID." wurde entfernt", 0);
+				}
+			}
 		}
 	}
 	    
@@ -135,12 +142,20 @@
 			      		if ($number > 0) {
 				  		$this->Remove($MessageID);
 			      		}
+					else {
+						$this->SendDebug("ProcessHookData", "Keine MessageID!", 0);
+					}
 			      		break;
 			    case 'switch':
 			      		$Page = isset($_GET['page']) ? $_GET['page'] : '';
 			      		if (is_string($page) && $page !='') {
 				  		$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
-						WFC_SwitchPage($WebfrontID, $Page);
+						if ($WebfrontID > 0) {
+							WFC_SwitchPage($WebfrontID, $Page);
+						}
+						else {
+							$this->SendDebug("ProcessHookData", "Kein Webfront definiert!", 0);
+						}
 			      		}
 			      break;
 			}
