@@ -15,6 +15,7 @@
             	// Diese Zeile nicht löschen.
             	parent::Create();
 		$this->RegisterPropertyBoolean("Open", false);
+		$this->RegisterPropertyInteger("Sorting", 0);
 		$this->RegisterAttributeString("MessageData", ""); 
 		$this->RegisterPropertyInteger("WebfrontID", 0);
 		
@@ -39,6 +40,12 @@
 		$arrayElements = array(); 
 		
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
+		
+		$arrayOptions = array();
+		$arrayOptions[] = array("label" => "Neuste Nachricht zuerst", "value" => 0);
+		$arrayOptions[] = array("label" => "Älteste Nachricht zuerst", "value" => 1);
+		$arrayElements[] = array("type" => "Select", "name" => "Sorting", "caption" => "Sortierung in der Darstellung", "options" => $arrayOptions );
+		
 		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Webfronts für die SwitchPage-Funktion"); 
 		$WebfrontID = Array();
 		$WebfrontID = $this->GetWebfrontID();
@@ -164,6 +171,11 @@
 	    
 	private function RenderData($MessageData)		
 	{
+		$Sorting = $this->ReadPropertyInteger("Sorting");
+		If ($Sorting == 0) {
+			$MessageData = array_reverse($MessageData);
+		}
+		
 		// Etwas CSS und HTML
 		$style = "";
 		$style .= '<style type="text/css">';
