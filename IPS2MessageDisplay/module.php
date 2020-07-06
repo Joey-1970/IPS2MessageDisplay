@@ -73,6 +73,7 @@
 			$MessageData[$MessagesID]["Page"] = $Page;
 			$this->WriteAttributeString("MessageData", serialize($MessageData));
 			$this->SendDebug("Add", "Message ".$MessageID." wurde hinzugefuegt", 0);
+			$this->RenderData($MessageData);
 		}
 	}
 	    
@@ -91,7 +92,8 @@
 				}
 			}
 			
-			$this->WriteAttributeString("MessageData", serialize($MessageData)); 
+			$this->WriteAttributeString("MessageData", serialize($MessageData));
+			$this->RenderData($MessageData);
 		}
 	}
 	    
@@ -109,12 +111,8 @@
 		}
 	}
 	
-	private function RenderData		
+	private function RenderData($MessageData)		
 	{
-		$ParentID = 0; //IPS_GetParent($_IPS['SELF']);
-	  	$DataID = = 0; //IPS_GetVariableIDByName('Daten', $ParentID);
-	  	$MessagesID = 0; //IPS_GetVariableIDByName('Meldungen', $ParentID);
-
 		// Etwas CSS und HTML
 		$style = "";
 		$style .= '<style type="text/css">';
@@ -132,43 +130,43 @@
 
 		$content = $style;
 		$content .= '<table>';
-		if (count($data) == 0) {
-	  $content = $content.'<tr>';
-	  $content = $content.'<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
-	  $content = $content.'<td class="mid">Keine Meldungen vorhanden!</td>';
-	  $content = $content.'<td class=\'lst\'><div class=\'green\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>OK</div></td>';
-	  $content = $content.'</tr>';
-	  }
-	  else {
-	    foreach ($data as $number => $message) {
-	      if ($message['type']) {
-		switch ($message['type']) {
-		  case 4:
-		    $type = 'orange';
-		    break;
-		  case 3:
-		    $type = 'blue';
-		    break;
-		  case 2:
-		    $type = 'yellow';
-		    break;
-		  case 1:
-		    $type = 'red';
-		    break;
-		  default:
-		    $type = 'green';
-		    break;
-		}
-	      }
-	      else {
-		$type = 'green';
-	      }
-	      if ($message['image']) {
-		$image = '<img src=\'img/icons/'.$message['image'].'.svg\'></img>';
-	      }
-	      else {
-		$image = '<img src=\'img/icons/Ok.svg\'></img>';
-	      }
+		if (count($MessageData) == 0) {
+	  		$content .= '<tr>';
+	  		$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
+	  		$content .= '<td class="mid">Keine Meldungen vorhanden!</td>';
+	  		$content .= '<td class=\'lst\'><div class=\'green\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>OK</div></td>';
+	  		$content .= '</tr>';
+	  	}
+	  	else {
+	    		foreach ($MessageData as $Number => $Message) {
+	      			if ($Message['Type']) {
+					switch ($Message['Type']) {
+		  				case 4:
+		    					$Type = 'orange';
+		    					break;
+		  				case 3:
+		    					$Type = 'blue';
+		    					break;
+		  				case 2:
+		    					$Type = 'yellow';
+		    					break;
+		  				case 1:
+		    					$Type = 'red';
+		    					break;
+		  				default:
+		    					$Type = 'green';
+		    					break;
+					}
+	      			}
+	      		else {
+				$Type = 'green';
+	      		}
+	      		if ($Message['Image']) {
+				$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
+	      		}
+	      		else {
+				$Image = '<img src=\'img/icons/Ok.svg\'></img>';
+	      		}
 
 	      $content .= '<tr>';
 	      $content = $content.'<td class="fst">'.$image.'</td>';
