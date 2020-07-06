@@ -69,6 +69,8 @@
             	parent::ApplyChanges();
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
+			$MessageData = array();
+			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
 			$this->RenderData($MessageData);
 			$this->SetStatus(102);
 			
