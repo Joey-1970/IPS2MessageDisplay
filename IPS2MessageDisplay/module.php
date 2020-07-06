@@ -177,7 +177,7 @@
 		$ShowTime = $this->ReadPropertyBoolean("ShowTime");
 		$Sorting = $this->ReadPropertyInteger("Sorting");
 		If ($Sorting == 0) {
-			$MessageData = array_reverse($MessageData);
+			$MessageData = array_reverse($MessageData, true);
 		}
 		
 		// Etwas CSS und HTML
