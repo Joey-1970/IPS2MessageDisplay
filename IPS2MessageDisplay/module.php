@@ -16,6 +16,7 @@
             	parent::Create();
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterAttributeString("MessageData", ""); 
+		$this->RegisterPropertyInteger("WebfrontID", 0);
 		
 		//Status-Variablen anlegen
 		$this->RegisterVariableString("Messages", "Meldungen", "~HTMLBox", 10);
@@ -38,6 +39,14 @@
 		$arrayElements = array(); 
 		
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
+		$WebfrontID = Array();
+		$WebfrontID = $this->GetWebfrontID();
+		$arrayOptions = array();
+		$arrayOptions[] = array("label" => "unbestimmt", "value" => 0);
+		foreach ($WebfrontID as $ID => $Webfront) {
+        		$arrayOptions[] = array("label" => $Webfront, "value" => $ID);
+    		}
+		$arrayElements[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayOptions );
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
  	}       
@@ -148,7 +157,8 @@
 			    case 'switch':
 			      		$Page = isset($_GET['page']) ? $_GET['page'] : '';
 			      		if (is_string($page) && $page !='') {
-				  		switchPage($WFC, $Page);
+				  		$WebfrontID = $this->ReadPropertyInteger("WebfrontID")
+						switchPage($WebfrontID, $Page);
 			      		}
 			      break;
 			}
@@ -232,6 +242,18 @@
 	  	SetValueString($this->GetIDForIdent("Messages"), $content);
 	}    
 	
+	private function GetWebfrontID()
+	{
+    		$guid = "{3565B1F2-8F7B-4311-A4B6-1BF1D868F39E}"; // Webfront Konfigurator
+    		//Auflisten
+    		$WebfrontArray = (IPS_GetInstanceListByModuleID($guid));
+    		$Result = array();
+    		foreach ($WebfrontArray as $Webfront) {
+        		$Result[$Webfront] = IPS_GetName($Webfront);
+    		}
+	return $Result;   
+	}    
+	    
 	private function RegisterHook($WebHook) 
 	{ 
 		$ids = IPS_GetInstanceListByModuleID("{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}"); 
