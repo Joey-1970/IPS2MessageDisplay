@@ -249,7 +249,7 @@
 				$content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
 				if ($Message['Removable'] == true) {
 																							//hook/IPS2MessageDisplay_'.$this->InstanceID.'?StationID='.$StationID.'\' })
-					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'/msg?ts=\' + (new Date()).getTime() + \'&action=remove&number='.$Number.'\' });">OK</div></td>';
+					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'/?action=remove&number='.$Number.'\' });">OK</div></td>';
 					//$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/msg?ts=\' + (new Date()).getTime() + \'&action=remove&number='.$Number.'\' });">OK</div></td>';
 
 				}
