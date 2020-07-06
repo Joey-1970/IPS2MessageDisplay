@@ -250,7 +250,7 @@
 
 				$content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
 				if ($Message['Removable'] == true) {
-					$HookLink = "hhok/IPS2MessageDisplay_".$this->InstanceID;
+					$HookLink = "hook/IPS2MessageDisplay_".$this->InstanceID;
 					//$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/msg?ts=\' + (new Date()).getTime() + \'&action=remove&number='.$Number.'\' });">OK</div></td>';
 					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \''.$HookLink.'\'?ts=\' + (new Date()).getTime() + \'&action=remove&number='.$Number.'\' });">OK</div></td>';
 
