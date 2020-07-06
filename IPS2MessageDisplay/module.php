@@ -224,8 +224,15 @@
 				else {
 					$Type = 'green';
 				}
+				
+				
 				if ($Message['Image']) {
-					$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
+					$title = ' ';
+                			if (isset($message['Timestamp'])) {
+                    				$title .= 'title=\''.date("d.m.Y H:i", $Message['Timestamp']).'\' ';      
+					}
+                			$Image = '<img src=\'img/icons/'.$message['image'].'.svg\''.$title.'></img>';
+					//$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
 				}
 				else {
 					$Image = '<img src=\'img/icons/Ok.svg\'></img>';
@@ -235,7 +242,7 @@
 				$content .= '<td class="fst">'.$Image.'</td>';
 
 				$content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
-				if ($Message['Removable']) {
+				if ($Message['Removable'] == true) {
 					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/msg?ts=\' + (new Date()).getTime() + \'&action=remove&number='.$Number.'\' });">OK</div></td>';
 				}
 				elseif ($Message['Page']) {
