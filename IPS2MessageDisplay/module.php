@@ -169,23 +169,23 @@
 	      		}
 
 	      $content .= '<tr>';
-	      $content = $content.'<td class="fst">'.$image.'</td>';
+	      $content .= '<td class="fst">'.$Image.'</td>';
 
-	      $content = $content.'<td class="mid">'.utf8_decode($message['text']).'</td>';
-	      if ($message['removable']) {
-		$content = $content.'<td class=\'lst\'><div class=\''.$type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/msg?ts=\' + (new Date()).getTime() + \'&action=remove&number='.$number.'\' });">OK</div></td>';
+	      $content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
+	      if ($Message['Removable']) {
+			$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/msg?ts=\' + (new Date()).getTime() + \'&action=remove&number='.$Number.'\' });">OK</div></td>';
 	      }
-	      elseif ($message['page']) {
-		$content = $content.'<td class=\'lst\'><div class=\''.$type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/msg?ts=\' + (new Date()).getTime() + \'&action=switch&page='.$message['page'].'\' });">OK</div></td>';
+	      elseif ($Message['Page']) {
+			$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/msg?ts=\' + (new Date()).getTime() + \'&action=switch&page='.$Message['Page'].'\' });">OK</div></td>';
 	      }
 	      else {
-		$content = $content.'<td class=\'lst\'><div class=\''.$type.'\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>OK</div></td>';
+			$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>OK</div></td>';
 	      }
 	      $content .= '</tr>';
 	    }
 	  }
-	  $content = $content. '</table>';
-	  SetValueString($MessagesID, $content);
+	  $content .= '</table>';
+	  SetValueString($this->GetIDForIdent("Messages"), $content);
 	}    
 	    
 }
