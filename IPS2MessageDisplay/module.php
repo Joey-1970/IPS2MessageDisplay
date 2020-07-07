@@ -24,7 +24,7 @@
 		$this->RegisterVariableString("Messages", "Meldungen", "~HTMLBox", 10);
 			
 		// Webhook einrichten
-		$this->RegisterHook("/hook/MessageDisplay_".$this->InstanceID);
+		$this->RegisterHook("/hook/IPS2MessageDisplay_".$this->InstanceID);
 		
 		$MessageData = array();
 		$this->WriteAttributeString("MessageData", serialize($MessageData)); 
