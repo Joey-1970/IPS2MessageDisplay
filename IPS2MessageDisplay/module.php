@@ -6,7 +6,7 @@
 	{
 		//Never delete this line!
 		parent::Destroy();
-		
+		$this->SetTimerInterval("AutoRemove", 0);
 	}  
 	    
 	// Überschreibt die interne IPS_Create($id) Funktion
@@ -19,6 +19,8 @@
 		$this->RegisterPropertyBoolean("ShowTime", false);
 		$this->RegisterAttributeString("MessageData", ""); 
 		$this->RegisterPropertyInteger("WebfrontID", 0);
+		$this->RegisterPropertyInteger("AutoRemove", 1000);
+		$this->RegisterTimer("AutoRemove", 0, 'IPS2MessageDisplay_AutoRemove($_IPS["TARGET"]);');
 		
 		//Status-Variablen anlegen
 		$this->RegisterVariableString("Messages", "Meldungen", "~HTMLBox", 10);
@@ -72,12 +74,13 @@
 			$MessageData = array();
 			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
 			$this->RenderData($MessageData);
+			$this->SetTimerInterval("AutoRemove", 1000);
 			$this->SetStatus(102);
 			
 		}
 		else {
 			$this->SetStatus(104);
-			
+			$this->SetTimerInterval("AutoRemove", 0);
 		}	
 	}
 	
@@ -131,8 +134,8 @@
 			$this->RenderData($MessageData);
 			$this->SendDebug("RemoveAll", "Alle Messages wurde entfernt", 0);
 		}
-	}
-	
+	}    
+	    
 	public function RemoveType(int $Type) 
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
@@ -142,6 +145,24 @@
 				If ($Message["Type"] == $Type) {
 					unset($MessageData[$MessageID]);
 					$this->SendDebug("RemoveType", "Message ".$MessageID." wurde entfernt", 0);
+				}
+			}
+			$this->WriteAttributeString("MessageData", serialize($MessageData));
+			$this->RenderData($MessageData);
+		}
+	}
+	    
+	public function AutoRemove() 
+	{
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$MessageData = array();
+			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
+			foreach ($MessageData as $MessageID => $Message) {
+				If ($Message["Expires"] > 0) {
+					If ($Message["Expires"] + $Message["Timestamp"] >= time() ) {
+						unset($MessageData[$MessageID]);
+						$this->SendDebug("AutoRemove", "Message ".$MessageID." wurde entfernt", 0);
+					}
 				}
 			}
 			$this->WriteAttributeString("MessageData", serialize($MessageData));
