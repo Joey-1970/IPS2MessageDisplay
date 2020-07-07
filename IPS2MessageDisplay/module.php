@@ -155,8 +155,8 @@
 			$this->SendDebug("ProcessHookData", "Ausfuehrung", 0);
 			switch ($_GET['action']) {
 			    	case 'remove':
-			      		$MessageID = isset($_GET['number']) ? $_GET['number'] : -1;
-			      		if ($number > 0) {
+			      		$MessageID = isset($_GET['MessageID']) ? $_GET['MessageID'] : -1;
+			      		if ($MessageID > 0) {
 				  		$this->Remove($MessageID);
 			      		}
 					else {
@@ -253,8 +253,8 @@
 
 				$content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
 				if ($Message['Removable'] == true) {
-					$this->SendDebug("RenderData", $Message['MessageID'], 0);
-					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=remove&number='.$Message['MessageID'].'\' });">OK</div></td>';
+					//$this->SendDebug("RenderData", $Message['MessageID'], 0);
+					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=remove&MessageID='.$Message['MessageID'].'\' });">OK</div></td>';
 					
 				}
 				/*
