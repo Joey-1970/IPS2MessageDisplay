@@ -186,7 +186,7 @@
 			      		break;
 			    case 'switch':
 			      		$PageID = isset($_GET['PageID']) ? $_GET['PageID'] : '';
-			      		if (is_string($page) && $page !='') {
+			      		if (is_string($PageID) && $PageID !='') {
 				  		$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
 						if ($WebfrontID > 0) {
 							WFC_SwitchPage($WebfrontID, $PageID);
