@@ -159,7 +159,7 @@
 			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
 			foreach ($MessageData as $MessageID => $Message) {
 				If ($Message["Expires"] > 0) {
-					If ($Message["Expires"] + $Message["Timestamp"] >= time() ) {
+					If ($Message["Expires"] + $Message["Timestamp"] <= time() ) {
 						unset($MessageData[$MessageID]);
 						$this->SendDebug("AutoRemove", "Message ".$MessageID." wurde entfernt", 0);
 					}
