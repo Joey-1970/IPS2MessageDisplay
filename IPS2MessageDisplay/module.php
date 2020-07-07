@@ -128,6 +128,7 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
 			$this->WriteAttributeString("MessageData", serialize($MessageData));
+			$this->RenderData($MessageData);
 			$this->SendDebug("RemoveAll", "Alle Messages wurde entfernt", 0);
 		}
 	}
@@ -143,6 +144,8 @@
 					$this->SendDebug("RemoveType", "Message ".$MessageID." wurde entfernt", 0);
 				}
 			}
+			$this->WriteAttributeString("MessageData", serialize($MessageData));
+			$this->RenderData($MessageData);
 		}
 	}
 	    
@@ -250,7 +253,7 @@
 
 				$content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
 				if ($Message['Removable'] == true) {
-					$HookLink = "hook/IPS2MessageDisplay_".$this->InstanceID;
+					$this->SendDebug("RenderData", $Message['MessageID'], 0);
 					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=remove&number='.$Message['MessageID'].'\' });">OK</div></td>';
 					
 				}
