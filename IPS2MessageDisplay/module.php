@@ -123,7 +123,7 @@
 		}
 	}
 	    
-	public function RemoveAll(int $MessageID) 
+	public function RemoveAll() 
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
