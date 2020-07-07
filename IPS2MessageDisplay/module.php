@@ -256,11 +256,10 @@
 				else {
 					$Type = 'green';
 				}
-				
-				
+							
 				if ($Message['Image']) {
 					$title = ' ';
-                			if ((isset($message['Timestamp'])) AND ($ShowTime == true)) {
+                			if ($ShowTime == true) {
                     				$title .= 'title=\''.date("d.m.Y H:i", $Message['Timestamp']).'\' ';      
 					}
                 			$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\''.$title.'></img>';
@@ -290,16 +289,6 @@
 				else {
 					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>OK</div></td>';
 				}
-				
-				
-				/*
-				elseif ($Message['Page']) {
-					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?msg?ts=\' + (new Date()).getTime() + \'&action=switch&page='.$Message['Page'].'\' });">OK</div></td>';
-					//$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/msg?ts=\' + (new Date()).getTime() + \'&action=switch&page='.$Message['Page'].'\' });">OK</div></td>';
-
-				}
-				*/
-				
 				$content .= '</tr>';
 			}
 	  	}
