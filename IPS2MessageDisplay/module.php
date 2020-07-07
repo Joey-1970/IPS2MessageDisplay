@@ -185,11 +185,11 @@
 					}
 			      		break;
 			    case 'switch':
-			      		$Page = isset($_GET['page']) ? $_GET['page'] : '';
+			      		$PageID = isset($_GET['PageID']) ? $_GET['PageID'] : '';
 			      		if (is_string($page) && $page !='') {
 				  		$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
 						if ($WebfrontID > 0) {
-							WFC_SwitchPage($WebfrontID, $Page);
+							WFC_SwitchPage($WebfrontID, $PageID);
 						}
 						else {
 							$this->SendDebug("ProcessHookData", "Kein Webfront definiert!", 0);
@@ -228,6 +228,7 @@
 	  		$content .= '<tr>';
 	  		$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
 	  		$content .= '<td class="mid">Keine Meldungen vorhanden!</td>';
+			$content .= '<td class="mid"></td>';
 	  		$content .= '<td class=\'lst\'><div class=\'green\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>OK</div></td>';
 	  		$content .= '</tr>';
 	  	}
@@ -273,11 +274,23 @@
 				$content .= '<td class="fst">'.$Image.'</td>';
 
 				$content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
+				if ($Message['Page'] <> "") {
+					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=switch&PageID='.$Message['Page'].'\' });">WF</div></td>';
+					
+				}
+				else {
+					$content .= '<td class="mid"></td>';
+				}
+				
 				if ($Message['Removable'] == true) {
-					//$this->SendDebug("RenderData", $Message['MessageID'], 0);
 					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=remove&MessageID='.$Message['MessageID'].'\' });">OK</div></td>';
 					
 				}
+				else {
+					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>OK</div></td>';
+				}
+				
+				
 				/*
 				elseif ($Message['Page']) {
 					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?msg?ts=\' + (new Date()).getTime() + \'&action=switch&page='.$Message['Page'].'\' });">OK</div></td>';
@@ -285,9 +298,7 @@
 
 				}
 				*/
-				else {
-					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>OK</div></td>';
-				}
+				
 				$content .= '</tr>';
 			}
 	  	}
