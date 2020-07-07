@@ -275,7 +275,8 @@
 
 				$content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
 				if ($Message['Page'] <> "") {
-					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=switch&PageID='.$Message['Page'].'\' });">WF</div></td>';
+					$TypeWF = 'blue';
+					$content .= '<td class=\'lst\'><div class=\''.$TypeWF.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=switch&PageID='.$Message['Page'].'\' });">WF</div></td>';
 					
 				}
 				else {
