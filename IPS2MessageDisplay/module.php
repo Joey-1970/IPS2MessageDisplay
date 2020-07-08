@@ -213,7 +213,7 @@
 		else {
 			$IconPath = $Skin."/img/icons";
 		}
-		$MessageData =  $this->MessageSort($MessageData, 'Timestamp',  $Sorting);
+		//$MessageData =  $this->MessageSort($MessageData, 'Timestamp',  $Sorting);
 		
 		// Etwas CSS und HTML
 		$style = "";
@@ -244,7 +244,8 @@
 	  		$content .= '</tr>';
 	  	}
 	  	else {
-	    		foreach ($MessageData as $Number => $Message) {
+	    		$MessageData =  $this->MessageSort($MessageData, 'Timestamp',  $Sorting);
+			foreach ($MessageData as $Number => $Message) {
 	      			if ($Message['Type']) {
 					switch ($Message['Type']) {
 		  				case 4:
