@@ -272,7 +272,7 @@
 				$content .= '<td class="fst">'.$Image.'</td>';
 				if ($ShowTime == true) {
 					$SecondsToday= date('H') * 3600 + date('i') * 60 + date('s');
-					If ($Message['Timestamp'] <= (time() - $SecondsToday) {
+					If ($Message['Timestamp'] <= (time() - $SecondsToday)) {
 						$content .= '<td class="lst">'.date("d.m.Y H:i", $Message['Timestamp']).'</td>';
 					}
 					else {
