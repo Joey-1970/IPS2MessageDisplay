@@ -229,7 +229,7 @@
 	  		$content .= '<tr>';
 	  		$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
 			if ($ShowTime == true) {
-				$content .= '<td class="mid"></td>';
+				$content .= '<td class="lst">'.date("d.m.Y H:i", time() ).'</td>';
 			}
 	  		$content .= '<td class="mid">Keine Meldungen vorhanden!</td>';
 			$content .= '<td class="mid"></td>';
@@ -262,13 +262,6 @@
 				}
 							
 				if ($Message['Image']) {
-					$title = ' ';
-                			/*
-					if ($ShowTime == true) {
-                    				$title .= 'title=\''.date("d.m.Y H:i", $Message['Timestamp']).'\' ';      
-					}
-					*/
-                			//$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\''.$title.'></img>';
 					$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
 				}
 				else {
