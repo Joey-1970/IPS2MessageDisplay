@@ -24,6 +24,7 @@
 		
 		//Status-Variablen anlegen
 		$this->RegisterVariableString("Messages", "Meldungen", "~HTMLBox", 10);
+		$this->RegisterVariableInteger("MessageCount", "Anzahl", "", 20);
 			
 		// Webhook einrichten
 		$this->RegisterHook("/hook/IPS2MessageDisplay_".$this->InstanceID);
@@ -294,6 +295,7 @@
 	  	}
 	  	$content .= '</table>';
 	  	SetValueString($this->GetIDForIdent("Messages"), $content);
+		SetValueInteger($this->GetIDForIdent("MessageCount"), count($MessageData));
 	}    
 	
 	private function MessageSort($MessageData, $DataField, $SortOrder) 
