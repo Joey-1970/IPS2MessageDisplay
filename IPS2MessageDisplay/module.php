@@ -233,15 +233,17 @@
 		$content = $style;
 		$content .= '<table>';
 		if (count($MessageData) == 0) {
-	  		$content .= '<tr>';
-	  		$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
-			if ($ShowTime == true) {
-				$content .= '<td class="lst">'.date("d.m.Y H:i", time() ).'</td>';
+	  		If ((GetValueString($this->GetIDForIdent("Messages")) == "") OR (GetValueInteger($this->GetIDForIdent("MessageCount")) > 0)) {
+				$content .= '<tr>';
+				$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
+				if ($ShowTime == true) {
+					$content .= '<td class="lst">'.date("d.m.Y H:i", time() ).'</td>';
+				}
+				$content .= '<td class="mid">Keine Meldungen vorhanden!</td>';
+				$content .= '<td class="mid"></td>';
+				$content .= '<td class=\'lst\'><div class=\'green\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>...</div></td>';
+				$content .= '</tr>';
 			}
-	  		$content .= '<td class="mid">Keine Meldungen vorhanden!</td>';
-			$content .= '<td class="mid"></td>';
-	  		$content .= '<td class=\'lst\'><div class=\'green\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>...</div></td>';
-	  		$content .= '</tr>';
 	  	}
 	  	else {
 	    		$MessageData =  $this->MessageSort($MessageData, 'Timestamp',  $Sorting);
@@ -309,8 +311,12 @@
 			}
 	  	}
 	  	$content .= '</table>';
-	  	SetValueString($this->GetIDForIdent("Messages"), $content);
-		SetValueInteger($this->GetIDForIdent("MessageCount"), count($MessageData));
+	  	If (GetValueString($this->GetIDForIdent("Messages")) <> $content) {
+			SetValueString($this->GetIDForIdent("Messages"), $content);
+		}
+		If (GetValueInteger($this->GetIDForIdent("MessageCount")) <> count($MessageData)) {
+			SetValueInteger($this->GetIDForIdent("MessageCount"), count($MessageData));
+		}
 	}    
 	
 	private function MessageSort($MessageData, $DataField, $SortOrder) 
