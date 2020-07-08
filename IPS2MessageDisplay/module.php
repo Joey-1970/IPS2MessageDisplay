@@ -231,9 +231,9 @@
 
 		$content = $style;
 		$content .= '<table>';
-		$this->SendDebug("RenderData", strlen(GetValueString($this->GetIDForIdent("Messages"))), 0);
+		//$this->SendDebug("RenderData", strlen(GetValueString($this->GetIDForIdent("Messages"))), 0);
 		if (count($MessageData) == 0) {
-	  		If ((GetValueString($this->GetIDForIdent("Messages")) == "") OR (GetValueInteger($this->GetIDForIdent("MessageCount")) > 0)) {
+	  		If (strlen(GetValueString($this->GetIDForIdent("Messages")) < 3500) OR (GetValueInteger($this->GetIDForIdent("MessageCount")) > 0)) {
 				$content .= '<tr>';
 				$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
 				if ($ShowTime == true) {
