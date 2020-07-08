@@ -288,7 +288,7 @@
 					
 				}
 				else {
-					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>OK</div></td>';
+					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>...</div></td>';
 				}
 				$content .= '</tr>';
 			}
