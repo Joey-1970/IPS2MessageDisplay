@@ -234,7 +234,7 @@
 
 		$content = $style;
 		$content .= '<table>';
-		//$this->SendDebug("RenderData", strlen(GetValueString($this->GetIDForIdent("Messages"))), 0);
+		
 		if (count($MessageData) == 0) {
 			$content .= '<tr>';
 			$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
@@ -252,34 +252,12 @@
 	      			$TypeColor = array("green", "red", "yellow", "blue");
 				$TypeImage = array("Ok", "Alert", "Warning", "Clock");
 				$Message['Type'] = min(3, max(0, $Message['Type']));
-				/*
-				if ($Message['Type']) {
-					switch ($Message['Type']) {
-		  				case 3:
-		    					$Type = 'blue'; // Clock - ToDo's
-							$Image = 
-		    					break;
-		  				case 2:
-		    					$Type = 'yellow'; // Warning - Warnmeldung
-		    					break;
-		  				case 1:
-		    					$Type = 'red'; // Alert - Fehlermeldung
-		    					break;
-		  				default:
-		    					$Type = 'green'; // Ok - Information
-		    					break;
-					}
-	      			}
-				else {
-					$Type = 'green';
-				}
-				*/			
+						
 				if ($Message['Image'] <> "") {
 					$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
 				}
 				else {
 					$Image = '<img src=\'img/icons/'.$TypeImage[$Message['Type']].'.svg\'></img>';
-					//$Image = '<img src=\'img/icons/Ok.svg\'></img>';
 				}
 
 				$content .= '<tr>';
