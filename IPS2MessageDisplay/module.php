@@ -234,7 +234,7 @@
 		$content .= '<table>';
 		if (count($MessageData) == 0) {
 	  		$content .= '<tr>';
-	  		$content .= '<td class="fst"><img src=\''.$IconPath.'/Ok.svg\'></img></td>';
+	  		$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
 			if ($ShowTime == true) {
 				$content .= '<td class="lst">'.date("d.m.Y H:i", time() ).'</td>';
 			}
