@@ -228,9 +228,12 @@
 		if (count($MessageData) == 0) {
 	  		$content .= '<tr>';
 	  		$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
+			if ($ShowTime == true) {
+				$content .= '<td class="mid"></td>';
+			}
 	  		$content .= '<td class="mid">Keine Meldungen vorhanden!</td>';
 			$content .= '<td class="mid"></td>';
-	  		$content .= '<td class=\'lst\'><div class=\'green\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>OK</div></td>';
+	  		$content .= '<td class=\'lst\'><div class=\'green\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>...</div></td>';
 	  		$content .= '</tr>';
 	  	}
 	  	else {
@@ -260,11 +263,13 @@
 							
 				if ($Message['Image']) {
 					$title = ' ';
-                			if ($ShowTime == true) {
+                			/*
+					if ($ShowTime == true) {
                     				$title .= 'title=\''.date("d.m.Y H:i", $Message['Timestamp']).'\' ';      
 					}
-                			$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\''.$title.'></img>';
-					//$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
+					*/
+                			//$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\''.$title.'></img>';
+					$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
 				}
 				else {
 					$Image = '<img src=\'img/icons/Ok.svg\'></img>';
@@ -272,8 +277,11 @@
 
 				$content .= '<tr>';
 				$content .= '<td class="fst">'.$Image.'</td>';
-
+				if ($ShowTime == true) {
+					$content .= '<td class="mid">'.date("d.m.Y H:i", $Message['Timestamp']).'</td>';
+				}
 				$content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
+				
 				if ($Message['Page'] <> "") {
 					$TypeWF = 'blue';
 					$content .= '<td class=\'lst\'><div class=\''.$TypeWF.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=switch&PageID='.$Message['Page'].'\' });">WF</div></td>';
