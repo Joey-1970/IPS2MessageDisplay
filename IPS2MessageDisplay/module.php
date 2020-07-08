@@ -278,7 +278,7 @@
 				$content .= '<tr>';
 				$content .= '<td class="fst">'.$Image.'</td>';
 				if ($ShowTime == true) {
-					$content .= '<td class="mid">'.date("d.m.Y H:i", $Message['Timestamp']).'</td>';
+					$content .= '<td class="lst">'.date("d.m.Y H:i", $Message['Timestamp']).'</td>';
 				}
 				$content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
 				
