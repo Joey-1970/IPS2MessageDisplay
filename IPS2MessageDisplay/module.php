@@ -15,7 +15,7 @@
             	// Diese Zeile nicht löschen.
             	parent::Create();
 		$this->RegisterPropertyBoolean("Open", false);
-		$this->RegisterPropertyInteger("Sorting", 0);
+		$this->RegisterPropertyInteger("Sorting", 3);
 		$this->RegisterPropertyBoolean("ShowTime", false);
 		$this->RegisterAttributeString("MessageData", ""); 
 		$this->RegisterPropertyInteger("WebfrontID", 0);
