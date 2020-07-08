@@ -140,6 +140,7 @@
 	public function RemoveType(int $Type) 
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
+			$Type = min(3, max(0, $Type));
 			$MessageData = array();
 			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
 			foreach ($MessageData as $MessageID => $Message) {
@@ -248,34 +249,37 @@
 	  	else {
 	    		$MessageData =  $this->MessageSort($MessageData, 'Timestamp',  $Sorting);
 			foreach ($MessageData as $Number => $Message) {
-	      			if ($Message['Type']) {
+	      			$TypeColor = array("green", "red", "yellow", "blue");
+				$TypeImage = array("Ok", "Alert", "Warning", "Clock");
+				$Message['Type'] = min(3, max(0, $Message['Type']));
+				/*
+				if ($Message['Type']) {
 					switch ($Message['Type']) {
-		  				case 4:
-		    					$Type = 'orange';
-		    					break;
 		  				case 3:
-		    					$Type = 'blue';
+		    					$Type = 'blue'; // Clock - ToDo's
+							$Image = 
 		    					break;
 		  				case 2:
-		    					$Type = 'yellow';
+		    					$Type = 'yellow'; // Warning - Warnmeldung
 		    					break;
 		  				case 1:
-		    					$Type = 'red';
+		    					$Type = 'red'; // Alert - Fehlermeldung
 		    					break;
 		  				default:
-		    					$Type = 'green';
+		    					$Type = 'green'; // Ok - Information
 		    					break;
 					}
 	      			}
 				else {
 					$Type = 'green';
 				}
-							
-				if ($Message['Image']) {
+				*/			
+				if ($Message['Image'] <> "") {
 					$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
 				}
 				else {
-					$Image = '<img src=\'img/icons/Ok.svg\'></img>';
+					$Image = '<img src=\'img/icons/'.$TypeImage[$Message['Type']].'.svg\'></img>';
+					//$Image = '<img src=\'img/icons/Ok.svg\'></img>';
 				}
 
 				$content .= '<tr>';
@@ -301,11 +305,11 @@
 				}
 				
 				if ($Message['Removable'] == true) {
-					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=remove&MessageID='.$Message['MessageID'].'\' });">OK</div></td>';
+					$content .= '<td class=\'lst\'><div class=\''.$TypeColor[$Message['Type']].'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=remove&MessageID='.$Message['MessageID'].'\' });">OK</div></td>';
 					
 				}
 				else {
-					$content .= '<td class=\'lst\'><div class=\''.$Type.'\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>...</div></td>';
+					$content .= '<td class=\'lst\'><div class=\''.$TypeColor[$Message['Type']].'\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>...</div></td>';
 				}
 				$content .= '</tr>';
 			}
