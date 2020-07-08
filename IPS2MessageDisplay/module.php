@@ -271,7 +271,13 @@
 				$content .= '<tr>';
 				$content .= '<td class="fst">'.$Image.'</td>';
 				if ($ShowTime == true) {
-					$content .= '<td class="lst">'.date("d.m.Y H:i", $Message['Timestamp']).'</td>';
+					$SecondsToday= date('H') * 3600 + date('i') * 60 + date('s');
+					If ($Message['Timestamp'] <= (time() - $SecondsToday) {
+						$content .= '<td class="lst">'.date("d.m.Y H:i", $Message['Timestamp']).'</td>';
+					}
+					else {
+						$content .= '<td class="lst">'.date("H:i:s", $Message['Timestamp']).'</td>';
+					}
 				}
 				$content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
 				
