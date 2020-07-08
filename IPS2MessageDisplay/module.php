@@ -213,7 +213,6 @@
 		else {
 			$IconPath = $Skin."/img/icons";
 		}
-		//$MessageData =  $this->MessageSort($MessageData, 'Timestamp',  $Sorting);
 		
 		// Etwas CSS und HTML
 		$style = "";
@@ -232,6 +231,7 @@
 
 		$content = $style;
 		$content .= '<table>';
+		$this->SendDebug("RenderData", strlen(GetValueString($this->GetIDForIdent("Messages"))), 0);
 		if (count($MessageData) == 0) {
 	  		If ((GetValueString($this->GetIDForIdent("Messages")) == "") OR (GetValueInteger($this->GetIDForIdent("MessageCount")) > 0)) {
 				$content .= '<tr>';
