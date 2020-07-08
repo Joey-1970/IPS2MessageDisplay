@@ -158,16 +158,18 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
 			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
-			foreach ($MessageData as $MessageID => $Message) {
-				If ($Message["Expires"] > 0) {
-					If ($Message["Expires"] + $Message["Timestamp"] <= time() ) {
-						unset($MessageData[$MessageID]);
-						$this->SendDebug("AutoRemove", "Message ".$MessageID." wurde entfernt", 0);
+			if (count($MessageData) > 0) {
+				foreach ($MessageData as $MessageID => $Message) {
+					If ($Message["Expires"] > 0) {
+						If ($Message["Expires"] + $Message["Timestamp"] <= time() ) {
+							unset($MessageData[$MessageID]);
+							$this->SendDebug("AutoRemove", "Message ".$MessageID." wurde entfernt", 0);
+						}
 					}
 				}
+				$this->WriteAttributeString("MessageData", serialize($MessageData));
+				$this->RenderData($MessageData);
 			}
-			$this->WriteAttributeString("MessageData", serialize($MessageData));
-			$this->RenderData($MessageData);
 		}
 	}
 	    
@@ -233,17 +235,15 @@
 		$content .= '<table>';
 		//$this->SendDebug("RenderData", strlen(GetValueString($this->GetIDForIdent("Messages"))), 0);
 		if (count($MessageData) == 0) {
-	  		If (strlen(GetValueString($this->GetIDForIdent("Messages")) < 3500) OR (GetValueInteger($this->GetIDForIdent("MessageCount")) > 0)) {
-				$content .= '<tr>';
-				$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
-				if ($ShowTime == true) {
-					$content .= '<td class="lst">'.date("d.m.Y H:i", time() ).'</td>';
-				}
-				$content .= '<td class="mid">Keine Meldungen vorhanden!</td>';
-				$content .= '<td class="mid"></td>';
-				$content .= '<td class=\'lst\'><div class=\'green\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>...</div></td>';
-				$content .= '</tr>';
+			$content .= '<tr>';
+			$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
+			if ($ShowTime == true) {
+				$content .= '<td class="lst">'.date("d.m.Y H:i", time() ).'</td>';
 			}
+			$content .= '<td class="mid">Keine Meldungen vorhanden!</td>';
+			$content .= '<td class="mid"></td>';
+			$content .= '<td class=\'lst\'><div class=\'green\' onclick=\'alert("Nachricht kann nicht bestätigt werden.");\'>...</div></td>';
+			$content .= '</tr>';
 	  	}
 	  	else {
 	    		$MessageData =  $this->MessageSort($MessageData, 'Timestamp',  $Sorting);
