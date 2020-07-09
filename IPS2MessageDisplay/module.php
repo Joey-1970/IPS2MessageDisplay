@@ -21,6 +21,7 @@
 		$this->RegisterPropertyInteger("WebfrontID", 0);
 		$this->RegisterPropertyInteger("AutoRemove", 1000);
 		$this->RegisterTimer("AutoRemove", 0, 'IPS2MessageDisplay_AutoRemove($_IPS["TARGET"]);');
+		$this->RegisterPropertyInteger("ActuatorID", 0);
 		
 		//Status-Variablen anlegen
 		$this->RegisterVariableString("Messages", "Meldungen", "~HTMLBox", 10);
@@ -44,7 +45,8 @@
 		$arrayElements = array(); 
 		
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
-		
+		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+ 
 		$arrayOptions = array();
 		$arrayOptions[] = array("label" => "Neuste Nachricht zuerst", "value" => SORT_DESC);
 		$arrayOptions[] = array("label" => "Älteste Nachricht zuerst", "value" => SORT_ASC);
@@ -61,6 +63,9 @@
         		$arrayOptions[] = array("label" => $Webfront, "value" => $ID);
     		}
 		$arrayElements[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayOptions );
+		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+            	$arrayElements[] = array("type" => "Label", "label" => "Aktor-Variable (Boolean)");
+            	$arrayElements[] = array("type" => "SelectVariable", "name" => "ActuatorID", "caption" => "Aktor"); 
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
  	}       
@@ -274,7 +279,7 @@
 				$content .= '<td class="mid">'.utf8_decode($Message['Text']).'</td>';
 				
 				if ($Message['Page'] <> "") {
-					$TypeWF = 'blue';
+					$TypeWF = 'orange';
 					$content .= '<td class=\'lst\'><div class=\''.$TypeWF.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=switch&PageID='.$Message['Page'].'\' });">WF</div></td>';
 					
 				}
@@ -298,6 +303,16 @@
 		}
 		If (GetValueInteger($this->GetIDForIdent("MessageCount")) <> count($MessageData)) {
 			SetValueInteger($this->GetIDForIdent("MessageCount"), count($MessageData));
+		}
+		If ((count($MessageData) == 0) AND ($this->ReadPropertyInteger("ActuatorID" > 0)) {
+			If (GetValueBoolean($this->ReadPropertyInteger("ActuatorID")) == true) {
+				SetValueBoolean($this->ReadPropertyInteger("ActuatorID"), false);
+			}
+		}
+		else ((count($MessageData) > 0) AND ($this->ReadPropertyInteger("ActuatorID" > 0)) {
+			If (GetValueBoolean($this->ReadPropertyInteger("ActuatorID")) == false) {
+				SetValueBoolean($this->ReadPropertyInteger("ActuatorID"), true);
+			}
 		}
 	}    
 	
