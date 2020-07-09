@@ -309,7 +309,7 @@
 				SetValueBoolean($this->ReadPropertyInteger("ActuatorID"), false);
 			}
 		}
-		else ((count($MessageData) > 0) AND ($this->ReadPropertyInteger("ActuatorID") > 0)) {
+		elseif ((count($MessageData) > 0) AND ($this->ReadPropertyInteger("ActuatorID") > 0)) {
 			If (GetValueBoolean($this->ReadPropertyInteger("ActuatorID")) == false) {
 				SetValueBoolean($this->ReadPropertyInteger("ActuatorID"), true);
 			}
