@@ -304,12 +304,12 @@
 		If (GetValueInteger($this->GetIDForIdent("MessageCount")) <> count($MessageData)) {
 			SetValueInteger($this->GetIDForIdent("MessageCount"), count($MessageData));
 		}
-		If ((count($MessageData) == 0) AND ($this->ReadPropertyInteger("ActuatorID" > 0)) {
+		If ((count($MessageData) == 0) AND ($this->ReadPropertyInteger("ActuatorID") > 0)) {
 			If (GetValueBoolean($this->ReadPropertyInteger("ActuatorID")) == true) {
 				SetValueBoolean($this->ReadPropertyInteger("ActuatorID"), false);
 			}
 		}
-		else ((count($MessageData) > 0) AND ($this->ReadPropertyInteger("ActuatorID" > 0)) {
+		else ((count($MessageData) > 0) AND ($this->ReadPropertyInteger("ActuatorID") > 0)) {
 			If (GetValueBoolean($this->ReadPropertyInteger("ActuatorID")) == false) {
 				SetValueBoolean($this->ReadPropertyInteger("ActuatorID"), true);
 			}
