@@ -214,14 +214,18 @@
 		$ShowTime = $this->ReadPropertyBoolean("ShowTime");
 		$Sorting = $this->ReadPropertyInteger("Sorting");
 		$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
-		$Skin = IPS_GetProperty($WebfrontID, "Skin");
-		If ($Skin == "") {
-			$IconPath = "img/icons";
+		If ($WebfrontID > 0) {
+			$Skin = IPS_GetProperty($WebfrontID, "Skin");
+			If ($Skin == "") {
+				$IconPath = "img/icons";
+			}
+			else {
+				$IconPath = $Skin."/img/icons";
+			}
 		}
 		else {
-			$IconPath = $Skin."/img/icons";
+			$IconPath = "img/icons";
 		}
-		
 		// Etwas CSS und HTML
 		$style = "";
 		$style .= '<style type="text/css">';
