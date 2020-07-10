@@ -163,8 +163,8 @@
 	    
 	public function Add(int $MessageID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, string $Page) 
 	{
-		//$this->WorkProcess("Add", $MessageID, $Text, $Expires, $Removable, $Type, $Image, $Page);
-		
+		$this->WorkProcess("Add", $MessageID, $Text, $Expires, $Removable, $Type, $Image, $Page);
+		return;
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
 			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
