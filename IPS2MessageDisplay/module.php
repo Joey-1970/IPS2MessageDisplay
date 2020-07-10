@@ -163,6 +163,8 @@
 	    
 	public function Add(int $MessageID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, string $Page) 
 	{
+		//$this->WorkProcess("Add", $MessageID, $Text, $Expires, $Removable, $Type, $Image, $Page);
+		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
 			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
@@ -182,6 +184,8 @@
 	    
 	public function Remove(int $MessageID) 
 	{
+		//$this->WorkProcess("Remove", $MessageID, "", 0, false, 0, "", "");
+		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
 			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
@@ -202,6 +206,8 @@
 	    
 	public function RemoveAll() 
 	{
+		//$this->WorkProcess("RemoveAll", 0, "", 0, false, 0, "", "");
+		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
 			$this->WriteAttributeString("MessageData", serialize($MessageData));
@@ -212,6 +218,8 @@
 	    
 	public function RemoveType(int $Type) 
 	{
+		//$this->WorkProcess("RemoveType", 0, "", 0, false, $Type, "", "");
+		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$Type = min(3, max(0, $Type));
 			$MessageData = array();
@@ -229,6 +237,8 @@
 	    
 	public function AutoRemove() 
 	{
+		//$this->WorkProcess("AutoRemove", 0, "", 0, false, 0, "", "");
+		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
 			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
@@ -255,6 +265,7 @@
 			    	case 'remove':
 			      		$MessageID = isset($_GET['MessageID']) ? $_GET['MessageID'] : -1;
 			      		if ($MessageID > 0) {
+						//$this->WorkProcess("Remove", $MessageID, "", 0, false, 0, "", "");
 				  		$this->Remove($MessageID);
 			      		}
 					else {
