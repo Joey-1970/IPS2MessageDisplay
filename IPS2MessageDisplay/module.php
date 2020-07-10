@@ -109,7 +109,7 @@
 						$MessageData[$MessageID]["Type"] = $Type;
 						$MessageData[$MessageID]["Image"] = $Image;
 						$MessageData[$MessageID]["Page"] = $Page;
-						$MessageData[$MessageID]["Timestamp"] = time();
+						$MessageData[$MessageID]["Timestamp"] = microtime(true);
 						$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde hinzugefuegt", 0);
 						break;
 					case 'Remove':
@@ -139,7 +139,7 @@
 						if (count($MessageData) > 0) {
 							foreach ($MessageData as $MessageID => $Message) {
 								If ($Message["Expires"] > 0) {
-									If ($Message["Expires"] + $Message["Timestamp"] <= time() ) {
+									If ($Message["Expires"] + $Message["Timestamp"] <= microtime(true) ) {
 										unset($MessageData[$MessageID]);
 										$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde entfernt", 0);
 										$this->RenderData($MessageData);
@@ -178,22 +178,8 @@
 	    
 	public function RemoveType(int $Type) 
 	{
+		$Type = min(3, max(0, $Type));
 		$this->WorkProcess("RemoveType", 0, "", 0, false, $Type, "", "");
-		return;
-		
-		If ($this->ReadPropertyBoolean("Open") == true) {
-			$Type = min(3, max(0, $Type));
-			$MessageData = array();
-			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
-			foreach ($MessageData as $MessageID => $Message) {
-				If ($Message["Type"] == $Type) {
-					unset($MessageData[$MessageID]);
-					$this->SendDebug("RemoveType", "Message ".$MessageID." wurde entfernt", 0);
-				}
-			}
-			$this->WriteAttributeString("MessageData", serialize($MessageData));
-			$this->RenderData($MessageData);
-		}
 	}
 	    
 	public function AutoRemove() 
