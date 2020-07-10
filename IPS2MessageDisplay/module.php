@@ -169,28 +169,12 @@
 	public function Remove(int $MessageID) 
 	{
 		$this->WorkProcess("Remove", $MessageID, "", 0, false, 0, "", "");
-		return;
-		If ($this->ReadPropertyBoolean("Open") == true) {
-			$MessageData = array();
-			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
-			If (is_array($MessageData)) {
-				if (array_key_exists($MessageID, $MessageData)) {
-					unset($MessageData[$MessageID]);
-					$this->SendDebug("Remove", "Message ".$MessageID." wurde entfernt", 0);
-				}
-				else {
-					$this->SendDebug("Remove", "Message ".$MessageID." wurde nicht gefunden", 0);
-				}
-			}
-			
-			$this->WriteAttributeString("MessageData", serialize($MessageData));
-			$this->RenderData($MessageData);
-		}
 	}
 	    
 	public function RemoveAll() 
 	{
-		//$this->WorkProcess("RemoveAll", 0, "", 0, false, 0, "", "");
+		$this->WorkProcess("RemoveAll", 0, "", 0, false, 0, "", "");
+		return;
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
