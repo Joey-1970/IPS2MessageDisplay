@@ -142,6 +142,7 @@
 									If ($Message["Expires"] + $Message["Timestamp"] <= time() ) {
 										unset($MessageData[$MessageID]);
 										$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde entfernt", 0);
+										$this->RenderData($MessageData);
 									}
 								}
 							}
@@ -151,7 +152,9 @@
 				$this->WriteAttributeString("MessageData", serialize($MessageData));
 			}
 			IPS_SemaphoreLeave("WorkProcess");
-			$this->RenderData($MessageData);
+			If ($Activity <> "AutoRemove") {
+				$this->RenderData($MessageData);
+			}
 		}
 		else {
 			$this->SendDebug("WorkProcess", "Semaphore Abbruch!", 0);
