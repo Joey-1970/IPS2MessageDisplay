@@ -93,6 +93,71 @@
 
 	    
 	// Beginn der Funktionen
+	private function WorkProcess(string $Activity, int $MessageID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, string $Page) 
+	{
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			if (IPS_SemaphoreEnter("WorkProcess", 2000))
+			{
+				$MessageData = array();
+				$MessageData = unserialize($this->ReadAttributeString("MessageData"));
+				switch ($Activity) {
+					case 'Add':
+						$MessageData[$MessageID]["MessageID"] = $MessageID;
+						$MessageData[$MessageID]["Text"] = $Text;
+						$MessageData[$MessageID]["Expires"] = $Expires;
+						$MessageData[$MessageID]["Removable"] = $Removable;
+						$MessageData[$MessageID]["Type"] = $Type;
+						$MessageData[$MessageID]["Image"] = $Image;
+						$MessageData[$MessageID]["Page"] = $Page;
+						$MessageData[$MessageID]["Timestamp"] = time();
+						$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde hinzugefuegt", 0);
+						break;
+					case 'Remove':
+						If (is_array($MessageData)) {
+							if (array_key_exists($MessageID, $MessageData)) {
+								unset($MessageData[$MessageID]);
+								$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde entfernt", 0);
+							}
+							else {
+								$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde nicht gefunden", 0);
+							}
+						}
+						break;
+					case 'RemoveAll':
+						$MessageData = array();
+						$this->SendDebug("WorkProcess", "Alle Messages wurde entfernt", 0);
+						break;
+					case 'RemoveType':
+						foreach ($MessageData as $MessageID => $Message) {
+							If ($Message["Type"] == $Type) {
+								unset($MessageData[$MessageID]);
+								$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde entfernt", 0);
+							}
+						}
+						break;
+					case 'AutoRemove':
+						if (count($MessageData) > 0) {
+							foreach ($MessageData as $MessageID => $Message) {
+								If ($Message["Expires"] > 0) {
+									If ($Message["Expires"] + $Message["Timestamp"] <= time() ) {
+										unset($MessageData[$MessageID]);
+										$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde entfernt", 0);
+									}
+								}
+							}
+						}
+						break;
+				}
+				$this->WriteAttributeString("MessageData", serialize($MessageData));
+			}
+			IPS_SemaphoreLeave("WorkProcess");
+			$this->RenderData($MessageData);
+		}
+		else {
+			$this->SendDebug("WorkProcess", "Semaphore Abbruch!", 0);
+		}
+	}
+	    
 	public function Add(int $MessageID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, string $Page) 
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
