@@ -174,19 +174,12 @@
 	public function RemoveAll() 
 	{
 		$this->WorkProcess("RemoveAll", 0, "", 0, false, 0, "", "");
-		return;
-		
-		If ($this->ReadPropertyBoolean("Open") == true) {
-			$MessageData = array();
-			$this->WriteAttributeString("MessageData", serialize($MessageData));
-			$this->RenderData($MessageData);
-			$this->SendDebug("RemoveAll", "Alle Messages wurde entfernt", 0);
-		}
 	}    
 	    
 	public function RemoveType(int $Type) 
 	{
-		//$this->WorkProcess("RemoveType", 0, "", 0, false, $Type, "", "");
+		$this->WorkProcess("RemoveType", 0, "", 0, false, $Type, "", "");
+		return;
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$Type = min(3, max(0, $Type));
