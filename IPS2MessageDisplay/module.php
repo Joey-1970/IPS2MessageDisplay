@@ -237,7 +237,8 @@
 	    
 	public function AutoRemove() 
 	{
-		//$this->WorkProcess("AutoRemove", 0, "", 0, false, 0, "", "");
+		$this->WorkProcess("AutoRemove", 0, "", 0, false, 0, "", "");
+		return;
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
