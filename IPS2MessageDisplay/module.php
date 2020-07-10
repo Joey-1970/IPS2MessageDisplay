@@ -164,28 +164,12 @@
 	public function Add(int $MessageID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, string $Page) 
 	{
 		$this->WorkProcess("Add", $MessageID, $Text, $Expires, $Removable, $Type, $Image, $Page);
-		return;
-		If ($this->ReadPropertyBoolean("Open") == true) {
-			$MessageData = array();
-			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
-			$MessageData[$MessageID]["MessageID"] = $MessageID;
-			$MessageData[$MessageID]["Text"] = $Text;
-			$MessageData[$MessageID]["Expires"] = $Expires;
-			$MessageData[$MessageID]["Removable"] = $Removable;
-			$MessageData[$MessageID]["Type"] = $Type;
-			$MessageData[$MessageID]["Image"] = $Image;
-			$MessageData[$MessageID]["Page"] = $Page;
-			$MessageData[$MessageID]["Timestamp"] = time();
-			$this->WriteAttributeString("MessageData", serialize($MessageData));
-			$this->SendDebug("Add", "Message ".$MessageID." wurde hinzugefuegt", 0);
-			$this->RenderData($MessageData);
-		}
 	}
 	    
 	public function Remove(int $MessageID) 
 	{
-		//$this->WorkProcess("Remove", $MessageID, "", 0, false, 0, "", "");
-		
+		$this->WorkProcess("Remove", $MessageID, "", 0, false, 0, "", "");
+		return;
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
 			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
@@ -238,24 +222,6 @@
 	public function AutoRemove() 
 	{
 		$this->WorkProcess("AutoRemove", 0, "", 0, false, 0, "", "");
-		return;
-		
-		If ($this->ReadPropertyBoolean("Open") == true) {
-			$MessageData = array();
-			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
-			if (count($MessageData) > 0) {
-				foreach ($MessageData as $MessageID => $Message) {
-					If ($Message["Expires"] > 0) {
-						If ($Message["Expires"] + $Message["Timestamp"] <= time() ) {
-							unset($MessageData[$MessageID]);
-							$this->SendDebug("AutoRemove", "Message ".$MessageID." wurde entfernt", 0);
-						}
-					}
-				}
-				$this->WriteAttributeString("MessageData", serialize($MessageData));
-				$this->RenderData($MessageData);
-			}
-		}
 	}
 	    
 	protected function ProcessHookData() 
