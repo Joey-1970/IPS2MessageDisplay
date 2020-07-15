@@ -14,6 +14,7 @@
             	// Diese Zeile nicht löschen.
             	parent::Create();
 		$this->RegisterPropertyBoolean("Open", false);
+		$this->RegisterPropertyInteger("Function", 0);
 		$this->RegisterPropertyInteger("VariableID", 0);
 		$this->RegisterPropertyInteger("WebfrontID", 0);
 		
@@ -36,8 +37,17 @@
 		
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
- 		$arrayElements[] = array("type" => "Label", "label" => "Zu überwachende Variable");
-            	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable"); 
+ 		
+		$arrayOptions = array();
+		$arrayOptions[] = array("label" => "Überwachung einer Variablen", "value" => 0);
+		$arrayOptions[] = array("label" => "Erinnerung nach Uhrzeit", "value" => 1);
+		$arrayElements[] = array("type" => "Select", "name" => "Function", "caption" => "Funktion", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"RefreshProfileForm",$Function);' );
+
+ 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+
+		// Funktion Überwachung einer Variablen
+		$arrayElements[] = array("type" => "Label", "name" => "LabelFunction1", "caption" => "Zu überwachende Variable", "visible" => true);
+            	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true); 
 		
 		
 		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Webfronts für die SwitchPage-Funktion"); 
@@ -72,7 +82,17 @@
 		}	
 	}
 	
-
+	public function RequestAction($Ident, $Value) 
+	{
+  		switch($Ident) {
+		case "RefreshProfileForm":
+				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
+				$this->RefreshProfileForm($Value);
+			break;
+	        default:
+	            throw new Exception("Invalid Ident");
+	    	}
+	}
 	    
 	// Beginn der Funktionen
 
@@ -81,7 +101,12 @@
 	    
 	
 	
-
+	private function RefreshProfileForm($Model)
+    	{
+        	
+        	//$this->UpdateFormField('Output', 'options', json_encode($arrayOptions));
+		//$this->UpdateFormField('Output_AP', 'options', json_encode($arrayOptions));
+    	}    
 	    
 	private function GetWebfrontID()
 	{
