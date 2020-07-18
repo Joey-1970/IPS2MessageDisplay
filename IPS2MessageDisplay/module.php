@@ -26,9 +26,6 @@
 		//Status-Variablen anlegen
 		$this->RegisterVariableString("Messages", "Meldungen", "~HTMLBox", 10);
 		$this->RegisterVariableInteger("MessageCount", "Anzahl", "", 20);
-			
-		// Webhook einrichten
-		$this->RegisterHook("/hook/IPS2MessageDisplay_".$this->InstanceID);
 		
 		$MessageData = array();
 		$this->WriteAttributeString("MessageData", serialize($MessageData)); 
@@ -76,6 +73,13 @@
             	// Diese Zeile nicht löschen
             	parent::ApplyChanges();
 		
+		$this->RegisterMessage($this->InstanceID, 10001); // IPS_KERNELSTARTED
+		
+		If ($this->IPS_GetKernelRunlevel() == 10103) {
+			// Webhook einrichten
+			$this->RegisterHook("/hook/IPS2MessageDisplay_".$this->InstanceID);
+		}
+		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageData = array();
 			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
@@ -90,7 +94,16 @@
 		}	
 	}
 	
-
+	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
+    	{
+		switch ($Message) {
+			case 10001:
+				// IPS_KERNELSTARTED
+				$this->ApplyChanges;
+				break;
+			
+		}
+    	}        
 	    
 	// Beginn der Funktionen
 	private function WorkProcess(string $Activity, int $MessageID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, string $Page) 
