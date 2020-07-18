@@ -75,7 +75,7 @@
 		
 		$this->RegisterMessage($this->InstanceID, 10001); // IPS_KERNELSTARTED
 		
-		If ($this->IPS_GetKernelRunlevel() == 10103) {
+		If (IPS_GetKernelRunlevel() == 10103) {
 			// Webhook einrichten
 			$this->RegisterHook("/hook/IPS2MessageDisplay_".$this->InstanceID);
 		}
