@@ -387,7 +387,8 @@
             		if (!$found) {
                 		$hooks[] = ['Hook' => $WebHook, 'TargetID' => $this->InstanceID];
             		}
-            	IPS_SetProperty($ids[0], 'Hooks', json_encode($hooks));
-            	IPS_ApplyChanges($ids[0]);
+            		IPS_SetProperty($ids[0], 'Hooks', json_encode($hooks));
+            		IPS_ApplyChanges($ids[0]);
+		}
         }
 }
