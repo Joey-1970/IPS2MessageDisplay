@@ -391,4 +391,3 @@
             	IPS_ApplyChanges($ids[0]);
         }
 }
-?>
