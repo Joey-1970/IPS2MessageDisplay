@@ -236,7 +236,7 @@
 		$ShowTime = $this->ReadPropertyBoolean("ShowTime");
 		$Sorting = $this->ReadPropertyInteger("Sorting");
 		$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
-		If ($WebfrontID > 0) {
+		If (($WebfrontID > 0) AND (IPS_GetKernelRunlevel() == KR_READY)) {
 			$Skin = IPS_GetProperty($WebfrontID, "Skin");
 			If ($Skin == "") {
 				$IconPath = "img/icons";
