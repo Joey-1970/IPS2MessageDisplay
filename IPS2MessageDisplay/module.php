@@ -14,6 +14,8 @@
         {
             	// Diese Zeile nicht löschen.
             	parent::Create();
+		$this->RegisterMessage(0, IPS_KERNELMESSAGE);
+		
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("Sorting", 3);
 		$this->RegisterPropertyBoolean("ShowTime", false);
@@ -73,9 +75,7 @@
             	// Diese Zeile nicht löschen
             	parent::ApplyChanges();
 		
-		$this->RegisterMessage($this->InstanceID, 10001); // IPS_KERNELSTARTED
-		
-		If (IPS_GetKernelRunlevel() == 10103) {
+		if (IPS_GetKernelRunlevel() == KR_READY) {
 			// Webhook einrichten
 			$this->RegisterHook("/hook/IPS2MessageDisplay_".$this->InstanceID);
 		}
@@ -369,26 +369,26 @@
 	return $Result;   
 	}    
 	    
-	private function RegisterHook($WebHook) 
-	{ 
-		$ids = IPS_GetInstanceListByModuleID("{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}"); 
-		if(count($ids) > 0) { 
-			$hooks = json_decode(IPS_GetProperty($ids[0], "Hooks"), true); 
-			$found = false; 
-			foreach($hooks as $index => $hook) { 
-				if($hook['Hook'] == $WebHook) { 
-					if($hook['TargetID'] == $this->InstanceID) 
-						return; 
-					$hooks[$index]['TargetID'] = $this->InstanceID; 
-					$found = true; 
-				} 
-			} 
-			if(!$found) { 
-				$hooks[] = Array("Hook" => $WebHook, "TargetID" => $this->InstanceID); 
-			} 
-			IPS_SetProperty($ids[0], "Hooks", json_encode($hooks)); 
-			IPS_ApplyChanges($ids[0]); 
-		} 
-	}     
+	private function RegisterHook($WebHook)
+    	{
+        	$ids = IPS_GetInstanceListByModuleID('{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}');
+        	if (count($ids) > 0) {
+            		$hooks = json_decode(IPS_GetProperty($ids[0], 'Hooks'), true);
+            		$found = false;
+            		foreach ($hooks as $index => $hook) {
+                		if ($hook['Hook'] == $WebHook) {
+                    			if ($hook['TargetID'] == $this->InstanceID) {
+                        			return;
+                    			}
+                    			$hooks[$index]['TargetID'] = $this->InstanceID;
+                    			$found = true;
+                		}
+            		}
+            		if (!$found) {
+                		$hooks[] = ['Hook' => $WebHook, 'TargetID' => $this->InstanceID];
+            		}
+            	IPS_SetProperty($ids[0], 'Hooks', json_encode($hooks));
+            	IPS_ApplyChanges($ids[0]);
+        }
 }
 ?>
