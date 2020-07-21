@@ -48,7 +48,7 @@
 
 		// Funktion Überwachung einer Variablen
 		$arrayElements[] = array("type" => "Label", "name" => "LabelFunction1", "caption" => "Zu überwachende Variable", "visible" => true);
-            	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true); 
+            	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$Function);'); 
 		
 		// Funktion nach Uhrzeit
 		
@@ -104,6 +104,10 @@
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
 				$this->RefreshProfileForm($Value);
 			break;
+		case "ChangeVariable":
+				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
+				$this->RefreshProfileForm($Value);
+			break;
 	        default:
 	            throw new Exception("Invalid Ident");
 	    	}
@@ -112,7 +116,17 @@
 	// Beginn der Funktionen
 
 	    
-	  
+	private function GetVariableType(int $VariableID) 
+	{
+		$Result = false;
+		if (IPS_VariableExists($VariableID) == true) {
+			$InformationArray = array();
+			$InformationsArray = IPS_GetVariable($VariableID);
+			$VariableType = $InformationsArray["VariableType"]; // Variablentyp (0: Boolean, 1: Integer, 2: Float, 3: String)
+			$Result = $VariableType;
+		}
+	return $Result;
+	}
 	    
 	
 	
