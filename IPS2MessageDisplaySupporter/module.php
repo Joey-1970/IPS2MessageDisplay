@@ -15,6 +15,7 @@
             	parent::Create();
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("Function", 0);
+		$this->RegisterPropertyInteger("MessageType", 0);
 		$this->RegisterPropertyInteger("VariableID", 0);
 		$this->RegisterPropertyInteger("WebfrontID", 0);
 		
@@ -48,6 +49,20 @@
 		// Funktion Überwachung einer Variablen
 		$arrayElements[] = array("type" => "Label", "name" => "LabelFunction1", "caption" => "Zu überwachende Variable", "visible" => true);
             	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true); 
+		
+		// Funktion nach Uhrzeit
+		
+		
+		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+	
+		$arrayOptions = array();
+		$arrayOptions[] = array("label" => "Information (grün)", "value" => 0);
+		$arrayOptions[] = array("label" => "Alarm (rot)", "value" => 1);
+		$arrayOptions[] = array("label" => "Warnung (gelb)", "value" => 2);
+		$arrayOptions[] = array("label" => "Aufgaben (blau)", "value" => 3);
+		$arrayElements[] = array("type" => "Select", "name" => "MessageType", "caption" => "Nachrichten-Typ", "options" => $arrayOptions);
+
+		
 		
 		
 		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Webfronts für die SwitchPage-Funktion"); 
