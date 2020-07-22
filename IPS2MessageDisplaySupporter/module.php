@@ -13,6 +13,8 @@
         {
             	// Diese Zeile nicht löschen.
             	parent::Create();
+		$this->ConnectParent("{8D668956-7DB5-49FD-B1A2-149149D99CEB}");
+		
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("Function", 0);
 		$this->RegisterPropertyInteger("MessageType", 0);
@@ -85,6 +87,11 @@
         {
             	// Diese Zeile nicht löschen
             	parent::ApplyChanges();
+		
+		if (IPS_GetKernelRunlevel() == KR_READY) {
+				//$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
+				//						  "Function" => "set_MaxWatering", "InstanceID" => $this->InstanceID, "MaxWatering" => $MaxWatering )));
+			}
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			
