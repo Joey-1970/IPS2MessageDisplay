@@ -113,7 +113,8 @@
 			break;
 		case "ChangeVariable":
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
-				$this->RefreshProfileForm($Value);
+				$this->GetVariableType($Value);
+				
 			break;
 	        default:
 	            throw new Exception("Invalid Ident");
@@ -130,6 +131,8 @@
 			$InformationArray = array();
 			$InformationsArray = IPS_GetVariable($VariableID);
 			$VariableType = $InformationsArray["VariableType"]; // Variablentyp (0: Boolean, 1: Integer, 2: Float, 3: String)
+			$VariableTypeArray = array("Boolean", "integer", "Float", "String);
+			$this->SendDebug("GetVariableType", "Variablen Typ: ".$VariableTypeArray[$Value], 0);
 			$Result = $VariableType;
 		}
 	return $Result;
