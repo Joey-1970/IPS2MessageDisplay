@@ -151,7 +151,7 @@
 					case 'Switch':
 						If (is_array($MessageData)) {
 							if (array_key_exists($MessageData[$MessageID], $MessageData)) {
-								If ($MessageData[$MessageID]["WebfrontID"] >= 10000) {
+								If ($MessageData[$MessageID]["WebfrontID"] >= 10000) AND ($MessageData[$MessageID]["Page"] <> "") {
 									WFC_SwitchPage ($MessageData[$MessageID]["WebfrontID"], $MessageData[$MessageID]["Page"]);
 								}
 							}
@@ -235,6 +235,7 @@
 	{
 		$ShowTime = $this->ReadPropertyBoolean("ShowTime");
 		$Sorting = $this->ReadPropertyInteger("Sorting");
+		/*
 		$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
 		If (($WebfrontID > 0) AND (IPS_GetKernelRunlevel() == KR_READY)) {
 			$Skin = IPS_GetProperty($WebfrontID, "Skin");
@@ -246,8 +247,11 @@
 			}
 		}
 		else {
-			$IconPath = "img/icons";
+			
 		}
+		*/
+		$IconPath = "img/icons";
+		
 		// Etwas CSS und HTML
 		$style = "";
 		$style .= '<style type="text/css">';
