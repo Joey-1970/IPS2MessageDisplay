@@ -151,7 +151,7 @@
 					case 'Switch':
 						If (is_array($MessageData)) {
 							if (array_key_exists($MessageData[$MessageID], $MessageData)) {
-								If ($MessageData[$MessageID]["WebfrontID"] >= 10000) AND ($MessageData[$MessageID]["Page"] <> "") {
+								If (($MessageData[$MessageID]["WebfrontID"] >= 10000) AND ($MessageData[$MessageID]["Page"] <> "")) {
 									WFC_SwitchPage ($MessageData[$MessageID]["WebfrontID"], $MessageData[$MessageID]["Page"]);
 								}
 							}
