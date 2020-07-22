@@ -20,7 +20,6 @@
 		$this->RegisterPropertyInteger("Sorting", 3);
 		$this->RegisterPropertyBoolean("ShowTime", false);
 		$this->RegisterAttributeString("MessageData", ""); 
-		$this->RegisterPropertyInteger("WebfrontID", 0);
 		$this->RegisterPropertyInteger("AutoRemove", 1000);
 		$this->RegisterTimer("AutoRemove", 0, 'IPS2MessageDisplay_AutoRemove($_IPS["TARGET"]);');
 		$this->RegisterPropertyInteger("ActuatorID", 0);
@@ -52,16 +51,6 @@
 		$arrayElements[] = array("type" => "Select", "name" => "Sorting", "caption" => "Sortierung in der Darstellung", "options" => $arrayOptions );
 		
 		$arrayElements[] = array("name" => "ShowTime", "type" => "CheckBox",  "caption" => "Uhrzeit anzeigen");
-		
-		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Webfronts für die SwitchPage-Funktion"); 
-		$WebfrontID = Array();
-		$WebfrontID = $this->GetWebfrontID();
-		$arrayOptions = array();
-		$arrayOptions[] = array("label" => "unbestimmt", "value" => 0);
-		foreach ($WebfrontID as $ID => $Webfront) {
-        		$arrayOptions[] = array("label" => $Webfront, "value" => $ID);
-    		}
-		$arrayElements[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayOptions );
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
  	}       
@@ -103,7 +92,7 @@
     	}        
 	    
 	// Beginn der Funktionen
-	private function WorkProcess(string $Activity, int $MessageID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, string $Page) 
+	private function WorkProcess(string $Activity, int $MessageID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, int $WebfrontID, string $Page) 
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			if (IPS_SemaphoreEnter("WorkProcess", 2000))
@@ -118,6 +107,7 @@
 						$MessageData[$MessageID]["Removable"] = $Removable;
 						$MessageData[$MessageID]["Type"] = $Type;
 						$MessageData[$MessageID]["Image"] = $Image;
+						$MessageData[$MessageID]["WebfrontID"] = $WebfrontID;
 						$MessageData[$MessageID]["Page"] = $Page;
 						$MessageData[$MessageID]["Timestamp"] = microtime(true);
 						$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde hinzugefuegt", 0);
@@ -158,6 +148,17 @@
 							}
 						}
 						break;
+					case 'Switch':
+						If (is_array($MessageData)) {
+							if (array_key_exists($MessageID, $MessageData)) {
+								$WebfrontID = 
+								$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde entfernt", 0);
+							}
+							else {
+								$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde nicht gefunden", 0);
+							}
+						}
+						break;
 				}
 				$this->WriteAttributeString("MessageData", serialize($MessageData));
 			}
@@ -171,30 +172,35 @@
 		}
 	}
 	    
-	public function Add(int $MessageID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, string $Page) 
+	public function Add(int $MessageID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, int $WebfrontID, string $Page) 
 	{
-		$this->WorkProcess("Add", $MessageID, $Text, $Expires, $Removable, $Type, $Image, $Page);
+		$this->WorkProcess("Add", $MessageID, $Text, $Expires, $Removable, $Type, $Image, $WebfrontID, $Page);
 	}
 	    
 	public function Remove(int $MessageID) 
 	{
-		$this->WorkProcess("Remove", $MessageID, "", 0, false, 0, "", "");
+		$this->WorkProcess("Remove", $MessageID, "", 0, false, 0, "", 0, "");
 	}
 	    
 	public function RemoveAll() 
 	{
-		$this->WorkProcess("RemoveAll", 0, "", 0, false, 0, "", "");
+		$this->WorkProcess("RemoveAll", 0, "", 0, false, 0, "", 0, "");
 	}    
 	    
 	public function RemoveType(int $Type) 
 	{
 		$Type = min(3, max(0, $Type));
-		$this->WorkProcess("RemoveType", 0, "", 0, false, $Type, "", "");
+		$this->WorkProcess("RemoveType", 0, "", 0, false, $Type, "", 0, "");
 	}
 	    
 	public function AutoRemove() 
 	{
-		$this->WorkProcess("AutoRemove", 0, "", 0, false, 0, "", "");
+		$this->WorkProcess("AutoRemove", 0, "", 0, false, 0, "", 0, "");
+	}
+	    
+	public function Switch(int $MessageID) 
+	{
+		$this->WorkProcess("Switch", $MessageID, "", 0, false, 0, "", 0, "");
 	}
 	    
 	protected function ProcessHookData() 
@@ -213,16 +219,15 @@
 					}
 			      		break;
 			    case 'switch':
-			      		$PageID = isset($_GET['PageID']) ? $_GET['PageID'] : '';
-			      		if (is_string($PageID) && $PageID !='') {
-				  		$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
-						if ($WebfrontID > 0) {
-							WFC_SwitchPage($WebfrontID, $PageID);
-						}
-						else {
-							$this->SendDebug("ProcessHookData", "Kein Webfront definiert!", 0);
-						}
+			      		$MessageID = isset($_GET['MessageID']) ? $_GET['MessageID'] : -1;
+			      		if ($MessageID > 0) {
+						//$this->WorkProcess("Remove", $MessageID, "", 0, false, 0, "", "");
+				  		$this->Switch($MessageID);
 			      		}
+					else {
+						$this->SendDebug("ProcessHookData", "Keine MessageID!", 0);
+					}
+			      		break;
 			      break;
 			}
 		}
@@ -303,7 +308,7 @@
 				
 				if ($Message['Page'] <> "") {
 					$TypeWF = 'orange';
-					$content .= '<td class=\'lst\'><div class=\''.$TypeWF.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=switch&PageID='.$Message['Page'].'\' });">WF</div></td>';
+					$content .= '<td class=\'lst\'><div class=\''.$TypeWF.'\' onclick="window.xhrGet=function xhrGet(o) {var HTTP = new XMLHttpRequest();HTTP.open(\'GET\',o.url,true);HTTP.send();};window.xhrGet({ url: \'hook/IPS2MessageDisplay_'.$this->InstanceID.'?ts=\' + (new Date()).getTime() + \'&action=switch&MessageID='.$Message['MessageID'].'\' });">WF</div></td>';
 					
 				}
 				else {
