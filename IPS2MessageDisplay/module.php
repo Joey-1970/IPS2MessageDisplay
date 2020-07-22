@@ -62,9 +62,6 @@
         		$arrayOptions[] = array("label" => $Webfront, "value" => $ID);
     		}
 		$arrayElements[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayOptions );
-		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
-            	$arrayElements[] = array("type" => "Label", "label" => "Aktor-Variable (Boolean)");
-            	$arrayElements[] = array("type" => "SelectVariable", "name" => "ActuatorID", "caption" => "Aktor"); 
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
  	}       
