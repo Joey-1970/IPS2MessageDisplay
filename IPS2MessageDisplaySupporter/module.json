@@ -7,8 +7,8 @@
   [
     "IPS2MessageDisplaySupporter"
   ],
-  "parentRequirements": [],
+  "parentRequirements": ["{4F07F8AF-DDF9-A175-6A16-C960F8040723}"],
   "childRequirements": [],
-  "implemented": [],
+  "implemented": ["{D82B76E1-322D-AC2D-E624-74F83E7DE356}"],
   "prefix": "IPS2MessageDisplaySupporter"
 }
