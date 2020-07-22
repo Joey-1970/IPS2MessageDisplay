@@ -149,6 +149,7 @@
 						}
 						break;
 					case 'Switch':
+						$this->SendDebug("WorkProcess", "Switch Webfront: ".$MessageData[$MessageID]["WebfrontID"]." Item: ".$MessageData[$MessageID]["Page"], 0);
 						If (is_array($MessageData)) {
 							if (array_key_exists($MessageData[$MessageID], $MessageData)) {
 								If (($MessageData[$MessageID]["WebfrontID"] >= 10000) AND ($MessageData[$MessageID]["Page"] <> "")) {
