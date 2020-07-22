@@ -131,8 +131,8 @@
 			$InformationArray = array();
 			$InformationsArray = IPS_GetVariable($VariableID);
 			$VariableType = $InformationsArray["VariableType"]; // Variablentyp (0: Boolean, 1: Integer, 2: Float, 3: String)
-			$VariableTypeArray = array("Boolean", "integer", "Float", "String);
-			$this->SendDebug("GetVariableType", "Variablen Typ: ".$VariableTypeArray[$Value], 0);
+			$VariableTypeArray = array("Boolean", "integer", "Float", "String");
+			$this->SendDebug("Get Variable Type", "Variablen Typ: ".$VariableTypeArray[$Value], 0);
 			$Result = $VariableType;
 		}
 	return $Result;
