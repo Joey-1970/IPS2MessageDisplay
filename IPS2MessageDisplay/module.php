@@ -152,9 +152,9 @@
 						$this->SendDebug("WorkProcess", "Switch Webfront: ".$MessageData[$MessageID]["WebfrontID"]." Item: ".$MessageData[$MessageID]["Page"], 0);
 						If (is_array($MessageData)) {
 							if (array_key_exists($MessageData[$MessageID], $MessageData)) {
-								If (($MessageData[$MessageID]["WebfrontID"] >= 10000) AND ($MessageData[$MessageID]["Page"] <> "")) {
+								If ((intval($MessageData[$MessageID]["WebfrontID"]) >= 10000) AND (strlen($MessageData[$MessageID]["Page"]) > 0)) {
 									$this->SendDebug("WorkProcess", "Switch Webfront: ".$MessageData[$MessageID]["WebfrontID"]." Item: ".$MessageData[$MessageID]["Page"], 0);
-									WFC_SwitchPage ($MessageData[$MessageID]["WebfrontID"], $MessageData[$MessageID]["Page"]);
+									WFC_SwitchPage (intval($MessageData[$MessageID]["WebfrontID"]), $MessageData[$MessageID]["Page"]);
 								}
 							}
 						}
