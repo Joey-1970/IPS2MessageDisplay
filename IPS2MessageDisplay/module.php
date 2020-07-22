@@ -150,12 +150,10 @@
 						break;
 					case 'Switch':
 						If (is_array($MessageData)) {
-							if (array_key_exists($MessageID, $MessageData)) {
-								$WebfrontID = 
-								$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde entfernt", 0);
-							}
-							else {
-								$this->SendDebug("WorkProcess", "Message ".$MessageID." wurde nicht gefunden", 0);
+							if (array_key_exists($MessageData[$MessageID], $MessageData)) {
+								If ($MessageData[$MessageID]["WebfrontID"] >= 10000) {
+									WFC_SwitchPage ($MessageData[$MessageID]["WebfrontID"], $MessageData[$MessageID]["Page"]);
+								}
 							}
 						}
 						break;
@@ -211,8 +209,8 @@
 			    	case 'remove':
 			      		$MessageID = isset($_GET['MessageID']) ? $_GET['MessageID'] : -1;
 			      		if ($MessageID > 0) {
-						//$this->WorkProcess("Remove", $MessageID, "", 0, false, 0, "", "");
-				  		$this->Remove($MessageID);
+						$this->WorkProcess("Remove", $MessageID, "", 0, false, 0, "", 0, "");
+				  		//$this->Remove($MessageID);
 			      		}
 					else {
 						$this->SendDebug("ProcessHookData", "Keine MessageID!", 0);
@@ -221,8 +219,8 @@
 			    case 'switch':
 			      		$MessageID = isset($_GET['MessageID']) ? $_GET['MessageID'] : -1;
 			      		if ($MessageID > 0) {
-						//$this->WorkProcess("Remove", $MessageID, "", 0, false, 0, "", "");
-				  		$this->Switch($MessageID);
+						$this->WorkProcess("Switch", $MessageID, "", 0, false, 0, "", 0, "");
+				  		//$this->Switch($MessageID);
 			      		}
 					else {
 						$this->SendDebug("ProcessHookData", "Keine MessageID!", 0);
