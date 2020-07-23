@@ -141,8 +141,9 @@
 	public function Add()
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
+			
 			$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
-						"Function" => "Add", "InstanceID" => $this->InstanceID, "MaxWatering" => $MaxWatering )));
+						"Function" => "Add", "MessageID" => $MessageID, "Text" => $Text, "Expires" => $Expires, "Removable" => $Removable, "Type" => $Type, "Image" => $Image, "WebfrontID" => $WebfrontID, "Page" => $Page )));
 
 		}
 	}
