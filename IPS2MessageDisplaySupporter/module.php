@@ -21,7 +21,10 @@
 		$this->RegisterPropertyInteger("VariableID", 0);
 		$this->RegisterPropertyInteger("WebfrontID", 0);
 		$this->RegisterPropertyString("MessageText", "");
-		
+		$this->RegisterPropertyInteger("Expires", 0);
+		$this->RegisterPropertyBoolean("Removable", true);
+		$this->RegisterPropertyString("Image", "");
+		$this->RegisterPropertyString("Page", "");
 		//Status-Variablen anlegen
 		
 			
@@ -144,6 +147,9 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageID = $this->InstanceID;
 			$Text = $this->ReadPropertyString("MessageText");
+			$Expires = $this->ReadPropertyInteger("Expires");
+			$Removable = $this->ReadPropertyBoolean("Removable");
+			$Type = $this->ReadPropertyInteger("MessageType");
 			
 			$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
 						"Function" => "Add", "MessageID" => $MessageID, "Text" => $Text, "Expires" => $Expires, "Removable" => $Removable, "Type" => $Type, "Image" => $Image, "WebfrontID" => $WebfrontID, "Page" => $Page )));
