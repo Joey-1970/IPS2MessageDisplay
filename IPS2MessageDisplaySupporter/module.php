@@ -20,6 +20,7 @@
 		$this->RegisterPropertyInteger("MessageType", 0);
 		$this->RegisterPropertyInteger("VariableID", 0);
 		$this->RegisterPropertyInteger("WebfrontID", 0);
+		$this->RegisterPropertyString("MessageText", "");
 		
 		//Status-Variablen anlegen
 		
@@ -141,6 +142,8 @@
 	public function Add()
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
+			$MessageID = $this->InstanceID;
+			$Text = $this->ReadPropertyString("MessageText");
 			
 			$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
 						"Function" => "Add", "MessageID" => $MessageID, "Text" => $Text, "Expires" => $Expires, "Removable" => $Removable, "Type" => $Type, "Image" => $Image, "WebfrontID" => $WebfrontID, "Page" => $Page )));
