@@ -68,7 +68,12 @@
 		$arrayOptions[] = array("label" => "Aufgaben (blau)", "value" => 3);
 		$arrayElements[] = array("type" => "Select", "name" => "MessageType", "caption" => "Nachrichten-Typ", "options" => $arrayOptions);
 
-		
+		$arrayOptions = array();
+		$arrayOptions[] = array("label" => "Keine Löschung", "value" => 0);
+		$arrayOptions[] = array("label" => "10", "value" => 10);
+		$arrayOptions[] = array("label" => "30", "value" => 30);
+		$arrayOptions[] = array("label" => "60", "value" => 60);
+		$arrayElements[] = array("type" => "Select", "name" => "Expires", "caption" => "Automatische Löschung (sek)", "options" => $arrayOptions);
 		
 		
 		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Webfronts für die SwitchPage-Funktion"); 
@@ -80,6 +85,8 @@
         		$arrayOptions[] = array("label" => $Webfront, "value" => $ID);
     		}
 		$arrayElements[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayOptions );
+		
+		
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
             	
 		
