@@ -157,6 +157,8 @@
 			$Expires = $this->ReadPropertyInteger("Expires");
 			$Removable = $this->ReadPropertyBoolean("Removable");
 			$Type = $this->ReadPropertyInteger("MessageType");
+			$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
+			$Page = $this->ReadPropertyString("Page");
 			
 			$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
 						"Function" => "Add", "MessageID" => $MessageID, "Text" => $Text, "Expires" => $Expires, "Removable" => $Removable, "Type" => $Type, "Image" => $Image, "WebfrontID" => $WebfrontID, "Page" => $Page )));
