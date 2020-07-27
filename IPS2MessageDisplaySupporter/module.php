@@ -185,6 +185,16 @@
 	return $Result;   
 	}    
 	    
-  
+  	function GetWebfrontPages($WebfrontID)
+	{
+    		$PagesArray = array();
+    		$config = IPS_GetConfiguration($WebfrontID);
+    		$WebfrontData = json_decode($config);
+    		$ItemsData = json_decode($WebfrontData->Items);
+    		foreach ($ItemsData as $Value) {
+        		$PagesArray[] = $Value->ID;
+    		}
+	return $PagesArray;
+	}
 }
 ?>
