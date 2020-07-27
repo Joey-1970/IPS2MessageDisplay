@@ -148,6 +148,7 @@
 				else {
 					$arrayOptions[] = array("label" => "unbestimmt", "value" => "unbestimmt");
 				}
+				$this->UpdateFormField('Page', 'value', "unbestimmt");
 				$this->UpdateFormField('Page', 'options', json_encode($arrayOptions));
 			break;
 	        default:
