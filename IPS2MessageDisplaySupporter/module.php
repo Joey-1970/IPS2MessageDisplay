@@ -24,7 +24,7 @@
 		$this->RegisterPropertyInteger("Expires", 0);
 		$this->RegisterPropertyBoolean("Removable", true);
 		$this->RegisterPropertyString("Image", "");
-		$this->RegisterPropertyString("Page", "");
+		$this->RegisterPropertyString("Page", "unbestimmt");
 		//Status-Variablen anlegen
 		
 			
