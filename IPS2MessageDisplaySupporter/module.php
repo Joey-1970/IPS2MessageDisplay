@@ -93,7 +93,7 @@
 		foreach ($PagesArray as $ID => $Page) {
         		$arrayOptions[] = array("label" => $Page, "value" => $Page);
     		}
-		$arrayElements[] = array("type" => "Select", "name" => "Page", "caption" => "Seiten", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"ChangeWebfront",$WebfrontID);'  );
+		$arrayElements[] = array("type" => "Select", "name" => "Page", "caption" => "Seiten", "options" => $arrayOptions);
 
 		
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
