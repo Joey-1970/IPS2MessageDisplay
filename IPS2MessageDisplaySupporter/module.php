@@ -76,7 +76,7 @@
 		$arrayElements[] = array("type" => "Select", "name" => "Expires", "caption" => "Automatische Löschung (sek)", "options" => $arrayOptions);
 		
 		
-		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Webfronts für die SwitchPage-Funktion"); 
+		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Webfronts und der Seite für die Sprung-Funktion"); 
 		$WebfrontID = Array();
 		$WebfrontID = $this->GetWebfrontID();
 		$arrayWebfronts = array();
@@ -84,7 +84,6 @@
 		foreach ($WebfrontID as $ID => $Webfront) {
         		$arrayWebfronts[] = array("label" => $Webfront, "value" => $ID);
     		}
-		//$arrayElements[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"ChangeWebfront",$WebfrontID);'  );
 		
 		$PagesArray = array();
 		$PagesArray = $this->GetWebfrontPages($this->ReadPropertyInteger("WebfrontID"));
@@ -93,11 +92,10 @@
 		foreach ($PagesArray as $ID => $Page) {
         		$arrayPages[] = array("label" => $Page, "value" => $Page);
     		}
-		//$arrayElements[] = array("type" => "Select", "name" => "Page", "caption" => "Seiten", "options" => $arrayOptions);
 		
 		$ArrayRowLayout = array();
 		$ArrayRowLayout[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayWebfronts, "onChange" => 'IPS_RequestAction($id,"ChangeWebfront",$WebfrontID);');
-		$ArrayRowLayout[] = array("type" => "Select", "name" => "Page", "caption" => "Seiten", "options" => $arrayPages);
+		$ArrayRowLayout[] = array("type" => "Select", "name" => "Page", "caption" => "Seite", "options" => $arrayPages);
 		$arrayElements[] = array("type" => "RowLayout", "items" => $ArrayRowLayout);
 		
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
