@@ -138,6 +138,7 @@
 			break;
 		case "ChangeWebfront":
 				$this->SendDebug("RequestAction", "ChangeWebfront - Wert: ".$Value, 0);
+				$this->UpdateFormField('Page', 'value', "unbestimmt");
 				If ($Value > 0) {
 					$PagesArray = array();
 					$PagesArray = $this->GetWebfrontPages($Value);
@@ -149,7 +150,6 @@
 				else {
 					$arrayOptions[] = array("label" => "unbestimmt", "value" => "unbestimmt");
 				}
-				$this->UpdateFormField('Page', 'value', "unbestimmt");
 				$this->UpdateFormField('Page', 'options', json_encode($arrayOptions));
 			break;
 	        default:
