@@ -79,22 +79,26 @@
 		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Webfronts für die SwitchPage-Funktion"); 
 		$WebfrontID = Array();
 		$WebfrontID = $this->GetWebfrontID();
-		$arrayOptions = array();
-		$arrayOptions[] = array("label" => "unbestimmt", "value" => 0);
+		$arrayWebfronts = array();
+		$arrayWebfronts[] = array("label" => "unbestimmt", "value" => 0);
 		foreach ($WebfrontID as $ID => $Webfront) {
-        		$arrayOptions[] = array("label" => $Webfront, "value" => $ID);
+        		$arrayWebfronts[] = array("label" => $Webfront, "value" => $ID);
     		}
-		$arrayElements[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"ChangeWebfront",$WebfrontID);'  );
+		//$arrayElements[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"ChangeWebfront",$WebfrontID);'  );
 		
 		$PagesArray = array();
 		$PagesArray = $this->GetWebfrontPages($this->ReadPropertyInteger("WebfrontID"));
-		$arrayOptions = array();
-		$arrayOptions[] = array("label" => "unbestimmt", "value" => "unbestimmt");
+		$arrayPages = array();
+		$arrayPages[] = array("label" => "unbestimmt", "value" => "unbestimmt");
 		foreach ($PagesArray as $ID => $Page) {
-        		$arrayOptions[] = array("label" => $Page, "value" => $Page);
+        		$arrayPages[] = array("label" => $Page, "value" => $Page);
     		}
-		$arrayElements[] = array("type" => "Select", "name" => "Page", "caption" => "Seiten", "options" => $arrayOptions);
-
+		//$arrayElements[] = array("type" => "Select", "name" => "Page", "caption" => "Seiten", "options" => $arrayOptions);
+		
+		$ArrayRowLayout = array();
+		$ArrayRowLayout[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayWebfronts, "onChange" => 'IPS_RequestAction($id,"ChangeWebfront",$WebfrontID);');
+		$ArrayRowLayout[] = array("type" => "Select", "name" => "Page", "caption" => "Seiten", "options" => $arrayPages);
+		$arrayElements[] = array("type" => "RowLayout", "items" => $ArrayRowLayout);
 		
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
             	
