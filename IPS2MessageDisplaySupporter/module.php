@@ -54,7 +54,7 @@
 
 		// Funktion Überwachung einer Variablen
 		$arrayElements[] = array("type" => "Label", "name" => "LabelFunction1", "caption" => "Zu überwachende Variable", "visible" => true);
-            	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$Function);'); 
+            	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
 		
 		// Funktion nach Uhrzeit
 		
@@ -84,8 +84,17 @@
 		foreach ($WebfrontID as $ID => $Webfront) {
         		$arrayOptions[] = array("label" => $Webfront, "value" => $ID);
     		}
-		$arrayElements[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayOptions );
+		$arrayElements[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"ChangeWebfront",$WebfrontID);'  );
 		
+		$PagesArray = array();
+		$PagesArray = $this->GetWebfrontPages($this->ReadPropertyInteger("WebfrontID"));
+		$arrayOptions = array();
+		$arrayOptions[] = array("label" => "unbestimmt", "value" => "unbestimmt");
+		foreach ($PagesArray as $ID => $Page) {
+        		$arrayOptions[] = array("label" => $Page, "value" => $Page);
+    		}
+		$arrayElements[] = array("type" => "Select", "name" => "Page", "caption" => "Seiten", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"ChangeWebfront",$WebfrontID);'  );
+
 		
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
             	
@@ -126,6 +135,20 @@
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
 				$this->GetVariableType($Value);
 				
+			break;
+		case "ChangeWebfront":
+				$this->SendDebug("RequestAction", "ChangeWebfront - Wert: ".$Value, 0);
+				If ($Value > 0) {
+					$PagesArray = array();
+					$PagesArray = $this->GetWebfrontPages($Value);
+					foreach ($PagesArray as $Value) {
+						$arrayOptions[] = array("label" => $Value, "value" => $Value);
+					}
+				}
+				else {
+					$arrayOptions[] = array("label" => "unbestimmt", "value" => "unbestimmt");
+				}
+				$this->UpdateFormField('Page', 'options', json_encode($arrayOptions));
 			break;
 	        default:
 	            throw new Exception("Invalid Ident");
@@ -185,15 +208,17 @@
 	return $Result;   
 	}    
 	    
-  	function GetWebfrontPages($WebfrontID)
+  	private function GetWebfrontPages($WebfrontID)
 	{
     		$PagesArray = array();
-    		$config = IPS_GetConfiguration($WebfrontID);
-    		$WebfrontData = json_decode($config);
-    		$ItemsData = json_decode($WebfrontData->Items);
-    		foreach ($ItemsData as $Value) {
-        		$PagesArray[] = $Value->ID;
-    		}
+    		If ($WebfrontID > 0) {
+			$config = IPS_GetConfiguration($WebfrontID);
+			$WebfrontData = json_decode($config);
+			$ItemsData = json_decode($WebfrontData->Items);
+			foreach ($ItemsData as $Value) {
+				$PagesArray[] = $Value->ID;
+			}
+		}
 	return $PagesArray;
 	}
 }
