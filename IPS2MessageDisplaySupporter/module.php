@@ -141,6 +141,7 @@
 				If ($Value > 0) {
 					$PagesArray = array();
 					$PagesArray = $this->GetWebfrontPages($Value);
+					$arrayOptions[] = array("label" => "unbestimmt", "value" => "unbestimmt");
 					foreach ($PagesArray as $Value) {
 						$arrayOptions[] = array("label" => $Value, "value" => $Value);
 					}
