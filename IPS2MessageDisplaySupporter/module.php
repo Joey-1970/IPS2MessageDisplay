@@ -43,14 +43,14 @@
 		$arrayElements = array(); 
 		
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
-		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
  		
 		$arrayOptions = array();
 		$arrayOptions[] = array("label" => "Überwachung einer Variablen", "value" => 0);
 		//$arrayOptions[] = array("label" => "Erinnerung nach Uhrzeit", "value" => 1);
 		$arrayElements[] = array("type" => "Select", "name" => "Function", "caption" => "Funktion", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"RefreshProfileForm",$Function);' );
 
- 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+ 		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
 
 		// Funktion Überwachung einer Variablen
 		$arrayElements[] = array("type" => "Label", "name" => "LabelFunction1", "caption" => "Zu überwachende Variable", "visible" => true);
@@ -61,7 +61,7 @@
 		// Funktion nach Uhrzeit
 		
 	
-		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
 		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "MessageText", "caption" => "Nachricht");
 		
 		$arrayOptions = array();
@@ -79,7 +79,7 @@
 		$arrayElements[] = array("type" => "Select", "name" => "Expires", "caption" => "Automatische Löschung (sek)", "options" => $arrayOptions);
 		
 		
-		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Webfronts und der Seite für die Sprung-Funktion"); 
+		$arrayElements[] = array("type" => "Label", "caption" => "Auswahl des Webfronts und der Seite für die Sprung-Funktion"); 
 		$WebfrontID = array();
 		$WebfrontID = $this->GetWebfrontID();
 		$arrayWebfronts = array();
@@ -101,7 +101,7 @@
 		$ArrayRowLayout[] = array("type" => "Select", "name" => "Page", "caption" => "Seite", "options" => $arrayPages);
 		$arrayElements[] = array("type" => "RowLayout", "items" => $ArrayRowLayout);
 		
-		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Icons (wird keins gewählt wird das Standard-Icon verwendet)"); 
+		$arrayElements[] = array("type" => "Label", "caption" => "Auswahl des Icons (wird keins gewählt wird das Standard-Icon verwendet)"); 
 		$IconsArray = array();
 		$IconsArray = $this->GetIconsList();
 		$arrayOptions = array();
@@ -111,7 +111,7 @@
 		$arrayElements[] = array("type" => "Select", "name" => "Image", "caption" => "Icon", "options" => $arrayOptions);
 
 		
-		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
             	
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
