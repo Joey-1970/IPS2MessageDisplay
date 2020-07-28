@@ -236,22 +236,6 @@
 	{
 		$ShowTime = $this->ReadPropertyBoolean("ShowTime");
 		$Sorting = $this->ReadPropertyInteger("Sorting");
-		/*
-		$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
-		If (($WebfrontID > 0) AND (IPS_GetKernelRunlevel() == KR_READY)) {
-			$Skin = IPS_GetProperty($WebfrontID, "Skin");
-			If ($Skin == "") {
-				$IconPath = "img/icons";
-			}
-			else {
-				$IconPath = $Skin."/img/icons";
-			}
-		}
-		else {
-			
-		}
-		*/
-		$IconPath = "img/icons";
 		
 		// Etwas CSS und HTML
 		$style = "";
@@ -271,19 +255,9 @@
 		$content = $style;
 		$content .= '<table>';
 		
-		
-		/*
-		if (array_key_exists($Line['Type'], $Config_Icon)) {
-                    $Line['Icon'] = '<div class="iconMediumSpinner ipsIcon' . $Config_Icon[$Line['Type']] . '" style="width: 100%; background-position: center center;"></div>';
-                } else {
-                    $Line['Icon'] = '<div class="iconMediumSpinner ipsIconTransparent" style="width: 100%; background-position: center center;"></div>';
-                }
-		*/
-		
 		if (count($MessageData) == 0) {
 			$content .= '<tr>';
 			$Icon = "Ok";
-			//$content .= '<td class="iconMediumSpinner ipsIcon' .$Icon. '"></img></td>';
 			$content .= '<td class="iconMediumSpinner ipsIcon' .$Icon. '"></td>';
 			if ($ShowTime == true) {
 				$content .= '<td class="lst">'.date("d.m.Y H:i", time() ).'</td>';
@@ -301,16 +275,13 @@
 				$Message['Type'] = min(3, max(0, $Message['Type']));
 						
 				if ($Message['Image'] <> "") {
-					//$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
 					$Image = $Message['Image'];
 				}
 				else {
-					//$Image = '<img src=\'img/icons/'.$TypeImage[$Message['Type']].'.svg\'></img>';
 					$Image = $TypeImage[$Message['Type']];
 				}
 
 				$content .= '<tr>';
-				//$content .= '<td class="fst">'.$Image.'</td>';
 				$content .= '<td class="iconMediumSpinner ipsIcon' .$Image. '"></td>';
 				if ($ShowTime == true) {
 					$SecondsToday= date('H') * 3600 + date('i') * 60 + date('s');
