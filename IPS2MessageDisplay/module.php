@@ -43,7 +43,7 @@
 		$arrayElements = array(); 
 		
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv");
-		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
  
 		$arrayOptions = array();
 		$arrayOptions[] = array("label" => "Neuste Nachricht zuerst", "value" => SORT_DESC);
