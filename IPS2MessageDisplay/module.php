@@ -283,8 +283,8 @@
 		if (count($MessageData) == 0) {
 			$content .= '<tr>';
 			$Icon = "Ok";
-			//$content .= '<td class="iconMediumSpinner ipsIcon' .$Icon. '" style="width: 100%; background-position: center center;"></div>';
-			$content .= '<td class="iconMediumSpinner ipsIcon' .$Icon. '"></img></td>';
+			//$content .= '<td class="iconMediumSpinner ipsIcon' .$Icon. '"></img></td>';
+			$content .= '<td class="iconMediumSpinner ipsIcon' .$Icon. '"></td>';
 			if ($ShowTime == true) {
 				$content .= '<td class="lst">'.date("d.m.Y H:i", time() ).'</td>';
 			}
@@ -301,14 +301,17 @@
 				$Message['Type'] = min(3, max(0, $Message['Type']));
 						
 				if ($Message['Image'] <> "") {
-					$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
+					//$Image = '<img src=\'img/icons/'.$Message['Image'].'.svg\'></img>';
+					$Image = $Message['Image'];
 				}
 				else {
-					$Image = '<img src=\'img/icons/'.$TypeImage[$Message['Type']].'.svg\'></img>';
+					//$Image = '<img src=\'img/icons/'.$TypeImage[$Message['Type']].'.svg\'></img>';
+					$Image = $TypeImage[$Message['Type']];
 				}
 
 				$content .= '<tr>';
-				$content .= '<td class="fst">'.$Image.'</td>';
+				//$content .= '<td class="fst">'.$Image.'</td>';
+				$content .= '<td class="iconMediumSpinner ipsIcon' .$Image. '"></td>';
 				if ($ShowTime == true) {
 					$SecondsToday= date('H') * 3600 + date('i') * 60 + date('s');
 					If ($Message['Timestamp'] <= (time() - $SecondsToday)) {
