@@ -271,9 +271,20 @@
 		$content = $style;
 		$content .= '<table>';
 		
+		
+		*/
+		if (array_key_exists($Line['Type'], $Config_Icon)) {
+                    $Line['Icon'] = '<div class="iconMediumSpinner ipsIcon' . $Config_Icon[$Line['Type']] . '" style="width: 100%; background-position: center center;"></div>';
+                } else {
+                    $Line['Icon'] = '<div class="iconMediumSpinner ipsIconTransparent" style="width: 100%; background-position: center center;"></div>';
+                }
+		*/
+		
 		if (count($MessageData) == 0) {
 			$content .= '<tr>';
-			$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
+			$Icon = "Ok";
+			$content .= '<td class="iconMediumSpinner ipsIcon' .$Icon. '" style="width: 100%; background-position: center center;"></div>';
+			//$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
 			if ($ShowTime == true) {
 				$content .= '<td class="lst">'.date("d.m.Y H:i", time() ).'</td>';
 			}
