@@ -23,7 +23,7 @@
 		$this->RegisterPropertyString("MessageText", "");
 		$this->RegisterPropertyInteger("Expires", 0);
 		$this->RegisterPropertyBoolean("Removable", true);
-		$this->RegisterPropertyString("Image", "");
+		$this->RegisterPropertyString("Image", "Transparent");
 		$this->RegisterPropertyString("Page", "unbestimmt");
 		//Status-Variablen anlegen
 		
@@ -62,41 +62,50 @@
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 	
 		$arrayOptions = array();
-		$arrayOptions[] = array("label" => "Information (grün)", "value" => 0);
-		$arrayOptions[] = array("label" => "Alarm (rot)", "value" => 1);
-		$arrayOptions[] = array("label" => "Warnung (gelb)", "value" => 2);
-		$arrayOptions[] = array("label" => "Aufgaben (blau)", "value" => 3);
+		$arrayOptions[] = array("caption" => "Information (grün)", "value" => 0);
+		$arrayOptions[] = array("caption" => "Alarm (rot)", "value" => 1);
+		$arrayOptions[] = array("caption" => "Warnung (gelb)", "value" => 2);
+		$arrayOptions[] = array("caption" => "Aufgaben (blau)", "value" => 3);
 		$arrayElements[] = array("type" => "Select", "name" => "MessageType", "caption" => "Nachrichten-Typ", "options" => $arrayOptions);
 
 		$arrayOptions = array();
-		$arrayOptions[] = array("label" => "Keine Löschung", "value" => 0);
-		$arrayOptions[] = array("label" => "10", "value" => 10);
-		$arrayOptions[] = array("label" => "30", "value" => 30);
-		$arrayOptions[] = array("label" => "60", "value" => 60);
+		$arrayOptions[] = array("caption" => "Keine Löschung", "value" => 0);
+		$arrayOptions[] = array("caption" => "10", "value" => 10);
+		$arrayOptions[] = array("caption" => "30", "value" => 30);
+		$arrayOptions[] = array("caption" => "60", "value" => 60);
 		$arrayElements[] = array("type" => "Select", "name" => "Expires", "caption" => "Automatische Löschung (sek)", "options" => $arrayOptions);
 		
 		
 		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Webfronts und der Seite für die Sprung-Funktion"); 
-		$WebfrontID = Array();
+		$WebfrontID = array();
 		$WebfrontID = $this->GetWebfrontID();
 		$arrayWebfronts = array();
-		$arrayWebfronts[] = array("label" => "unbestimmt", "value" => 0);
+		$arrayWebfronts[] = array("caption" => "unbestimmt", "value" => 0);
 		foreach ($WebfrontID as $ID => $Webfront) {
-        		$arrayWebfronts[] = array("label" => $Webfront, "value" => $ID);
+        		$arrayWebfronts[] = array("caption" => $Webfront, "value" => $ID);
     		}
 		
 		$PagesArray = array();
 		$PagesArray = $this->GetWebfrontPages($this->ReadPropertyInteger("WebfrontID"));
 		$arrayPages = array();
-		$arrayPages[] = array("label" => "unbestimmt", "value" => "unbestimmt");
+		$arrayPages[] = array("caption" => "unbestimmt", "value" => "unbestimmt");
 		foreach ($PagesArray as $ID => $Page) {
-        		$arrayPages[] = array("label" => $Page, "value" => $Page);
+        		$arrayPages[] = array("caption" => $Page, "value" => $Page);
     		}
 		
 		$ArrayRowLayout = array();
 		$ArrayRowLayout[] = array("type" => "Select", "name" => "WebfrontID", "caption" => "Webfront", "options" => $arrayWebfronts, "onChange" => 'IPS_RequestAction($id,"ChangeWebfront",$WebfrontID);');
 		$ArrayRowLayout[] = array("type" => "Select", "name" => "Page", "caption" => "Seite", "options" => $arrayPages);
 		$arrayElements[] = array("type" => "RowLayout", "items" => $ArrayRowLayout);
+		
+		$IconsArray = array();
+		$IconsArray = $this->GetIconsList();
+		$arrayOptions = array();
+		foreach ($IconsArray as $Value) {
+			$arrayOptions[] = array("caption" => $Value['caption'], "value" => $Value['value']);
+		}
+		$arrayElements[] = array("type" => "Select", "name" => "Image", "caption" => "Icon", "options" => $arrayOptions);
+
 		
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
             	
@@ -224,6 +233,17 @@
 			}
 		}
 	return $PagesArray;
+	}
+	    
+	function GetIconsList()
+	{
+	    	$id = IPS_GetInstanceListByModuleID('{B69010EA-96D5-46DF-B885-24821B8C8DBD}')[0];
+	    	$Icons = array();
+	    	$Icons[] = ['caption' => 'none', 'value' => 'Transparent'];
+	    	foreach (UC_GetIconList($id) as $Icon) {
+			$Icons[] = ['caption' => $Icon, 'value' => $Icon];
+	    	}
+	return $Icons;
 	}
 }
 ?>
