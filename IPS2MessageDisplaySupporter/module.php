@@ -240,7 +240,7 @@
 	{
 	    	$id = IPS_GetInstanceListByModuleID('{B69010EA-96D5-46DF-B885-24821B8C8DBD}')[0];
 	    	$Icons = array();
-	    	$Icons[] = ['caption' => 'Kein Icon', 'value' => 'Transparent'];
+	    	$Icons[] = ['caption' => 'Standard', 'value' => 'Transparent'];
 	    	foreach (UC_GetIconList($id) as $Icon) {
 			$Icons[] = ['caption' => $Icon, 'value' => $Icon];
 	    	}
