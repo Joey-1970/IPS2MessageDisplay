@@ -98,6 +98,7 @@
 		$ArrayRowLayout[] = array("type" => "Select", "name" => "Page", "caption" => "Seite", "options" => $arrayPages);
 		$arrayElements[] = array("type" => "RowLayout", "items" => $ArrayRowLayout);
 		
+		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Icons, wird keins gewählt, wird das Standard-Icon verwendet"); 
 		$IconsArray = array();
 		$IconsArray = $this->GetIconsList();
 		$arrayOptions = array();
@@ -239,7 +240,7 @@
 	{
 	    	$id = IPS_GetInstanceListByModuleID('{B69010EA-96D5-46DF-B885-24821B8C8DBD}')[0];
 	    	$Icons = array();
-	    	$Icons[] = ['caption' => 'none', 'value' => 'Transparent'];
+	    	$Icons[] = ['caption' => 'Kein Icon', 'value' => 'Transparent'];
 	    	foreach (UC_GetIconList($id) as $Icon) {
 			$Icons[] = ['caption' => $Icon, 'value' => $Icon];
 	    	}
