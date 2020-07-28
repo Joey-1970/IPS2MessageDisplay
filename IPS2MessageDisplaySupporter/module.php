@@ -98,7 +98,7 @@
 		$ArrayRowLayout[] = array("type" => "Select", "name" => "Page", "caption" => "Seite", "options" => $arrayPages);
 		$arrayElements[] = array("type" => "RowLayout", "items" => $ArrayRowLayout);
 		
-		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Icons, wird keins gewählt, wird das Standard-Icon verwendet"); 
+		$arrayElements[] = array("type" => "Label", "label" => "Auswahl des Icons (wird keins gewählt wird das Standard-Icon verwendet)"); 
 		$IconsArray = array();
 		$IconsArray = $this->GetIconsList();
 		$arrayOptions = array();
