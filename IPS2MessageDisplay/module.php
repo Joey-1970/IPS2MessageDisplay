@@ -90,6 +90,24 @@
 			
 		}
     	}        
+	 
+	public function ForwardData($JSONString) 
+	 {
+	 	// Empfangene Daten von der Device Instanz
+	    	$data = json_decode($JSONString);
+	    	$Result = 0;
+	 	switch ($data->Function) {
+		    	// Maximale Bewässerungszeit
+			case "Add":
+	 			$this->WorkProcess("Add", $data->MessageID, $data->Text, $data->Expires, $data->Removable, $data->Type, $data->Image, $data->WebfrontID, $data->Page);
+				break;
+			case "Remove":
+				$this->WorkProcess("Remove", $data->MessageID, "", 0, false, 0, "", 0, "");		 
+				break;
+		}
+	return $Result;
+	}    
+	    
 	    
 	// Beginn der Funktionen
 	private function WorkProcess(string $Activity, int $MessageID, string $Text, int $Expires, bool $Removable, int $Type, string $Image, int $WebfrontID, string $Page) 
