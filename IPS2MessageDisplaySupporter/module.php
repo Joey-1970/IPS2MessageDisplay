@@ -47,7 +47,7 @@
  		
 		$arrayOptions = array();
 		$arrayOptions[] = array("label" => "Überwachung einer Variablen", "value" => 0);
-		$arrayOptions[] = array("label" => "Erinnerung nach Uhrzeit", "value" => 1);
+		//$arrayOptions[] = array("label" => "Erinnerung nach Uhrzeit", "value" => 1);
 		$arrayElements[] = array("type" => "Select", "name" => "Function", "caption" => "Funktion", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"RefreshProfileForm",$Function);' );
 
  		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
@@ -58,7 +58,7 @@
 		
 		// Funktion nach Uhrzeit
 		
-		
+		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "MessageText", "caption" => "Nachricht");
 		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 	
 		$arrayOptions = array();
@@ -121,9 +121,8 @@
             	parent::ApplyChanges();
 		
 		if (IPS_GetKernelRunlevel() == KR_READY) {
-				//$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
-				//						  "Function" => "set_MaxWatering", "InstanceID" => $this->InstanceID, "MaxWatering" => $MaxWatering )));
-			}
+		
+		}
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			
@@ -203,6 +202,16 @@
 		}
 	}
 	
+	public function Remove()
+	{
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$MessageID = $this->InstanceID;
+			$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
+						"Function" => "Add", "MessageID" => $MessageID )));
+
+		}
+	}    
+	    
 	private function RefreshProfileForm($Model)
     	{
         	
