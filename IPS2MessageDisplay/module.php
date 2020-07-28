@@ -272,7 +272,7 @@
 		$content .= '<table>';
 		
 		
-		*/
+		/*
 		if (array_key_exists($Line['Type'], $Config_Icon)) {
                     $Line['Icon'] = '<div class="iconMediumSpinner ipsIcon' . $Config_Icon[$Line['Type']] . '" style="width: 100%; background-position: center center;"></div>';
                 } else {
