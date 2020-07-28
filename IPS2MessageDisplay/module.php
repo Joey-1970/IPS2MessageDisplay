@@ -283,8 +283,8 @@
 		if (count($MessageData) == 0) {
 			$content .= '<tr>';
 			$Icon = "Ok";
-			$content .= '<td class="iconMediumSpinner ipsIcon' .$Icon. '" style="width: 100%; background-position: center center;"></div>';
-			//$content .= '<td class="fst"><img src=\'img/icons/Ok.svg\'></img></td>';
+			//$content .= '<td class="iconMediumSpinner ipsIcon' .$Icon. '" style="width: 100%; background-position: center center;"></div>';
+			$content .= '<td class="iconMediumSpinner ipsIcon' .$Icon. '"></img></td>';
 			if ($ShowTime == true) {
 				$content .= '<td class="lst">'.date("d.m.Y H:i", time() ).'</td>';
 			}
