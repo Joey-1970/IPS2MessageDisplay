@@ -55,12 +55,15 @@
 		// Funktion Überwachung einer Variablen
 		$arrayElements[] = array("type" => "Label", "name" => "LabelFunction1", "caption" => "Zu überwachende Variable", "visible" => true);
             	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
-		
+			// Boolean Variable
+			
+			
 		// Funktion nach Uhrzeit
 		
-		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "MessageText", "caption" => "Nachricht");
-		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
 	
+		$arrayElements[] = array("type" => "Label", "label" => "_____________________________________________________________________________________________________");
+		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "MessageText", "caption" => "Nachricht");
+		
 		$arrayOptions = array();
 		$arrayOptions[] = array("caption" => "Information (grün)", "value" => 0);
 		$arrayOptions[] = array("caption" => "Alarm (rot)", "value" => 1);
