@@ -182,8 +182,8 @@
 		case "ChangeVariable":
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
 				// Registrierung für die Änderung der Variablen
-				If ($this->ReadPropertyInteger("VariableID") > 0) {
-					$this->RegisterMessage($this->ReadPropertyInteger("VariableID"), 10603);
+				If ($Value > 0) {
+					$this->RegisterMessage($Value, 10603);
 					switch($this->GetVariableType($Value)) {
 						case 0: // Boolean
 							$this->UpdateFormField('ComparativeValueBool', 'visible', true);
