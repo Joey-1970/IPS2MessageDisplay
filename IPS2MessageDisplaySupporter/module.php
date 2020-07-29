@@ -20,6 +20,7 @@
 		$this->RegisterPropertyInteger("MessageType", 0);
 		$this->RegisterPropertyInteger("VariableID", 0);
 		$this->RegisterPropertyString("Operator", "<");
+		$this->RegisterPropertyString("OperatorString", "==");
 		$this->RegisterPropertyBoolean("ComparativeValueBool", false);
 		$this->RegisterPropertyInteger("ComparativeValueInt", 0);
 		$this->RegisterPropertyFloat("ComparativeValueFloat", 0.0);
@@ -83,8 +84,12 @@
 		
 			// Float
 			$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => false);
-		
+			
 			// String
+			$arrayOptions = array();
+			$arrayOptions[] = array("caption" => "==", "value" => "==");
+			$arrayOptions[] = array("caption" => "<>", "value" => "<>");
+			$arrayElements[] = array("type" => "Select", "name" => "OperatorString", "caption" => "Vergleichsart", "options" => $arrayOptions, "visible" => false);
 			$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => false);
 		
 		// Funktion nach Uhrzeit
@@ -191,6 +196,7 @@
 							$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
 							$this->UpdateFormField('ComparativeValueString', 'visible', false);
 							$this->UpdateFormField('Operator', 'visible', false);
+							$this->UpdateFormField('OperatorString', 'visible', false);
 							break;
 						case 1: // Integer
 							$this->UpdateFormField('ComparativeValueBool', 'visible', false);
@@ -198,6 +204,7 @@
 							$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
 							$this->UpdateFormField('ComparativeValueString', 'visible', false);
 							$this->UpdateFormField('Operator', 'visible', true);
+							$this->UpdateFormField('OperatorString', 'visible', false);
 							break;
 						case 2: // Float
 							$this->UpdateFormField('ComparativeValueBool', 'visible', false);
@@ -205,13 +212,15 @@
 							$this->UpdateFormField('ComparativeValueFloat', 'visible', true);
 							$this->UpdateFormField('ComparativeValueString', 'visible', false);
 							$this->UpdateFormField('Operator', 'visible', true);
+							$this->UpdateFormField('OperatorString', 'visible', false);
 							break;
 						case 3: // String
 							$this->UpdateFormField('ComparativeValueBool', 'visible', false);
 							$this->UpdateFormField('ComparativeValueInt', 'visible', false);
 							$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
 							$this->UpdateFormField('ComparativeValueString', 'visible', true);
-							$this->UpdateFormField('Operator', 'visible', true);
+							$this->UpdateFormField('Operator', 'visible', false);
+							$this->UpdateFormField('OperatorString', 'visible', true);
 							break;
 					}
 				}
@@ -276,7 +285,7 @@
 							}
 							break;
 						case 3: // String
-							If (checkOperator(GetValueString($SenderID), $this->ReadPropertyString("Operator"), $this->ReadPropertyString("ComparativeValueString")) {
+							If (checkOperator(GetValueString($SenderID), $this->ReadPropertyString("OperatorString"), $this->ReadPropertyString("ComparativeValueString")) {
 								$this->Add();
 							}
 							else {
