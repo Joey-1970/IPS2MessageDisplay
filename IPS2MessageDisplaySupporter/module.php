@@ -249,7 +249,7 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageID = $this->InstanceID;
 			$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
-						"Function" => "Add", "MessageID" => $MessageID )));
+						"Function" => "Remove", "MessageID" => $MessageID )));
 
 		}
 	}    
