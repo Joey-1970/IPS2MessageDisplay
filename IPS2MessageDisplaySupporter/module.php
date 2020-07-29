@@ -269,7 +269,7 @@
 							}
 							break;
 						case 1: // Integer
-							If (checkOperator(GetValueInteger($SenderID), $this->ReadPropertyString("Operator"), $this->ReadPropertyInteger("ComparativeValueInt")) {
+							If ($this->checkOperator(GetValueInteger($SenderID), $this->ReadPropertyString("Operator"), $this->ReadPropertyInteger("ComparativeValueInt")) {
 								$this->Add();
 							}
 							else {
@@ -277,7 +277,7 @@
 							}
 							break;
 						case 2: // Float
-							If (checkOperator(GetValueFloat($SenderID), $this->ReadPropertyString("Operator"), $this->ReadPropertyFloat("ComparativeValueFloat")) {
+							If ($this->checkOperator(GetValueFloat($SenderID), $this->ReadPropertyString("Operator"), $this->ReadPropertyFloat("ComparativeValueFloat")) {
 								$this->Add();
 							}
 							else {
@@ -285,7 +285,7 @@
 							}
 							break;
 						case 3: // String
-							If (checkOperator(GetValueString($SenderID), $this->ReadPropertyString("OperatorString"), $this->ReadPropertyString("ComparativeValueString")) {
+							If ($this->checkOperator(GetValueString($SenderID), $this->ReadPropertyString("OperatorString"), $this->ReadPropertyString("ComparativeValueString")) {
 								$this->Add();
 							}
 							else {
