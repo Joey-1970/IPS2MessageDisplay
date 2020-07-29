@@ -17,10 +17,10 @@
 		
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("Function", 0);
-		$this->RegisterPropertyBoolean("ActionBoolean", false);
 		$this->RegisterPropertyInteger("MessageType", 0);
 		$this->RegisterPropertyInteger("VariableID", 0);
 		$this->RegisterPropertyString("Operator", "<");
+		$this->RegisterPropertyBoolean("ComparativeValueBool", false);
 		$this->RegisterPropertyInteger("ComparativeValueInt", 0);
 		$this->RegisterPropertyFloat("ComparativeValueFloat", 0.0);
 		$this->RegisterPropertyString("ComparativeValueString", "");
@@ -64,7 +64,7 @@
 			$arrayOptions = array();
 			$arrayOptions[] = array("caption" => "Falsch", "value" => false);
 			$arrayOptions[] = array("caption" => "Wahr", "value" => true);
-			$arrayElements[] = array("type" => "Select", "name" => "ActionBoolean", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptions, "visible" => true);
+			$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptions, "visible" => true);
 			
 			// Integer und Float
 			$arrayOptions = array();
@@ -180,10 +180,39 @@
 			break;
 		case "ChangeVariable":
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
-				$this->GetVariableType($Value);
 				// Registrierung für die Änderung der Variablen
 				If ($this->ReadPropertyInteger("VariableID") > 0) {
 					$this->RegisterMessage($this->ReadPropertyInteger("VariableID"), 10603);
+				}
+				switch($this->GetVariableType($Value)) {
+					case 0: // Boolean
+						$this->UpdateFormField('ComparativeValueBool', 'visible', true);
+						$this->UpdateFormField('ComparativeValueInt', 'visible', false);
+						$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
+						$this->UpdateFormField('ComparativeValueString', 'visible', false);
+						$this->UpdateFormField('Operator', 'visible', false);
+						break;
+					case 1: // Integer
+						$this->UpdateFormField('ComparativeValueBool', 'visible', false);
+						$this->UpdateFormField('ComparativeValueInt', 'visible', true);
+						$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
+						$this->UpdateFormField('ComparativeValueString', 'visible', false);
+						$this->UpdateFormField('Operator', 'visible', true);
+						break;
+					case 2: // Float
+						$this->UpdateFormField('ComparativeValueBool', 'visible', false);
+						$this->UpdateFormField('ComparativeValueInt', 'visible', false);
+						$this->UpdateFormField('ComparativeValueFloat', 'visible', true);
+						$this->UpdateFormField('ComparativeValueString', 'visible', false);
+						$this->UpdateFormField('Operator', 'visible', true);
+						break;
+					case 3: // String
+						$this->UpdateFormField('ComparativeValueBool', 'visible', false);
+						$this->UpdateFormField('ComparativeValueInt', 'visible', false);
+						$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
+						$this->UpdateFormField('ComparativeValueString', 'visible', true);
+						$this->UpdateFormField('Operator', 'visible', true);
+						break;
 				}
 			break;
 		case "ChangeWebfront":
