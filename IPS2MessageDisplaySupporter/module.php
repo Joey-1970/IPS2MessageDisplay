@@ -63,21 +63,21 @@
             	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
 			
 			// Boolean Variable
-			$arrayOptions = array();
-			$arrayOptions[] = array("caption" => "Falsch", "value" => false);
-			$arrayOptions[] = array("caption" => "Wahr", "value" => true);
-			$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptions, "visible" => false);
+			$arrayOptionsBool = array();
+			$arrayOptionsBool[] = array("caption" => "Falsch", "value" => false);
+			$arrayOptionsBool[] = array("caption" => "Wahr", "value" => true);
+			$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptionsBool, "visible" => false);
 			
 			// Integer und Float
-			$arrayOptions = array();
-			$arrayOptions[] = array("caption" => "<", "value" => "<");
-			$arrayOptions[] = array("caption" => "<=", "value" => "<=");
-			$arrayOptions[] = array("caption" => ">", "value" => ">");
-			$arrayOptions[] = array("caption" => ">=", "value" => ">=");
-			$arrayOptions[] = array("caption" => "==", "value" => "==");
-			$arrayOptions[] = array("caption" => "===", "value" => "===");
-			$arrayOptions[] = array("caption" => "<>", "value" => "<>");
-			$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptions, "visible" => false);
+			$arrayOptionsCompare = array();
+			$arrayOptionsCompare[] = array("caption" => "<", "value" => "<");
+			$arrayOptionsCompare[] = array("caption" => "<=", "value" => "<=");
+			$arrayOptionsCompare[] = array("caption" => ">", "value" => ">");
+			$arrayOptionsCompare[] = array("caption" => ">=", "value" => ">=");
+			$arrayOptionsCompare[] = array("caption" => "==", "value" => "==");
+			$arrayOptionsCompare[] = array("caption" => "===", "value" => "===");
+			$arrayOptionsCompare[] = array("caption" => "<>", "value" => "<>");
+			$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptionsCompare, "visible" => false);
 
 			// Integer
 			$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueInt", "caption" => "Vergleichswert", "visible" => false);
@@ -86,10 +86,10 @@
 			$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => false);
 			
 			// String
-			$arrayOptions = array();
-			$arrayOptions[] = array("caption" => "==", "value" => "==");
-			$arrayOptions[] = array("caption" => "<>", "value" => "<>");
-			$arrayElements[] = array("type" => "Select", "name" => "OperatorString", "caption" => "Vergleichsart", "options" => $arrayOptions, "visible" => false);
+			$arrayOptionsCompareString = array();
+			$arrayOptionsCompareString[] = array("caption" => "==", "value" => "==");
+			$arrayOptionsCompareString[] = array("caption" => "<>", "value" => "<>");
+			$arrayElements[] = array("type" => "Select", "name" => "OperatorString", "caption" => "Vergleichsart", "options" => $arrayOptionsCompareString, "visible" => false);
 			$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => false);
 		
 		// Funktion nach Uhrzeit
