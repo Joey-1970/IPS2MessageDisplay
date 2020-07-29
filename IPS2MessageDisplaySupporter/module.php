@@ -62,13 +62,12 @@
 		$arrayElements[] = array("type" => "Label", "name" => "LabelFunction1", "caption" => "Zu überwachende Variable", "visible" => true);
             	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
 			
-			// Boolean Variable
+			// Select Boolean Variable
 			$arrayOptionsBool = array();
 			$arrayOptionsBool[] = array("caption" => "Falsch", "value" => false);
 			$arrayOptionsBool[] = array("caption" => "Wahr", "value" => true);
-			$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptionsBool, "visible" => false);
 			
-			// Integer und Float
+			// Select Integer und Float
 			$arrayOptionsCompare = array();
 			$arrayOptionsCompare[] = array("caption" => "<", "value" => "<");
 			$arrayOptionsCompare[] = array("caption" => "<=", "value" => "<=");
@@ -77,20 +76,47 @@
 			$arrayOptionsCompare[] = array("caption" => "==", "value" => "==");
 			$arrayOptionsCompare[] = array("caption" => "===", "value" => "===");
 			$arrayOptionsCompare[] = array("caption" => "<>", "value" => "<>");
-			$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptionsCompare, "visible" => false);
-
-			// Integer
-			$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueInt", "caption" => "Vergleichswert", "visible" => false);
-		
-			// Float
-			$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => false);
 			
-			// String
+			// Select String
 			$arrayOptionsCompareString = array();
 			$arrayOptionsCompareString[] = array("caption" => "==", "value" => "==");
 			$arrayOptionsCompareString[] = array("caption" => "<>", "value" => "<>");
-			$arrayElements[] = array("type" => "Select", "name" => "OperatorString", "caption" => "Vergleichsart", "options" => $arrayOptionsCompareString, "visible" => false);
-			$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => false);
+
+			switch($this->GetVariableType($this->ReadPropertyInteger("VariableID"))) {
+				case 0: // Boolean			
+					$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptionsBool, "visible" => true);
+					$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptionsCompare, "visible" => false);
+					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueInt", "caption" => "Vergleichswert", "visible" => false);
+					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => false);
+					$arrayElements[] = array("type" => "Select", "name" => "OperatorString", "caption" => "Vergleichsart", "options" => $arrayOptionsCompareString, "visible" => false);
+					$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => false);
+					break;
+				case 1: // Integer			
+					$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptionsBool, "visible" => false);
+					$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptionsCompare, "visible" => true);
+					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueInt", "caption" => "Vergleichswert", "visible" => true);
+					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => false);
+					$arrayElements[] = array("type" => "Select", "name" => "OperatorString", "caption" => "Vergleichsart", "options" => $arrayOptionsCompareString, "visible" => false);
+					$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => false);
+					break;	
+				case 2: // Float			
+					$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptionsBool, "visible" => false);
+					$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptionsCompare, "visible" => true);
+					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueInt", "caption" => "Vergleichswert", "visible" => false);
+					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => true);
+					$arrayElements[] = array("type" => "Select", "name" => "OperatorString", "caption" => "Vergleichsart", "options" => $arrayOptionsCompareString, "visible" => false);
+					$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => false);
+					break;
+				case 3: // String			
+					$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptionsBool, "visible" => false);
+					$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptionsCompare, "visible" => false);
+					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueInt", "caption" => "Vergleichswert", "visible" => false);
+					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => false);
+					$arrayElements[] = array("type" => "Select", "name" => "OperatorString", "caption" => "Vergleichsart", "options" => $arrayOptionsCompareString, "visible" => true);
+					$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => true);
+					break;
+			}
+					
 		
 		// Funktion nach Uhrzeit
 		
