@@ -58,8 +58,8 @@
             	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
 			// Boolean Variable
 			$arrayOptions = array();
-			$arrayOptions[] = array("caption" => "false", "value" => 0);
-			$arrayOptions[] = array("caption" => "true", "value" => 1);
+			$arrayOptions[] = array("caption" => "Falsch", "value" => false);
+			$arrayOptions[] = array("caption" => "Wahr", "value" => true);
 			$arrayElements[] = array("type" => "Select", "name" => "ActionBoolean", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptions, "visible" => true);
 			
 		// Funktion nach Uhrzeit
