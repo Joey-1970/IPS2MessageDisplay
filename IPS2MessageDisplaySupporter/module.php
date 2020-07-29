@@ -229,7 +229,7 @@
 			$Expires = $this->ReadPropertyInteger("Expires");
 			$Removable = $this->ReadPropertyBoolean("Removable");
 			$Type = $this->ReadPropertyInteger("MessageType");
-			$Page = $this->ReadPropertyString("Image");
+			$Image = $this->ReadPropertyString("Image");
 			$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
 			$Page = $this->ReadPropertyString("Page");
 			
