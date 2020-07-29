@@ -105,7 +105,7 @@
 		$ArrayRowLayout[] = array("type" => "Select", "name" => "Page", "caption" => "Seite", "options" => $arrayPages);
 		$arrayElements[] = array("type" => "RowLayout", "items" => $ArrayRowLayout);
 		
-		$arrayElements[] = array("type" => "Label", "caption" => "Auswahl des Icons (wird keins gewählt wird das Standard-Icon verwendet)"); 
+		$arrayElements[] = array("type" => "Label", "caption" => "Auswahl des Icons"); 
 		$IconsArray = array();
 		$IconsArray = $this->GetIconsList();
 		$arrayOptions = array();
@@ -229,7 +229,12 @@
 			$Expires = $this->ReadPropertyInteger("Expires");
 			$Removable = $this->ReadPropertyBoolean("Removable");
 			$Type = $this->ReadPropertyInteger("MessageType");
-			$Image = $this->ReadPropertyString("Image");
+			If ($this->ReadPropertyString("Image") == "Transparent") {
+				$Image = "";
+			}
+			   else {
+				$Image = $this->ReadPropertyString("Image");
+			}
 			$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
 			$Page = $this->ReadPropertyString("Page");
 			
