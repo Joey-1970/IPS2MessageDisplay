@@ -20,6 +20,10 @@
 		$this->RegisterPropertyBoolean("ActionBoolean", false);
 		$this->RegisterPropertyInteger("MessageType", 0);
 		$this->RegisterPropertyInteger("VariableID", 0);
+		$this->RegisterPropertyString("Operator", "<");
+		$this->RegisterPropertyInteger("ComparativeValueInt", 0);
+		$this->RegisterPropertyFloat("ComparativeValueFloat", 0.0);
+		$this->RegisterPropertyString("ComparativeValueString", "");
 		$this->RegisterPropertyInteger("WebfrontID", 0);
 		$this->RegisterPropertyString("MessageText", "");
 		$this->RegisterPropertyInteger("Expires", 0);
@@ -61,6 +65,18 @@
 			$arrayOptions[] = array("caption" => "Falsch", "value" => false);
 			$arrayOptions[] = array("caption" => "Wahr", "value" => true);
 			$arrayElements[] = array("type" => "Select", "name" => "ActionBoolean", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptions, "visible" => true);
+			
+			// Integer und Float
+			$arrayOptions = array();
+			$arrayOptions[] = array("caption" => "<", "value" => "<");
+			$arrayOptions[] = array("caption" => "<=", "value" => "<=");
+			$arrayOptions[] = array("caption" => ">", "value" => ">");
+			$arrayOptions[] = array("caption" => ">=", "value" => ">=");
+			$arrayOptions[] = array("caption" => "==", "value" => "==");
+			$arrayOptions[] = array("caption" => "===", "value" => "===");
+			$arrayOptions[] = array("caption" => "<>", "value" => "<>");
+			$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptions, "visible" => true);
+
 			
 		// Funktion nach Uhrzeit
 		
