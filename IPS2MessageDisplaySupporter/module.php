@@ -77,7 +77,15 @@
 			$arrayOptions[] = array("caption" => "<>", "value" => "<>");
 			$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptions, "visible" => true);
 
-			
+			// Integer
+			$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueInt", "caption" => "Vergleichswert", "visible" => true);
+		
+			// Float
+			$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => true);
+		
+			// String
+			$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => true);
+		
 		// Funktion nach Uhrzeit
 		
 	
