@@ -252,7 +252,31 @@
 				If ($SenderID == $this->ReadPropertyInteger("VariableID")) {
 					switch ($this->GetVariableType($SenderID)) {
 						case 0: // Boolean
-							If (GetValueBoolean($SenderID) == $this->ReadPropertyBoolean("ActionBoolean")) {
+							If (GetValueBoolean($SenderID) == $this->ReadPropertyBoolean("ComparativeValueBool")) {
+								$this->Add();
+							}
+							else {
+								$this->Remove();	
+							}
+							break;
+						case 1: // Integer
+							If (checkOperator(GetValueInteger($SenderID), $this->ReadPropertyString("Operator"), $this->ReadPropertyInteger("ComparativeValueInt")) {
+								$this->Add();
+							}
+							else {
+								$this->Remove();	
+							}
+							break;
+						case 2: // Float
+							If (checkOperator(GetValueFloat($SenderID), $this->ReadPropertyString("Operator"), $this->ReadPropertyFloat("ComparativeValueFloat")) {
+								$this->Add();
+							}
+							else {
+								$this->Remove();	
+							}
+							break;
+						case 3: // String
+							If (checkOperator(GetValueString($SenderID), $this->ReadPropertyString("Operator"), $this->ReadPropertyString("ComparativeValueString")) {
 								$this->Add();
 							}
 							else {
