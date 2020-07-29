@@ -60,7 +60,7 @@
 			$arrayOptions = array();
 			$arrayOptions[] = array("caption" => "false", "value" => 0);
 			$arrayOptions[] = array("caption" => "true", "value" => 1);
-			$arrayElements[] = array("type" => "Select", "name" => "ActionBoolean", "caption" => "Nachrichten-Typ", "options" => $arrayOptions, , "visible" => true);
+			$arrayElements[] = array("type" => "Select", "name" => "ActionBoolean", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptions, "visible" => true);
 			
 		// Funktion nach Uhrzeit
 		
