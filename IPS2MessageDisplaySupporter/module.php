@@ -253,6 +253,28 @@
 
 		}
 	}    
+	
+	private function checkOperator($value1, $operator, $value2) 
+	{
+    		switch ($operator) {
+        		case '<': // Less than
+            			return $value1 < $value2;
+        		case '<=': // Less than or equal to
+            			return $value1 <= $value2;
+        		case '>': // Greater than
+            			return $value1 > $value2;
+        		case '>=': // Greater than or equal to
+            			return $value1 >= $value2;
+        		case '==': // Equal
+            			return $value1 == $value2;
+        		case '===': // Identical
+            			return $value1 === $value2;
+        		case '<>': // Not equal
+            			return $value1 != $value2;
+        		default:
+            			return FALSE;
+    		}
+	}
 	    
 	private function RefreshProfileForm($Model)
     	{
