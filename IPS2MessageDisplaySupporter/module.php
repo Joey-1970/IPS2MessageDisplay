@@ -17,6 +17,7 @@
 		
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("Function", 0);
+		$this->RegisterPropertyBoolean("ActionBoolean", false);
 		$this->RegisterPropertyInteger("MessageType", 0);
 		$this->RegisterPropertyInteger("VariableID", 0);
 		$this->RegisterPropertyInteger("WebfrontID", 0);
@@ -56,7 +57,10 @@
 		$arrayElements[] = array("type" => "Label", "name" => "LabelFunction1", "caption" => "Zu überwachende Variable", "visible" => true);
             	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
 			// Boolean Variable
-			
+			$arrayOptions = array();
+			$arrayOptions[] = array("caption" => "false", "value" => 0);
+			$arrayOptions[] = array("caption" => "true", "value" => 1);
+			$arrayElements[] = array("type" => "Select", "name" => "ActionBoolean", "caption" => "Nachrichten-Typ", "options" => $arrayOptions, , "visible" => true);
 			
 		// Funktion nach Uhrzeit
 		
@@ -127,6 +131,11 @@
 		
 		}
 		
+		// Registrierung für die Änderung der Variablen
+		If ($this->ReadPropertyInteger("VariableID") > 0) {
+			$this->RegisterMessage($this->ReadPropertyInteger("VariableID"), 10603);
+		}
+		
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			
 			$this->SetStatus(102);
@@ -148,7 +157,10 @@
 		case "ChangeVariable":
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
 				$this->GetVariableType($Value);
-				
+				// Registrierung für die Änderung der Variablen
+				If ($this->ReadPropertyInteger("VariableID") > 0) {
+					$this->RegisterMessage($this->ReadPropertyInteger("VariableID"), 10603);
+				}
 			break;
 		case "ChangeWebfront":
 				$this->SendDebug("RequestAction", "ChangeWebfront - Wert: ".$Value, 0);
@@ -170,6 +182,27 @@
 	            throw new Exception("Invalid Ident");
 	    	}
 	}
+	
+	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
+    	{
+		switch ($Message) {
+			case 10603:
+				// Änderung der Ist-Temperatur, die Temperatur aus dem angegebenen Sensor in das Modul kopieren
+				If ($SenderID == $this->ReadPropertyInteger("VariableID")) {
+					switch (GetVariableType($SenderID)) {
+						case 0: // Boolean
+							If (GetValueBoolean($SenderID) == $this->ReadPropertyBoolean("ActionBoolean")) {
+								$this->Add();
+							}
+							else {
+								$this->Remove();	
+							}
+							break;
+					}
+				}
+				break;
+		}
+    	}    
 	    
 	// Beginn der Funktionen
 
@@ -181,7 +214,7 @@
 			$InformationArray = array();
 			$InformationsArray = IPS_GetVariable($VariableID);
 			$VariableType = $InformationsArray["VariableType"]; // Variablentyp (0: Boolean, 1: Integer, 2: Float, 3: String)
-			$VariableTypeArray = array("Boolean", "integer", "Float", "String");
+			$VariableTypeArray = array("Boolean", "Integer", "Float", "String");
 			$this->SendDebug("Get Variable Type", "Variablen Typ: ".$VariableTypeArray[$VariableType], 0);
 			$Result = $VariableType;
 		}
