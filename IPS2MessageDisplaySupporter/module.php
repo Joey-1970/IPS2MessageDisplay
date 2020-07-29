@@ -189,7 +189,7 @@
 			case 10603:
 				// Änderung der Ist-Temperatur, die Temperatur aus dem angegebenen Sensor in das Modul kopieren
 				If ($SenderID == $this->ReadPropertyInteger("VariableID")) {
-					switch (GetVariableType($SenderID)) {
+					switch ($this->GetVariableType($SenderID)) {
 						case 0: // Boolean
 							If (GetValueBoolean($SenderID) == $this->ReadPropertyBoolean("ActionBoolean")) {
 								$this->Add();
