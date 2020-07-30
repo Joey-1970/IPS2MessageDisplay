@@ -327,7 +327,7 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			switch ($this->GetVariableType($this->ReadPropertyInteger("VariableID"))) {
 				case 0: // Boolean
-					If (GetValueBoolean($SenderID) == $this->ReadPropertyBoolean("ComparativeValueBool")) {
+					If (GetValueBoolean($this->ReadPropertyInteger("VariableID")) == $this->ReadPropertyBoolean("ComparativeValueBool")) {
 						$this->Add();
 					}
 					else {
