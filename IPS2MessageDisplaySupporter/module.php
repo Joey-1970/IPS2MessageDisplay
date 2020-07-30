@@ -472,7 +472,7 @@
 	return $PagesArray;
 	}
 	    
-	function GetIconsList()
+	private function GetIconsList()
 	{
 	    	$id = IPS_GetInstanceListByModuleID('{B69010EA-96D5-46DF-B885-24821B8C8DBD}')[0];
 	    	$Icons = array();
