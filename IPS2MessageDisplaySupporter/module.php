@@ -13,6 +13,8 @@
         {
             	// Diese Zeile nicht löschen.
             	parent::Create();
+		$this->RegisterMessage(0, IPS_KERNELMESSAGE);
+		
 		$this->ConnectParent("{8D668956-7DB5-49FD-B1A2-149149D99CEB}");
 		
 		$this->RegisterPropertyBoolean("Open", false);
@@ -31,12 +33,7 @@
 		$this->RegisterPropertyBoolean("Removable", true);
 		$this->RegisterPropertyString("Image", "Transparent");
 		$this->RegisterPropertyString("Page", "unbestimmt");
-		//Status-Variablen anlegen
 		
-			
-		// Webhook einrichten
-	
-
         }
  	
 	public function GetConfigurationForm() 
@@ -183,17 +180,13 @@
             	// Diese Zeile nicht löschen
             	parent::ApplyChanges();
 		
-		if (IPS_GetKernelRunlevel() == KR_READY) {
-		
-		}
-		
 		// Registrierung für die Änderung der Variablen
 		If ($this->ReadPropertyInteger("VariableID") > 0) {
 			$this->RegisterMessage($this->ReadPropertyInteger("VariableID"), 10603);
 		}
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			
+			$this->Initialize();
 			$this->SetStatus(102);
 			
 		}
@@ -282,8 +275,12 @@
 	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
     	{
 		switch ($Message) {
+			case 10100:
+				// IPS_KERNELSTARTED
+				$this->ApplyChanges();
+				break;
 			case 10603:
-				// Änderung der Ist-Temperatur, die Temperatur aus dem angegebenen Sensor in das Modul kopieren
+				// Änderung an der zu überwachende Variable
 				If ($SenderID == $this->ReadPropertyInteger("VariableID")) {
 					switch ($this->GetVariableType($SenderID)) {
 						case 0: // Boolean
@@ -325,7 +322,45 @@
     	}    
 	    
 	// Beginn der Funktionen
-
+	private function Initialize()
+	{
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			switch ($this->GetVariableType($this->ReadPropertyInteger("VariableID"))) {
+				case 0: // Boolean
+					If (GetValueBoolean($SenderID) == $this->ReadPropertyBoolean("ComparativeValueBool")) {
+						$this->Add();
+					}
+					else {
+						$this->Remove();	
+					}
+					break;
+				case 1: // Integer
+					If ($this->checkOperator(GetValueInteger($this->ReadPropertyInteger("VariableID")), $this->ReadPropertyString("Operator"), $this->ReadPropertyInteger("ComparativeValueInt"))) {
+						$this->Add();
+					}
+					else {
+						$this->Remove();	
+					}
+					break;
+				case 2: // Float
+					If ($this->checkOperator(GetValueFloat($this->ReadPropertyInteger("VariableID")), $this->ReadPropertyString("Operator"), $this->ReadPropertyFloat("ComparativeValueFloat"))) {
+						$this->Add();
+					}
+					else {
+						$this->Remove();	
+					}
+					break;
+				case 3: // String
+					If ($this->checkOperator(GetValueString($this->ReadPropertyInteger("VariableID")), $this->ReadPropertyString("OperatorString"), $this->ReadPropertyString("ComparativeValueString"))) {
+						$this->Add();
+					}
+					else {
+						$this->Remove();	
+					}
+					break;
+			}
+		}
+	}
 	    
 	private function GetVariableType(int $VariableID) 
 	{
@@ -357,10 +392,10 @@
 			}
 			$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
 			$Page = $this->ReadPropertyString("Page");
-			
-			$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
+			if (IPS_GetKernelRunlevel() == KR_READY) {
+				$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
 						"Function" => "Add", "MessageID" => $MessageID, "Text" => $Text, "Expires" => $Expires, "Removable" => $Removable, "Type" => $Type, "Image" => $Image, "WebfrontID" => $WebfrontID, "Page" => $Page )));
-
+			}
 		}
 	}
 	
@@ -368,9 +403,10 @@
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$MessageID = $this->InstanceID;
-			$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
+			if (IPS_GetKernelRunlevel() == KR_READY) {
+				$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
 						"Function" => "Remove", "MessageID" => $MessageID )));
-
+			}
 		}
 	}    
 	
