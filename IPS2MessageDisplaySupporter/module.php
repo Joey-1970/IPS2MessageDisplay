@@ -81,7 +81,7 @@
 
 			switch($this->GetVariableType($this->ReadPropertyInteger("VariableID"))) {
 				case 0: // Boolean			
-					$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptionsBool, "visible" => true);
+					$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Vergleichswert", "options" => $arrayOptionsBool, "visible" => true);
 					$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptionsCompare, "visible" => false);
 					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueInt", "caption" => "Vergleichswert", "visible" => false);
 					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => false);
@@ -89,7 +89,7 @@
 					$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => false);
 					break;
 				case 1: // Integer			
-					$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptionsBool, "visible" => false);
+					$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Vergleichswert", "options" => $arrayOptionsBool, "visible" => false);
 					$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptionsCompare, "visible" => true);
 					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueInt", "caption" => "Vergleichswert", "visible" => true);
 					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => false);
@@ -97,7 +97,7 @@
 					$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => false);
 					break;	
 				case 2: // Float			
-					$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptionsBool, "visible" => false);
+					$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Vergleichswert", "options" => $arrayOptionsBool, "visible" => false);
 					$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptionsCompare, "visible" => true);
 					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueInt", "caption" => "Vergleichswert", "visible" => false);
 					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => true);
@@ -105,7 +105,7 @@
 					$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => false);
 					break;
 				case 3: // String			
-					$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Nachrichten-Erstellung", "options" => $arrayOptionsBool, "visible" => false);
+					$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Vergleichswert", "options" => $arrayOptionsBool, "visible" => false);
 					$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptionsCompare, "visible" => false);
 					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueInt", "caption" => "Vergleichswert", "visible" => false);
 					$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => false);
@@ -119,7 +119,7 @@
 		
 	
 		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
-		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "MessageText", "caption" => "Nachricht");
+		$arrayElements[] = array("type" => "ValidationTextBox", "name" => "MessageText", "caption" => "Nachrichtentext");
 		
 		$arrayOptions = array();
 		$arrayOptions[] = array("caption" => "Information (grün)", "value" => 0);
@@ -127,9 +127,16 @@
 		$arrayOptions[] = array("caption" => "Warnung (gelb)", "value" => 2);
 		$arrayOptions[] = array("caption" => "Aufgaben (blau)", "value" => 3);
 		$arrayElements[] = array("type" => "Select", "name" => "MessageType", "caption" => "Nachrichten-Typ", "options" => $arrayOptions);
-
+		
+		$arrayElements[] = array("type" => "Label", "caption" => "Nachricht manuell löschbar");
 		$arrayOptions = array();
-		$arrayOptions[] = array("caption" => "Keine Löschung", "value" => 0);
+		$arrayOptions[] = array("label" => "Ja", "value" => true);
+		$arrayOptions[] = array("label" => "Nein", "value" => false);
+		$arrayElements[] = array("type" => "Select", "name" => "Removable", "caption" => "Löschbarkeit", "options" => $arrayOptions);
+
+		$arrayElements[] = array("type" => "Label", "caption" => "Automatische Löschung");
+		$arrayOptions = array();
+		$arrayOptions[] = array("caption" => "Keine automatische Löschung", "value" => 0);
 		$arrayOptions[] = array("caption" => "10", "value" => 10);
 		$arrayOptions[] = array("caption" => "30", "value" => 30);
 		$arrayOptions[] = array("caption" => "60", "value" => 60);
