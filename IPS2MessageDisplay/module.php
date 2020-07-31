@@ -223,7 +223,7 @@
 	protected function ProcessHookData() 
 	{		
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			$this->SendDebug("ProcessHookData", "Ausfuehrung", 0);
+			$this->SendDebug("ProcessHookData", "Ausfuehrung: ".$_SERVER['HOOK'], 0);
 			switch ($_GET['action']) {
 			    	case 'remove':
 			      		$MessageID = isset($_GET['MessageID']) ? $_GET['MessageID'] : -1;
