@@ -51,13 +51,14 @@
 		$arrayOptions = array();
 		$arrayOptions[] = array("label" => "Überwachung einer Variablen", "value" => 0);
 		//$arrayOptions[] = array("label" => "Erinnerung nach Uhrzeit", "value" => 1);
-		$arrayElements[] = array("type" => "Select", "name" => "Function", "caption" => "Funktion", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"RefreshProfileForm",$Function);' );
+		$arrayElements[] = array("type" => "Select", "name" => "Function", "caption" => "Funktion", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"ChangeFunction",$Function);' );
 
  		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
-
-		// Funktion Überwachung einer Variablen
-		$arrayElements[] = array("type" => "Label", "name" => "LabelFunction1", "caption" => "Zu überwachende Variable", "visible" => true);
-            	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
+		
+		If ($this->ReadPropertyInteger("Function") == 0) {
+			// Funktion Überwachung einer Variablen
+			$arrayElements[] = array("type" => "Label", "caption" => "Zu überwachende Variable", "visible" => true);
+            		$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
 			
 			// Select Boolean Variable
 			$arrayOptionsBool = array();
@@ -113,7 +114,10 @@
 					$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => true);
 					break;
 			}
-					
+		}
+		elseif ($this->ReadPropertyInteger("Function") == 1) {
+			$arrayElements[] = array("type" => "Label", "caption" => "Funktion Erinnerung", "visible" => true);
+		}
 		
 		// Funktion nach Uhrzeit
 		
@@ -206,9 +210,16 @@
 	public function RequestAction($Ident, $Value) 
 	{
   		switch($Ident) {
-		case "RefreshProfileForm":
+		case "ChangeFunction":
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
-				$this->RefreshProfileForm($Value);
+				switch($Value) {
+					case 0: // Variablenüberwachung
+						
+						break;
+					case 1: // Erinnerung nach Uhrzeit
+						
+						break;
+				}
 			break;
 		case "ChangeVariable":
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
