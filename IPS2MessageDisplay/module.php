@@ -22,6 +22,7 @@
 		$this->RegisterAttributeString("MessageData", ""); 
 		$this->RegisterPropertyInteger("AutoRemove", 1000);
 		$this->RegisterTimer("AutoRemove", 0, 'IPS2MessageDisplay_AutoRemove($_IPS["TARGET"]);');
+		$this->RegisterPropertyInteger("ActuatorID", 0);
 		
 		//Status-Variablen anlegen
 		$this->RegisterVariableString("Messages", "Meldungen", "~HTMLBox", 10);
@@ -50,6 +51,8 @@
 		$arrayElements[] = array("type" => "Select", "name" => "Sorting", "caption" => "Sortierung in der Darstellung", "options" => $arrayOptions );
 		
 		$arrayElements[] = array("name" => "ShowTime", "type" => "CheckBox",  "caption" => "Uhrzeit anzeigen");
+		$arrayElements[] = array("type" => "Label", "caption" => "Boolean-Variable die anzeigt, ob Meldungen vorhanden sind");
+ 		$arrayElements[] = array("type" => "SelectVariable", "name" => "ActuatorID", "caption" => "Anzeige-Variablen ID");
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
  	}       
@@ -337,7 +340,7 @@
 		If (GetValueInteger($this->GetIDForIdent("MessageCount")) <> count($MessageData)) {
 			SetValueInteger($this->GetIDForIdent("MessageCount"), count($MessageData));
 		}
-		/*
+		
 		If ((count($MessageData) == 0) AND ($this->ReadPropertyInteger("ActuatorID") > 0)) {
 			If (GetValueBoolean($this->ReadPropertyInteger("ActuatorID")) == true) {
 				SetValueBoolean($this->ReadPropertyInteger("ActuatorID"), false);
@@ -348,7 +351,7 @@
 				SetValueBoolean($this->ReadPropertyInteger("ActuatorID"), true);
 			}
 		}
-		*/
+		
 	}    
 	
 	private function MessageSort($MessageData, $DataField, $SortOrder) 
