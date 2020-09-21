@@ -1,14 +1,7 @@
 <?
-    // Klassendefinition
-    class IPS2MessageDisplay extends IPSModule 
-    {
-	public function Destroy() 
-	{
-		//Never delete this line!
-		parent::Destroy();
-		$this->SetTimerInterval("AutoRemove", 0);
-	}  
-	    
+// Klassendefinition
+class IPS2MessageDisplay extends IPSModule 
+{
 	// Überschreibt die interne IPS_Create($id) Funktion
         public function Create() 
         {
