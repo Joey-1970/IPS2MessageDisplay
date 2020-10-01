@@ -7,7 +7,7 @@ class IPS2MessageDisplay extends IPSModule
         {
             	// Diese Zeile nicht löschen.
             	parent::Create();
-		$this->RegisterMessage(0, IPS_KERNELMESSAGE);
+		$this->RegisterMessage(0, IPS_KERNELSTARTED);
 		
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("Sorting", 3);
