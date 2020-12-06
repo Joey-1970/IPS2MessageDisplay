@@ -352,13 +352,17 @@
 				}
 				break;
 			case 10505:
-				$Status = (IPS_GetInstance($SenderID)['InstanceStatus']);  
-				If ($Status <> 102) {
-					$this->Add();
+				$this->SendDebug("MessageSink", "SenderID: ".$SenderID, 0);
+				If ($SenderID == $this->ReadPropertyInteger("InstanceID")) {
+					$Status = (IPS_GetInstance($SenderID)['InstanceStatus']);  
+					$this->SendDebug("MessageSink", "Status: ".$Status, 0);
+					If ($Status <> 102) {
+						$this->Add();
+					}
+					else {
+						$this->Remove();	
+					}
 				}
-				else {
-					$this->Remove();	
-				}		
 				break;
 		}
     	}    
