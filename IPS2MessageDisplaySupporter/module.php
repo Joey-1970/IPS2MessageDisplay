@@ -21,6 +21,7 @@
 		$this->RegisterPropertyInteger("Function", 0);
 		$this->RegisterPropertyInteger("MessageType", 0);
 		$this->RegisterPropertyInteger("VariableID", 0);
+		$this->RegisterPropertyInteger("InstanceID", 0);
 		$this->RegisterPropertyString("Operator", "<");
 		$this->RegisterPropertyString("OperatorString", "==");
 		$this->RegisterPropertyBoolean("ComparativeValueBool", false);
@@ -50,7 +51,8 @@
  		
 		$arrayOptions = array();
 		$arrayOptions[] = array("label" => "Überwachung einer Variablen", "value" => 0);
-		//$arrayOptions[] = array("label" => "Erinnerung nach Uhrzeit", "value" => 1);
+		$arrayOptions[] = array("label" => "Überwachung einer Instanz", "value" => 1);
+		//$arrayOptions[] = array("label" => "Erinnerung nach Uhrzeit", "value" => 2);
 		$arrayElements[] = array("type" => "Select", "name" => "Function", "caption" => "Funktion", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"ChangeFunction",$Function);' );
 
  		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
@@ -116,6 +118,11 @@
 			}
 		}
 		elseif ($this->ReadPropertyInteger("Function") == 1) {
+			$arrayElements[] = array("type" => "Label", "caption" => "Zu überwachende Instanz", "visible" => true);
+			$arrayElements[] = array("type" => "SelectInstance", "name" => "InstanceID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeInstance",$InstanceID);'); 
+
+		}
+		elseif ($this->ReadPropertyInteger("Function") == 2) {
 			$arrayElements[] = array("type" => "Label", "caption" => "Funktion Erinnerung", "visible" => true);
 		}
 		
@@ -269,6 +276,14 @@
 					$this->UpdateFormField('Operator', 'visible', false);
 				}
 			break;
+		case "ChangeInstance":
+				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
+				// Registrierung für die Änderung der Variablen
+				If ($Value > 0) {
+					$this->RegisterMessage($Value, 10505);
+				}	
+			break;
+		
 		case "ChangeWebfront":
 				$this->SendDebug("RequestAction", "ChangeWebfront - Wert: ".$Value, 0);
 				$this->UpdateFormField('Page', 'value', "unbestimmt");
@@ -335,6 +350,15 @@
 							break;
 					}
 				}
+				break;
+			case 10505:
+				$Status = (IPS_GetInstance($SenderID)['InstanceStatus']);  
+				If ($Status <> 102) {
+					$this->Add();
+				}
+				else {
+					$this->Remove();	
+				}		
 				break;
 		}
     	}    
