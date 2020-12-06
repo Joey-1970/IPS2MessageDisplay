@@ -198,9 +198,17 @@
             	// Diese Zeile nicht löschen
             	parent::ApplyChanges();
 		
-		// Registrierung für die Änderung der Variablen
-		If ($this->ReadPropertyInteger("VariableID") > 0) {
-			$this->RegisterMessage($this->ReadPropertyInteger("VariableID"), 10603);
+		If ($this->ReadPropertyInteger("Function") == 0) {
+			// Registrierung für die Änderung der Variablen
+			If ($this->ReadPropertyInteger("VariableID") > 0) {
+				$this->RegisterMessage($this->ReadPropertyInteger("VariableID"), 10603);
+			}
+		}
+		elseif ($this->ReadPropertyInteger("Function") == 1) {
+			// Registrierung für die Änderung der Instance
+			If ($this->ReadPropertyInteger("InstanceID") > 0) {
+				$this->RegisterMessage($this->ReadPropertyInteger("InstanceID"), 10505);
+			}
 		}
 		
 		If ($this->ReadPropertyBoolean("Open") == true) {
@@ -371,39 +379,52 @@
 	private function Initialize()
 	{
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			switch ($this->GetVariableType($this->ReadPropertyInteger("VariableID"))) {
-				case 0: // Boolean
-					If (GetValueBoolean($this->ReadPropertyInteger("VariableID")) == $this->ReadPropertyBoolean("ComparativeValueBool")) {
-						$this->Add();
-					}
-					else {
-						$this->Remove();	
-					}
-					break;
-				case 1: // Integer
-					If ($this->checkOperator(GetValueInteger($this->ReadPropertyInteger("VariableID")), $this->ReadPropertyString("Operator"), $this->ReadPropertyInteger("ComparativeValueInt"))) {
-						$this->Add();
-					}
-					else {
-						$this->Remove();	
-					}
-					break;
-				case 2: // Float
-					If ($this->checkOperator(GetValueFloat($this->ReadPropertyInteger("VariableID")), $this->ReadPropertyString("Operator"), $this->ReadPropertyFloat("ComparativeValueFloat"))) {
-						$this->Add();
-					}
-					else {
-						$this->Remove();	
-					}
-					break;
-				case 3: // String
-					If ($this->checkOperator(GetValueString($this->ReadPropertyInteger("VariableID")), $this->ReadPropertyString("OperatorString"), $this->ReadPropertyString("ComparativeValueString"))) {
-						$this->Add();
-					}
-					else {
-						$this->Remove();	
-					}
-					break;
+			If ($this->ReadPropertyInteger("Function") == 0) {
+				switch ($this->GetVariableType($this->ReadPropertyInteger("VariableID"))) {
+					case 0: // Boolean
+						If (GetValueBoolean($this->ReadPropertyInteger("VariableID")) == $this->ReadPropertyBoolean("ComparativeValueBool")) {
+							$this->Add();
+						}
+						else {
+							$this->Remove();	
+						}
+						break;
+					case 1: // Integer
+						If ($this->checkOperator(GetValueInteger($this->ReadPropertyInteger("VariableID")), $this->ReadPropertyString("Operator"), $this->ReadPropertyInteger("ComparativeValueInt"))) {
+							$this->Add();
+						}
+						else {
+							$this->Remove();	
+						}
+						break;
+					case 2: // Float
+						If ($this->checkOperator(GetValueFloat($this->ReadPropertyInteger("VariableID")), $this->ReadPropertyString("Operator"), $this->ReadPropertyFloat("ComparativeValueFloat"))) {
+							$this->Add();
+						}
+						else {
+							$this->Remove();	
+						}
+						break;
+					case 3: // String
+						If ($this->checkOperator(GetValueString($this->ReadPropertyInteger("VariableID")), $this->ReadPropertyString("OperatorString"), $this->ReadPropertyString("ComparativeValueString"))) {
+							$this->Add();
+						}
+						else {
+							$this->Remove();	
+						}
+						break;
+				}
+			}
+			elseif ($this->ReadPropertyInteger("Function") == 1) {
+				$InstanceID = $this->ReadPropertyInteger("InstanceID");
+				$Status = (IPS_GetInstance($InstanceID)['InstanceStatus']);  
+				$this->SendDebug("MessageSink", "Status: ".$Status, 0);
+				If ($Status <> 102) {
+					$this->Add();
+				}
+				else {
+					$this->Remove();	
+				}
 			}
 		}
 	}
