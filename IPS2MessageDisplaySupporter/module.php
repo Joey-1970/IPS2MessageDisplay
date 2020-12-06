@@ -409,7 +409,13 @@
 				$Image = $this->ReadPropertyString("Image");
 			}
 			$WebfrontID = $this->ReadPropertyInteger("WebfrontID");
-			$Page = $this->ReadPropertyString("Page");
+			If ($this->ReadPropertyString("Page") <> "unbestimmt") {
+				$Page = $this->ReadPropertyString("Page");
+			}
+			else {
+				$Page = "";
+			}
+			
 			if (IPS_GetKernelRunlevel() == KR_READY) {
 				$this->SendDataToParent(json_encode(Array("DataID"=> "{4F07F8AF-DDF9-A175-6A16-C960F8040723}", 
 						"Function" => "Add", "MessageID" => $MessageID, "Text" => $Text, "Expires" => $Expires, "Removable" => $Removable, "Type" => $Type, "Image" => $Image, "WebfrontID" => $WebfrontID, "Page" => $Page )));
