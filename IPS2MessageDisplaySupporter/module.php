@@ -418,7 +418,7 @@
 			elseif ($this->ReadPropertyInteger("Function") == 1) {
 				$InstanceID = $this->ReadPropertyInteger("InstanceID");
 				$Status = (IPS_GetInstance($InstanceID)['InstanceStatus']);  
-				$this->SendDebug("MessageSink", "Status: ".$Status, 0);
+				$this->SendDebug("Initialize", "Status: ".$Status, 0);
 				If ($Status <> 102) {
 					$this->Add();
 				}
