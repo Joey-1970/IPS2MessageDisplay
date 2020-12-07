@@ -59,7 +59,7 @@
 		
 		If ($this->ReadPropertyInteger("Function") == 0) {
 			// Funktion Überwachung einer Variablen
-			$arrayElements[] = array("type" => "Label", "caption" => "Zu überwachende Variable", "visible" => true);
+			$arrayElements[] = array("type" => "Label", "name" => "lblVariable", "caption" => "Zu überwachende Variable", "visible" => true);
             		$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
 			
 			// Select Boolean Variable
@@ -118,7 +118,7 @@
 			}
 		}
 		elseif ($this->ReadPropertyInteger("Function") == 1) {
-			$arrayElements[] = array("type" => "Label", "caption" => "Zu überwachende Instanz", "visible" => true);
+			$arrayElements[] = array("type" => "Label", "name" => "lblInstance", "caption" => "Zu überwachende Instanz", "visible" => true);
 			$arrayElements[] = array("type" => "SelectInstance", "name" => "InstanceID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeInstance",$InstanceID);'); 
 
 		}
@@ -273,8 +273,10 @@
 							$this->UpdateFormField('Operator', 'visible', false);
 							$this->UpdateFormField('OperatorString', 'visible', false);
 						}
-						
-						$this->UpdateFormField('InstanceID', 'visible', false);						
+						$this->UpdateFormField('lblVariable', 'visible', true);
+						$this->UpdateFormField('lblInstance', 'visible', false);
+						$this->UpdateFormField('InstanceID', 'visible', false);	
+						$this->UpdateFormField('VariableID', 'visible', true);	
 						break;
 					case 1: // Instanzüberwachung
 						$this->UpdateFormField('ComparativeValueBool', 'visible', false);
@@ -283,8 +285,10 @@
 						$this->UpdateFormField('ComparativeValueString', 'visible', false);
 						$this->UpdateFormField('Operator', 'visible', false);
 						$this->UpdateFormField('OperatorString', 'visible', false);
-						
-						$this->UpdateFormField('InstanceID', 'visible', true);	
+						$this->UpdateFormField('lblVariable', 'visible', false);
+						$this->UpdateFormField('lblInstance', 'visible', true);
+						$this->UpdateFormField('InstanceID', 'visible', true);
+						$this->UpdateFormField('VariableID', 'visible', false);	
 						break;
 				}
 			break;
