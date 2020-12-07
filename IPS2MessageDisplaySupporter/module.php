@@ -125,6 +125,12 @@
 			// unsichtbare Element
 			$arrayElements[] = array("type" => "Label", "name" => "lblVariable", "caption" => "Zu überwachende Variable", "visible" => false);
             		$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => false, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
+			$arrayElements[] = array("type" => "Select", "name" => "ComparativeValueBool", "caption" => "Vergleichswert", "options" => $arrayOptionsBool, "visible" => false);
+			$arrayElements[] = array("type" => "Select", "name" => "Operator", "caption" => "Vergleichsart", "options" => $arrayOptionsCompare, "visible" => false);
+			$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueInt", "caption" => "Vergleichswert", "visible" => false);
+			$arrayElements[] = array("type" => "NumberSpinner", "name" => "ComparativeValueFloat", "caption" => "Vergleichswert", "digits" => 1, "visible" => false);
+			$arrayElements[] = array("type" => "Select", "name" => "OperatorString", "caption" => "Vergleichsart", "options" => $arrayOptionsCompareString, "visible" => false);
+			$arrayElements[] = array("type" => "ValidationTextBox", "name" => "ComparativeValueString", "caption" => "Vergleichswert", "visible" => false);
 
 			
 			$arrayElements[] = array("type" => "Label", "name" => "lblInstance", "caption" => "Zu überwachende Instanz", "visible" => true);
