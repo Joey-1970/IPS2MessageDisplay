@@ -230,7 +230,7 @@
 				switch($Value) {
 					case 0: // Variablenüberwachung
 						If ($this->ReadPropertyInteger("InstanceID") > 0) {
-							switch($this->GetVariableType($Value)) {
+							switch($this->GetVariableType($this->ReadPropertyInteger("InstanceID"))) {
 								case 0: // Boolean
 									$this->UpdateFormField('ComparativeValueBool', 'visible', true);
 									$this->UpdateFormField('ComparativeValueInt', 'visible', false);
@@ -287,7 +287,6 @@
 						$this->UpdateFormField('InstanceID', 'visible', true);	
 						break;
 				}
-				$this->ReloadForm();
 			break;
 		case "ChangeVariable":
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
