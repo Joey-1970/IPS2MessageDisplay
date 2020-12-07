@@ -226,7 +226,7 @@
 	{
   		switch($Ident) {
 		case "ChangeFunction":
-				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
+				$this->SendDebug("RequestAction", "ChangeFunction - Wert: ".$Value, 0);
 				switch($Value) {
 					case 0: // Variablenüberwachung
 						If ($this->ReadPropertyInteger("InstanceID") > 0) {
