@@ -295,6 +295,7 @@
 						$this->UpdateFormField('VariableID', 'visible', false);	
 						break;
 				}
+				$this->ReloadForm();
 			break;
 		case "ChangeVariable":
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
