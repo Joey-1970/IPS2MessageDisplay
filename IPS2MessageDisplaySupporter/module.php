@@ -229,13 +229,65 @@
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
 				switch($Value) {
 					case 0: // Variablenüberwachung
+						If ($this->ReadPropertyInteger("InstanceID") > 0) {
+							switch($this->GetVariableType($Value)) {
+								case 0: // Boolean
+									$this->UpdateFormField('ComparativeValueBool', 'visible', true);
+									$this->UpdateFormField('ComparativeValueInt', 'visible', false);
+									$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
+									$this->UpdateFormField('ComparativeValueString', 'visible', false);
+									$this->UpdateFormField('Operator', 'visible', false);
+									$this->UpdateFormField('OperatorString', 'visible', false);
+									break;
+								case 1: // Integer
+									$this->UpdateFormField('ComparativeValueBool', 'visible', false);
+									$this->UpdateFormField('ComparativeValueInt', 'visible', true);
+									$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
+									$this->UpdateFormField('ComparativeValueString', 'visible', false);
+									$this->UpdateFormField('Operator', 'visible', true);
+									$this->UpdateFormField('OperatorString', 'visible', false);
+									break;
+								case 2: // Float
+									$this->UpdateFormField('ComparativeValueBool', 'visible', false);
+									$this->UpdateFormField('ComparativeValueInt', 'visible', false);
+									$this->UpdateFormField('ComparativeValueFloat', 'visible', true);
+									$this->UpdateFormField('ComparativeValueString', 'visible', false);
+									$this->UpdateFormField('Operator', 'visible', true);
+									$this->UpdateFormField('OperatorString', 'visible', false);
+									break;
+								case 3: // String
+									$this->UpdateFormField('ComparativeValueBool', 'visible', false);
+									$this->UpdateFormField('ComparativeValueInt', 'visible', false);
+									$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
+									$this->UpdateFormField('ComparativeValueString', 'visible', true);
+									$this->UpdateFormField('Operator', 'visible', false);
+									$this->UpdateFormField('OperatorString', 'visible', true);
+									break;
+							}
+						}
+						else {
+							$this->UpdateFormField('ComparativeValueBool', 'visible', false);
+							$this->UpdateFormField('ComparativeValueInt', 'visible', false);
+							$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
+							$this->UpdateFormField('ComparativeValueString', 'visible', false);
+							$this->UpdateFormField('Operator', 'visible', false);
+							$this->UpdateFormField('OperatorString', 'visible', false);
+						}
 						
+						$this->UpdateFormField('InstanceID', 'visible', false);						
 						break;
-					case 2: // Instanzüberwachung
+					case 1: // Instanzüberwachung
+						$this->UpdateFormField('ComparativeValueBool', 'visible', false);
+						$this->UpdateFormField('ComparativeValueInt', 'visible', false);
+						$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
+						$this->UpdateFormField('ComparativeValueString', 'visible', false);
+						$this->UpdateFormField('Operator', 'visible', false);
+						$this->UpdateFormField('OperatorString', 'visible', false);
 						
+						$this->UpdateFormField('InstanceID', 'visible', true);	
 						break;
 				}
-				$this->ReloadForm();
+				//$this->ReloadForm();
 			break;
 		case "ChangeVariable":
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
@@ -283,6 +335,7 @@
 					$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
 					$this->UpdateFormField('ComparativeValueString', 'visible', false);
 					$this->UpdateFormField('Operator', 'visible', false);
+					$this->UpdateFormField('OperatorString', 'visible', false);
 				}
 			break;
 		case "ChangeInstance":
