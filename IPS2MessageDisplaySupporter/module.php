@@ -229,6 +229,7 @@
 				$this->SendDebug("RequestAction", "ChangeFunction - Wert: ".$Value, 0);
 				switch($Value) {
 					case 0: // Variablenüberwachung
+						$this->SendDebug("RequestAction", "ChangeFunction - InstanceID: ".$this->ReadPropertyInteger("InstanceID"), 0);						
 						If ($this->ReadPropertyInteger("InstanceID") > 0) {
 							switch($this->GetVariableType($this->ReadPropertyInteger("InstanceID"))) {
 								case 0: // Boolean
