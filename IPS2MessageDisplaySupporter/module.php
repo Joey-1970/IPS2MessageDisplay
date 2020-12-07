@@ -57,11 +57,19 @@
 		
  		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
 		
+		$arrayElements[] = array("type" => "Label", "name" => "lblVariable", "caption" => "Zu überwachende Variable", "visible" => false);
+            	$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => false, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
+
+		$arrayElements[] = array("type" => "Label", "name" => "lblInstance", "caption" => "Zu überwachende Instanz", "visible" => false);
+		$arrayElements[] = array("type" => "SelectInstance", "name" => "InstanceID", "caption" => "Variable", "visible" => false, "onChange" => 'IPS_RequestAction($id,"ChangeInstance",$InstanceID);'); 
+	
+		
+		
 		If ($this->ReadPropertyInteger("Function") == 0) {
 			// Funktion Überwachung einer Variablen
 			$arrayElements[] = array("type" => "Label", "name" => "lblVariable", "caption" => "Zu überwachende Variable", "visible" => true);
             		$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
-			
+		
 			// Select Boolean Variable
 			$arrayOptionsBool = array();
 			$arrayOptionsBool[] = array("caption" => "Falsch", "value" => false);
@@ -120,7 +128,9 @@
 		elseif ($this->ReadPropertyInteger("Function") == 1) {
 			$arrayElements[] = array("type" => "Label", "name" => "lblInstance", "caption" => "Zu überwachende Instanz", "visible" => true);
 			$arrayElements[] = array("type" => "SelectInstance", "name" => "InstanceID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeInstance",$InstanceID);'); 
+			
 
+			
 		}
 		elseif ($this->ReadPropertyInteger("Function") == 2) {
 			$arrayElements[] = array("type" => "Label", "caption" => "Funktion Erinnerung", "visible" => true);
