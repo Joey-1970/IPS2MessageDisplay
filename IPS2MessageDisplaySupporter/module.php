@@ -57,6 +57,27 @@
 		
  		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
 		
+		
+		// Select Boolean Variable
+		$arrayOptionsBool = array();
+		$arrayOptionsBool[] = array("caption" => "Falsch", "value" => false);
+		$arrayOptionsBool[] = array("caption" => "Wahr", "value" => true);
+
+		// Select Integer und Float
+		$arrayOptionsCompare = array();
+		$arrayOptionsCompare[] = array("caption" => "<", "value" => "<");
+		$arrayOptionsCompare[] = array("caption" => "<=", "value" => "<=");
+		$arrayOptionsCompare[] = array("caption" => ">", "value" => ">");
+		$arrayOptionsCompare[] = array("caption" => ">=", "value" => ">=");
+		$arrayOptionsCompare[] = array("caption" => "==", "value" => "==");
+		$arrayOptionsCompare[] = array("caption" => "===", "value" => "===");
+		$arrayOptionsCompare[] = array("caption" => "<>", "value" => "<>");
+
+		// Select String
+		$arrayOptionsCompareString = array();
+		$arrayOptionsCompareString[] = array("caption" => "==", "value" => "==");
+		$arrayOptionsCompareString[] = array("caption" => "<>", "value" => "<>");		
+		
 		If ($this->ReadPropertyInteger("Function") == 0) {
 			// unsichtbare Elemente
 			$arrayElements[] = array("type" => "Label", "name" => "lblInstance", "caption" => "Zu überwachende Instanz", "visible" => false);
@@ -66,25 +87,7 @@
 			$arrayElements[] = array("type" => "Label", "name" => "lblVariable", "caption" => "Zu überwachende Variable", "visible" => true);
             		$arrayElements[] = array("type" => "SelectVariable", "name" => "VariableID", "caption" => "Variable", "visible" => true, "onChange" => 'IPS_RequestAction($id,"ChangeVariable",$VariableID);'); 
 		
-			// Select Boolean Variable
-			$arrayOptionsBool = array();
-			$arrayOptionsBool[] = array("caption" => "Falsch", "value" => false);
-			$arrayOptionsBool[] = array("caption" => "Wahr", "value" => true);
 			
-			// Select Integer und Float
-			$arrayOptionsCompare = array();
-			$arrayOptionsCompare[] = array("caption" => "<", "value" => "<");
-			$arrayOptionsCompare[] = array("caption" => "<=", "value" => "<=");
-			$arrayOptionsCompare[] = array("caption" => ">", "value" => ">");
-			$arrayOptionsCompare[] = array("caption" => ">=", "value" => ">=");
-			$arrayOptionsCompare[] = array("caption" => "==", "value" => "==");
-			$arrayOptionsCompare[] = array("caption" => "===", "value" => "===");
-			$arrayOptionsCompare[] = array("caption" => "<>", "value" => "<>");
-			
-			// Select String
-			$arrayOptionsCompareString = array();
-			$arrayOptionsCompareString[] = array("caption" => "==", "value" => "==");
-			$arrayOptionsCompareString[] = array("caption" => "<>", "value" => "<>");
 
 			switch($this->GetVariableType($this->ReadPropertyInteger("VariableID"))) {
 				case 0: // Boolean			
