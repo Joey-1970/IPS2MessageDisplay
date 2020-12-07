@@ -287,7 +287,7 @@
 						$this->UpdateFormField('InstanceID', 'visible', true);	
 						break;
 				}
-				//$this->ReloadForm();
+				$this->ReloadForm();
 			break;
 		case "ChangeVariable":
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
