@@ -54,7 +54,7 @@
 		$arrayOptions[] = array("label" => "Überwachung einer Instanz", "value" => 1);
 		//$arrayOptions[] = array("label" => "Erinnerung nach Uhrzeit", "value" => 2);
 		$arrayElements[] = array("type" => "Select", "name" => "Function", "caption" => "Funktion", "options" => $arrayOptions, "onChange" => 'IPS_RequestAction($id,"ChangeFunction",$Function);' );
-
+		
  		$arrayElements[] = array("type" => "Label", "caption" => "_____________________________________________________________________________________________________");
 		
 		If ($this->ReadPropertyInteger("Function") == 0) {
@@ -231,10 +231,11 @@
 					case 0: // Variablenüberwachung
 						
 						break;
-					case 1: // Erinnerung nach Uhrzeit
+					case 2: // Instanzüberwachung
 						
 						break;
 				}
+				$this->ReloadForm();
 			break;
 		case "ChangeVariable":
 				$this->SendDebug("RequestAction", "Wert: ".$Value, 0);
@@ -504,13 +505,6 @@
             			return FALSE;
     		}
 	}
-	    
-	private function RefreshProfileForm($Model)
-    	{
-        	
-        	//$this->UpdateFormField('Output', 'options', json_encode($arrayOptions));
-		//$this->UpdateFormField('Output_AP', 'options', json_encode($arrayOptions));
-    	}    
 	    
 	private function GetWebfrontID()
 	{
