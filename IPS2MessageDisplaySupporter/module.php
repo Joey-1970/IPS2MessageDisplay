@@ -273,12 +273,15 @@
 							$this->UpdateFormField('Operator', 'visible', false);
 							$this->UpdateFormField('OperatorString', 'visible', false);
 						}
+						$this->SendDebug("RequestAction", "Formular Variable", 0);
 						$this->UpdateFormField('lblVariable', 'visible', true);
+						$this->UpdateFormField('VariableID', 'visible', true);	
 						$this->UpdateFormField('lblInstance', 'visible', false);
 						$this->UpdateFormField('InstanceID', 'visible', false);	
-						$this->UpdateFormField('VariableID', 'visible', true);	
+						
 						break;
 					case 1: // Instanzüberwachung
+						$this->SendDebug("RequestAction", "Formular Instanz", 0);
 						$this->UpdateFormField('ComparativeValueBool', 'visible', false);
 						$this->UpdateFormField('ComparativeValueInt', 'visible', false);
 						$this->UpdateFormField('ComparativeValueFloat', 'visible', false);
