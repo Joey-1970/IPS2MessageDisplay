@@ -12,6 +12,7 @@ class IPS2MessageDisplay extends IPSModule
 		$this->RegisterPropertyBoolean("Open", false);
 		$this->RegisterPropertyInteger("Sorting", 3);
 		$this->RegisterPropertyBoolean("ShowTime", false);
+		$this->RegisterPropertyBoolean("ShowIcon", true);
 		$this->RegisterAttributeString("MessageData", ""); 
 		$this->RegisterPropertyInteger("AutoRemove", 1000);
 		$this->RegisterTimer("AutoRemove", 0, 'IPS2MessageDisplay_AutoRemove($_IPS["TARGET"]);');
@@ -44,7 +45,8 @@ class IPS2MessageDisplay extends IPSModule
 		$arrayElements[] = array("type" => "Select", "name" => "Sorting", "caption" => "Sortierung in der Darstellung", "options" => $arrayOptions );
 		
 		$arrayElements[] = array("name" => "ShowTime", "type" => "CheckBox",  "caption" => "Uhrzeit anzeigen");
-		$arrayElements[] = array("type" => "Label", "caption" => "Boolean-Variable die anzeigt, ob Meldungen vorhanden sind");
+		$arrayElements[] = array("name" => "ShowIcon", "type" => "CheckBox",  "caption" => "Icon anzeigen");
+		$arrayElements[] = array("type" => "Label", "caption" => "Boolean-Variable die anzeigt, das Meldungen vorhanden sind");
  		$arrayElements[] = array("type" => "SelectVariable", "name" => "ActuatorID", "caption" => "Anzeige-Variablen ID");
 		
  		return JSON_encode(array("status" => $arrayStatus, "elements" => $arrayElements)); 		 
@@ -248,6 +250,7 @@ class IPS2MessageDisplay extends IPSModule
 	private function RenderData($MessageData)		
 	{
 		$ShowTime = $this->ReadPropertyBoolean("ShowTime");
+		$ShowIcon = $this->ReadPropertyBoolean("ShowIcon");
 		$Sorting = $this->ReadPropertyInteger("Sorting");
 		
 		// Etwas CSS und HTML
@@ -270,8 +273,10 @@ class IPS2MessageDisplay extends IPSModule
 		
 		if (count($MessageData) == 0) {
 			$content .= '<tr>';
-			$Icon = "Ok";
-			$content .= '<td class="iconMediumSpinner ipsIcon' .$Icon. '"></td>';
+			If ($ShowIcon == true) {
+				$Icon = "Ok";
+				$content .= '<td class="iconMediumSpinner ipsIcon' .$Icon. '"></td>';
+			}
 			if ($ShowTime == true) {
 				$content .= '<td class="lst">'.date("d.m.Y H:i", time() ).'</td>';
 			}
@@ -295,7 +300,9 @@ class IPS2MessageDisplay extends IPSModule
 				}
 
 				$content .= '<tr>';
-				$content .= '<td class="iconMediumSpinner ipsIcon' .$Image. '"></td>';
+				If ($ShowIcon == true) {
+					$content .= '<td class="iconMediumSpinner ipsIcon' .$Image. '"></td>';
+				}
 				if ($ShowTime == true) {
 					$SecondsToday= date('H') * 3600 + date('i') * 60 + date('s');
 					If ($Message['Timestamp'] <= (time() - $SecondsToday)) {
