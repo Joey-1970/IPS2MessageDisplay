@@ -2,12 +2,6 @@
     // Klassendefinition
     class IPS2MessageDisplaySupporter extends IPSModule 
     {
-	public function Destroy() 
-	{
-		//Never delete this line!
-		parent::Destroy();
-	}  
-	    
 	// Überschreibt die interne IPS_Create($id) Funktion
         public function Create() 
         {
@@ -221,13 +215,13 @@
 		If ($this->ReadPropertyInteger("Function") == 0) {
 			// Registrierung für die Änderung der Variablen
 			If ($this->ReadPropertyInteger("VariableID") > 0) {
-				$this->RegisterMessage($this->ReadPropertyInteger("VariableID"), 10603);
+				$this->RegisterMessage($this->ReadPropertyInteger("VariableID"), VM_UPDATE);
 			}
 		}
 		elseif ($this->ReadPropertyInteger("Function") == 1) {
 			// Registrierung für die Änderung der Instance
 			If ($this->ReadPropertyInteger("InstanceID") > 0) {
-				$this->RegisterMessage($this->ReadPropertyInteger("InstanceID"), 10505);
+				$this->RegisterMessage($this->ReadPropertyInteger("InstanceID"), IM_CHANGESTATUS);
 			}
 		}
 		
@@ -397,11 +391,11 @@
 	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
     	{
 		switch ($Message) {
-			case 10100:
+			case IPS_KERNELSTARTED:
 				// IPS_KERNELSTARTED
 				$this->ApplyChanges();
 				break;
-			case 10603:
+			case VM_UPDATE:
 				// Änderung an der zu überwachende Variable
 				If ($SenderID == $this->ReadPropertyInteger("VariableID")) {
 					switch ($this->GetVariableType($SenderID)) {
@@ -440,7 +434,7 @@
 					}
 				}
 				break;
-			case 10505:
+			case IM_CHANGESTATUS:
 				$this->SendDebug("MessageSink", "SenderID: ".$SenderID, 0);
 				If ($SenderID == $this->ReadPropertyInteger("InstanceID")) {
 					$Status = (IPS_GetInstance($SenderID)['InstanceStatus']);  
