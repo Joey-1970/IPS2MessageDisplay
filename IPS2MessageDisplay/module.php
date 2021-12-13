@@ -80,9 +80,9 @@ class IPS2MessageDisplay extends IPSModule
 	public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
     	{
 		switch ($Message) {
-			case 10001:
+			case IPS_KERNELSTARTED:
 				// IPS_KERNELSTARTED
-				$this->ApplyChanges();
+				$this->RegisterHook("/hook/IPS2MessageDisplay_".$this->InstanceID);
 				break;
 			
 		}
