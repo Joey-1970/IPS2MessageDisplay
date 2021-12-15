@@ -68,11 +68,15 @@ class IPS2MessageDisplay extends IPSModule
 			$MessageData = unserialize($this->ReadAttributeString("MessageData"));
 			$this->RenderData($MessageData);
 			$this->SetTimerInterval("AutoRemove", 1000);
-			$this->SetStatus(102);
+			If ($this->GetStatus() <> 102) {
+				$this->SetStatus(102);
+			}
 			
 		}
 		else {
-			$this->SetStatus(104);
+			If ($this->GetStatus() <> 104) {
+				$this->SetStatus(104);
+			}
 			$this->SetTimerInterval("AutoRemove", 0);
 		}	
 	}
